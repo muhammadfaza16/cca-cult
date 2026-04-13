@@ -1,0 +1,105 @@
+---
+title: "Teori Permainan: Matematika di Balik Keputusan"
+subtitle: "Kenapa kerja sama itu sulit, kenapa pengkhianatan itu rasional, dan kenapa strategi terbaik sering bukan yang paling agresif."
+topic_pillar: sains
+difficulty: menengah
+tags: [game-theory, nash-equilibrium, prisoner-dilemma, strategi, matematika]
+author: "Tim CCA"
+published_at: "2026-02-25"
+seo_description: "Pengantar teori permainan: dari Prisoner's Dilemma sampai Nash Equilibrium, dan bagaimana matematika menjelaskan perilaku strategis manusia."
+---
+
+Setiap hari, tanpa sadar, kamu bermain ratusan "permainan" — bukan catur atau Monopoli, tapi permainan strategis di mana keputusanmu bergantung pada keputusan orang lain.
+
+Mau contoh? Kamu sedang menyetir, dan ada mobil lain di persimpangan. Kamu *berdua* harus memutuskan siapa yang jalan duluan. Keputusanmu bergantung pada apa yang kamu pikir *dia* akan lakukan, dan keputusannya bergantung pada apa yang dia pikir *kamu* akan lakukan.
+
+Ini bukan filsafat. Ini matematika. Dan cabang matematika yang mempelajarinya disebut **teori permainan** (game theory).
+
+<KeyConcept title="Teori Permainan">
+Teori permainan adalah studi matematis tentang pengambilan keputusan strategis — situasi di mana pilihan optimal seseorang bergantung pada pilihan yang dibuat oleh orang lain. Dikembangkan oleh John von Neumann dan Oskar Morgenstern (1944), lalu dikembangkan lebih jauh oleh John Nash yang legendaris.
+</KeyConcept>
+
+## Dilema Tahanan: Permainan Paling Terkenal di Dunia
+
+Bayangkan skenario ini:
+
+Kamu dan temanmu ditangkap polisi karena dicurigai merampok. Kalian ditempatkan di ruang interogasi terpisah, tanpa bisa berkomunikasi. Polisi menawarkan deal yang sama ke kalian berdua:
+
+- **Kalau kamu berkhianat (mengaku) dan temanmu diam**: kamu bebas, temanmu dipenjara 10 tahun.
+- **Kalau kalian berdua diam**: masing-masing dipenjara 1 tahun (bukti kurang kuat).
+- **Kalau kalian berdua berkhianat**: masing-masing dipenjara 5 tahun.
+
+<ThinkAbout prompt="Apa yang akan kamu pilih — diam atau berkhianat? Pikirkan baik-baik sebelum membaca pembahasan.">
+Secara rasional murni, kamu *harus* berkhianat. Apapun yang dilakukan temanmu, berkhianat selalu lebih baik untukmu: kalau dia diam, kamu bebas (bukan 1 tahun). Kalau dia juga berkhianat, kamu 5 tahun (bukan 10 tahun). Ini disebut **strategi dominan**. Masalahnya, temanmu juga berpikir identik. Hasilnya? Kalian berdua berkhianat dan masing-masing dapat 5 tahun — padahal kalau berdua diam, cuma 1 tahun. Inilah tragedi Dilema Tahanan: rasionalitas individual mengarah ke hasil yang lebih buruk untuk semua orang.
+</ThinkAbout>
+
+Dilema Tahanan menunjukkan sesuatu yang profound: **apa yang rasional untuk individu bisa irasional untuk kelompok**. Dan ini menjelaskan *banyak* masalah dunia nyata.
+
+## Nash Equilibrium: Ketika Tidak Ada yang Mau Berubah
+
+John Nash — matematikawan brilian yang didiagnosis skizofrenia dan kisahnya difilmkan di *A Beautiful Mind* — mengembangkan konsep yang ia sebut **Nash Equilibrium**.
+
+<AnalogyBlock>
+Bayangkan dua kedai kopi di jalan yang sama. Masing-masing memilih lokasi. Nash Equilibrium tercapai ketika *tidak ada* kedai yang bisa meningkatkan keuntungannya dengan pindah lokasi sendirian. Bukan berarti keduanya di posisi terbaik yang mungkin — hanya berarti tidak ada yang punya insentif untuk bergerak dari posisi sekarang. Seperti dua magnets yang saling dorong sampai menemukan jarak stabil — bukan sempurna, tapi seimbang.
+</AnalogyBlock>
+
+Nash Equilibrium tidak selalu efisien. Dalam Dilema Tahanan, keadaan di mana keduanya berkhianat *adalah* Nash Equilibrium (tak ada yang bisa memperbaiki posisinya dengan berubah sendiri) — tapi jelas bukan hasil terbaik yang mungkin.
+
+Ini menjelaskan kenapa banyak situasi di dunia nyata *terjebak* di keadaan yang semua orang tahu suboptimal tapi tak ada yang punya insentif untuk berubah duluan.
+
+## Permainan yang Diulang: Lahirnya Kerja Sama
+
+Di Dilema Tahanan versi satu kali, pengkhianatan menang. Tapi apa yang terjadi kalau kamu bermain lagi dan lagi dengan orang yang sama?
+
+Pada 1984, ilmuwan politik Robert Axelrod mengadakan turnamen komputer yang legendaris. Ia mengundang para ahli untuk mengirimkan strategi untuk Dilema Tahanan berulang. Strategi terbaik?
+
+**Tit for Tat** — yang artinya:
+1. Mulai dengan kerja sama.
+2. Setelah itu, lakukan apapun yang dilakukan lawanmu di ronde sebelumnya.
+
+Sederhana. Baik hati (mulai dengan kooperasi). Tegas (membalas pengkhianatan). Pemaaf (kembali kooperasi begitu lawan kooperasi lagi).
+
+<Callout type="important" title="Insight Kunci">
+Tit for Tat bukan strategi yang pernah "menang" dalam satu ronde pun terhadap lawannya. Ia tidak pernah mengeksploitasi siapapun. Tapi ia *konsisten* mengumpulkan poin yang cukup baik dari semua interaksinya. Pelajarannya: strategi terbaik jangka panjang sering bukan yang paling agresif, tapi yang paling *konsisten* dan *responsif*.
+</Callout>
+
+## Teori Permainan di Dunia Nyata
+
+### Perang Harga
+
+Dua supermarket di kota yang sama. Kalau keduanya menjaga harga normal, keduanya untung. Tapi kalau satu menurunkan harga, ia menarik pelanggan lawan — jangka pendek menguntungkan. Kalau keduanya menurunkan harga, keduanya rugi. Ini adalah Dilema Tahanan klasik.
+
+### Perubahan Iklim
+
+Setiap negara diuntungkan kalau *semua negara lain* mengurangi emisi sementara ia sendiri tidak. Mengurangi emisi itu mahal. Tapi kalau semua berpikir begitu, bumi panas dan semua rugi. Ini Dilema Tahanan skala global dengan 195 pemain.
+
+### Lalu Lintas
+
+Setiap pengemudi diuntungkan kalau *semua orang lain* naik transportasi umum (jalanan jadi sepi) sementara ia tetap naik mobil. Tapi kalau semua berpikir begitu, macet total.
+
+<Callout type="info" title="Tragedy of the Commons">
+Banyak masalah teori permainan berkaitan dengan apa yang disebut "Tragedi Commons" — situasi di mana sumber daya bersama habis karena setiap individu bertindak demi kepentingan sendiri. Ini layak artikel tersendiri (dan kami sudah menulisnya).
+</Callout>
+
+## Melampaui Zero-Sum
+
+Salah satu kontribusi terbesar teori permainan ke pemikiran manusia: menunjukkan bahwa **tidak semua interaksi adalah zero-sum**.
+
+Permainan zero-sum berarti keuntunganmu = kerugian orang lain. Catur, tinju, dan poker adalah zero-sum.
+
+Tapi kebanyakan interaksi nyata adalah **non-zero-sum** — ada kemungkinan *semua pihak* untung atau *semua pihak* rugi. Perdagangan internasional, misalnya: kedua negara bisa diuntungkan. Hubungan romantis: kedua orang bisa bahagia atau kedua orang bisa menderita.
+
+<ThinkAbout prompt="Kalau kebanyakan interaksi nyata itu non-zero-sum, kenapa manusia sering memperlakukannya seolah zero-sum? Kenapa kita sering berpikir 'kalau dia menang, berarti aku kalah'?">
+Ini kemungkinan warisan evolusi. Di lingkungan nenek moyang kita — kelompok kecil, sumber daya terbatas — interaksi memang sering mendekati zero-sum. Daging rusa yang dimakan temanmu adalah daging yang tidak kamu makan. Tapi di ekonomi modern yang kompleks, pie-nya bisa membesar. Kekayaan bisa diciptakan, bukan hanya dipindahkan. Otak kita belum sepenuhnya meng-update software-nya dari era savanna ke era globalisasi.
+</ThinkAbout>
+
+## Pelajaran dari Teori Permainan
+
+Teori permainan bukan sekadar matematika abstrak. Ia memberikan beberapa insight paling powerful tentang perilaku manusia:
+
+1. **Kerja sama itu fragile tapi berharga** — perlu mekanisme (reputasi, hukum, norma sosial) untuk menjaganya.
+2. **Insentif menentukan perilaku** — kalau kamu ingin mengubah perilaku, ubah insentifnya, bukan ceramahnya.
+3. **Jangka panjang ≠ jangka pendek** — strategi terbaik jangka panjang sering berbeda drastis dari yang terbaik jangka pendek.
+4. **Perspektif orang lain penting** — kamu tidak bisa membuat keputusan optimal tanpa memikirkan apa yang akan dilakukan orang lain.
+
+Dan mungkin yang terpenting: kadang keputusan "irasional" individu (kerja sama padahal pengkhianatan lebih menguntungkan) justru *rasional* dalam konteks yang lebih besar. Itulah kenapa institusi, hukum, dan norma sosial ada — mereka mengubah struktur permainan sehingga apa yang baik untuk individu *sejalan* dengan apa yang baik untuk kelompok.

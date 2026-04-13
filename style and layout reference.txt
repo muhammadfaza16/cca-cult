@@ -1,0 +1,594 @@
+import { useState, useEffect, useRef } from "react";
+
+// ─── PALETTE & TOKENS ─────────────────────────────────────────────────────────
+const T = {
+  bg: "#F4F2EC",
+  ink: "#1C1C16",
+  muted: "#7A7A6E",
+  faint: "rgba(28,28,22,.07)",
+  border: "rgba(28,28,22,.1)",
+  white: "#FDFCF8",
+};
+
+const CATS = [
+  { id: "all",      label: "Semua",          color: T.ink },
+  { id: "logika",   label: "Logika & Pikir", color: "#B8860B" },
+  { id: "sains",    label: "Sains",          color: "#1A7A8F" },
+  { id: "sejarah",  label: "Sejarah",        color: "#A0420A" },
+  { id: "filsafat", label: "Filsafat",       color: "#6B3FA0" },
+  { id: "ekonomi",  label: "Ekonomi",        color: "#1A7A4A" },
+];
+
+const catColor = id => CATS.find(c => c.id === id)?.color || T.ink;
+
+// ─── CONTENT ──────────────────────────────────────────────────────────────────
+const SERIES = [
+  { id: "bias-101", label: "Seri: Pikiran yang Menipu", cat: "logika", count: 3 },
+  { id: "sejarah-id", label: "Seri: Indonesia Dibalik Layar", cat: "sejarah", count: 4 },
+];
+
+const ARTICLES = [
+  {
+    id: 1, cat: "logika", series: "bias-101", seriesPart: 1,
+    title: "Kenapa Otak Lo Gampang Dibohongi",
+    sub: "Cognitive bias bukan cacat. Ini fitur evolusi yang salah konteks.",
+    readTime: "8 menit", tag: "BERPIKIR KRITIS", featured: true, length: "panjang",
+    content: [
+      { type: "lead", text: "Bayangkan lo baru baca berita yang bikin lo marah. Lo langsung share. Besoknya, ternyata hoaks. Yang terjadi bukan karena lo bodoh — tapi karena otak lo bekerja persis seperti yang seharusnya. Hanya saja di konteks yang salah." },
+      { type: "heading", text: "Otak Lo Adalah Mesin Bertahan Hidup, Bukan Mesin Kebenaran" },
+      { type: "body", text: "Selama jutaan tahun evolusi, otak manusia tidak didesain untuk menemukan kebenaran. Otak didesain untuk membuat keputusan cepat yang meningkatkan peluang bertahan hidup. Di savana Afrika, lebih baik lari dari bayangan yang mungkin harimau daripada berpikir panjang dan mati duluan." },
+      { type: "body", text: "Masalahnya: kita masih pakai otak savana itu di dunia media sosial, politik, dan iklan. Para pembuat konten — baik yang berniat baik maupun tidak — sangat paham cara mengeksploitasi ini." },
+      { type: "callout", text: "\"Kita bukan makhluk rasional yang kadang emosional. Kita makhluk emosional yang kadang rasional.\" — Jonathan Haidt" },
+      { type: "heading", text: "Tiga Bias yang Paling Sering Merugikan Lo" },
+      { type: "body", text: "Confirmation bias: lo otomatis lebih percaya informasi yang sesuai keyakinan lo. Availability heuristic: lo menilai seberapa umum sesuatu dari seberapa mudah contohnya muncul di pikiran. In-group bias: lo cenderung mempercayai orang yang lo anggap 'kelompok lo'." },
+      { type: "body", text: "Ketiganya bekerja bersamaan dan saling memperkuat. Hasilnya: lo bisa sangat yakin dengan sesuatu yang salah, dan semakin yakin ketika ada yang mempertanyakannya." },
+      { type: "note", text: "Tahukah lo? Orang dengan IQ tinggi justru lebih pandai membangun argumen untuk membenarkan kesimpulan yang sudah mereka pegang — bukan lebih pandai menemukan kebenaran. Ini disebut 'motivated reasoning'." },
+      { type: "heading", text: "Apa yang Bisa Lo Lakukan?" },
+      { type: "body", text: "Pertama, akui bahwa lo punya bias ini. Semua orang punya — tanpa terkecuali. Kedua, tunda respons. Sebelum share sesuatu yang bikin lo marah atau senang, tunggu minimal 10 menit. Ketiga, sengaja cari yang tidak setuju. Bukan untuk mengubah pikiran — tapi untuk mengujinya." },
+      { type: "closing", text: "Berpikir kritis bukan tentang tidak percaya apa-apa. Ini tentang menunda kepastian sampai lo punya alasan yang cukup. Dan itu butuh latihan yang sangat sadar dari makhluk yang otaknya tidak dirancang untuk itu." },
+    ],
+  },
+  {
+    id: 2, cat: "sains", series: null,
+    title: "Alam Semesta Berumur 13.8 Miliar Tahun. Kita Tahu Ini dari Mana?",
+    sub: "Bukan tebakan. Ini salah satu pengukuran paling presisi dalam sejarah sains.",
+    readTime: "4 menit", tag: "KOSMOLOGI", featured: false, length: "pendek",
+    content: [
+      { type: "lead", text: "Kalau ada yang tanya: 'Emang lo tau dari mana alam semesta seumur itu?' — pertanyaan itu bagus. Dan jawabannya lebih keren dari yang lo kira." },
+      { type: "heading", text: "Teleskop Adalah Mesin Waktu" },
+      { type: "body", text: "Ketika lo melihat bintang yang jaraknya 100 juta tahun cahaya, lo melihat cahaya yang sudah berperjalanan 100 juta tahun. Artinya lo melihat bintang itu seperti 100 juta tahun lalu — bukan sekarang." },
+      { type: "callout", text: "Cosmic Microwave Background — sisa cahaya dari 380.000 tahun setelah Big Bang — masih bisa kita deteksi hari ini. Itu foto bayi alam semesta." },
+      { type: "heading", text: "Tiga Cara Kita Mengukurnya" },
+      { type: "body", text: "Pertama: ekspansi alam semesta. Galaksi-galaksi bergerak menjauh — kalau diputar balik, ada titik awal. Kedua: umur bintang tertua, sekitar 13.2 miliar tahun — masuk akal. Ketiga: peta CMB yang memberi sidik jari sangat presisi tentang kondisi awal alam semesta." },
+      { type: "note", text: "Tiga metode yang sama sekali berbeda secara teknis memberikan hasil yang hampir identik. Dalam sains, itu bukan kebetulan — itu konfirmasi." },
+      { type: "closing", text: "13.8 miliar tahun bukan angka sembarangan. Itu kesimpulan dari ratusan ilmuwan, puluhan instrumen, dan bertahun-tahun verifikasi. Dan masih terus diperhalus." },
+    ],
+  },
+  {
+    id: 3, cat: "sejarah", series: "sejarah-id", seriesPart: 1,
+    title: "G30S: Apa yang Benar-Benar Kita Tahu, dan Apa yang Masih Kabur",
+    sub: "Setelah 60 tahun, peristiwa paling berpengaruh dalam sejarah modern Indonesia masih menyimpan lubang besar.",
+    readTime: "12 menit", tag: "SEJARAH INDONESIA", featured: true, length: "panjang",
+    content: [
+      { type: "lead", text: "Setiap 30 September, Indonesia memperingati peristiwa yang membentuk setengah abad berikutnya. Tapi apa yang kita tahu sebagai 'fakta', dan apa yang masih diperdebatkan sejarawan?" },
+      { type: "heading", text: "Yang Kita Tahu Pasti" },
+      { type: "body", text: "Pada dini hari 1 Oktober 1965, enam jenderal Angkatan Darat diculik dan dibunuh di Jakarta. Pelakunya menyebut diri Gerakan 30 September. Dalam hitungan jam, Mayor Jenderal Suharto mengambil kendali dan menghancurkan gerakan tersebut." },
+      { type: "heading", text: "Yang Masih Diperdebatkan" },
+      { type: "body", text: "Siapa dalangnya? Versi Orde Baru menyebut PKI. Tapi sejarawan seperti Benedict Anderson dan Ruth McVey berargumen buktinya tidak sekuat klaim resmi. Ada yang menyebut keterlibatan internal AD sendiri. Ada yang menyebut peran CIA. Tidak ada versi yang terbukti sepenuhnya." },
+      { type: "callout", text: "Tragedi sesungguhnya bukan hanya peristiwa 30 September — tapi pembunuhan massal 500.000 hingga 1 juta orang yang terjadi dalam bulan-bulan setelahnya. Ini hampir tidak pernah dibahas di kurikulum sekolah." },
+      { type: "note", text: "Dokumen CIA yang dibuka sebagian pada 2017 menunjukkan bahwa AS mengetahui dan sebagian mendukung operasi Suharto — tapi sejauh mana keterlibatan aktifnya masih diperdebatkan." },
+      { type: "heading", text: "Kenapa Ini Penting Sekarang" },
+      { type: "body", text: "Bukan untuk membuka luka. Tapi karena cara sebuah bangsa menghadapi sejarahnya menentukan kualitas demokrasinya. Jerman memilih confrontasi total dengan Nazi-nya. Indonesia masih dalam proses yang belum selesai." },
+      { type: "closing", text: "Sejarah yang tidak diselesaikan tidak menghilang. Ia berubah jadi hantu — muncul dalam bentuk polarisasi, stigma, dan ketidakmampuan untuk tidak setuju secara sehat." },
+    ],
+  },
+  {
+    id: 4, cat: "filsafat", series: null,
+    title: "Apakah Lo Punya Kehendak Bebas?",
+    sub: "Neurosains modern dan filsafat kuno sedang berbenturan di pertanyaan yang sama — dan jawabannya lebih menggelisahkan dari yang lo kira.",
+    readTime: "6 menit", tag: "FILSAFAT PIKIRAN", featured: false, length: "pendek",
+    content: [
+      { type: "lead", text: "Sebelum lo membaca kalimat ini, otak lo sudah memutuskan bahwa lo akan membacanya. Itu bukan kiasan — itu temuan neurosains." },
+      { type: "heading", text: "Eksperimen Libet yang Menggelisahkan" },
+      { type: "body", text: "Pada 1980-an, Benjamin Libet menemukan bahwa aktivitas otak yang berhubungan dengan gerakan muncul 300-500 milidetik SEBELUM seseorang sadar bahwa mereka memutuskan untuk bergerak. Keputusan terjadi di bawah kesadaran, dan kesadaran hanya mengikuti." },
+      { type: "callout", text: "Kalau setiap keputusan lo sudah ditentukan neuron sebelum lo 'memutuskan' — apa artinya tanggung jawab? Apa artinya hukuman?" },
+      { type: "heading", text: "Dua Posisi yang Masuk Akal" },
+      { type: "body", text: "Hard determinism: tidak ada kehendak bebas, semua ditentukan sebab-akibat fisik. Compatibilism: kehendak bebas dan determinisme bisa berdampingan — yang penting adalah apakah tindakan lo berasal dari diri lo atau dipaksa dari luar. Daniel Dennett dan banyak filsuf modern condong ke sini." },
+      { type: "note", text: "Menariknya: percaya atau tidak percaya pada kehendak bebas secara aktif mengubah perilaku manusia. Penelitian menunjukkan orang yang tidak percaya pada free will lebih cenderung berlaku curang." },
+      { type: "closing", text: "Pertanyaan ini bukan soal jawaban yang benar. Tapi bagaimana lo menjawabnya akan mempengaruhi cara lo melihat hukuman, pendidikan, dan empati terhadap orang lain." },
+    ],
+  },
+  {
+    id: 5, cat: "ekonomi", series: null,
+    title: "Kenapa Harga Naik Terus? Inflasi Tanpa Basa-Basi",
+    sub: "Bukan salah satu pihak. Inflasi adalah sistem — dan lo bisa memahaminya.",
+    readTime: "7 menit", tag: "LITERASI EKONOMI", featured: false, length: "panjang",
+    content: [
+      { type: "lead", text: "Tahun ini harga beras naik. Tahun lalu bensin. Ada yang bilang salah pemerintah, ada yang bilang salah spekulan, ada yang bilang salah asing. Semuanya sebagian benar — dan itu yang bikin inflasi sulit dipahami." },
+      { type: "heading", text: "Inflasi Itu Apa Sebenernya" },
+      { type: "body", text: "Inflasi adalah kenaikan harga secara umum dan berkelanjutan. Bukan kenaikan satu barang — tapi banyak barang, dalam waktu yang cukup panjang. Diukur lewat CPI: sekeranjang barang representatif yang dipantau berkala." },
+      { type: "heading", text: "Tiga Akar Penyebab" },
+      { type: "body", text: "Demand-pull: terlalu banyak uang mengejar terlalu sedikit barang. Cost-push: biaya produksi naik, produsen naikkan harga. Built-in inflation: pekerja minta naik gaji karena harga naik, pengusaha naikkan harga karena gaji naik. Lingkaran setan." },
+      { type: "callout", text: "Inflasi rendah (2-3%) sebenarnya sehat — mendorong orang belanja dan investasi, bukan menimbun cash. Yang bahaya adalah inflasi yang tidak diimbangi kenaikan pendapatan." },
+      { type: "note", text: "Zimbabwe pernah mengalami inflasi 89.7 sextillion persen per bulan pada 2008. Orang membawa uang tunai dalam karung untuk membeli roti. Itu yang terjadi ketika pemerintah mencetak uang tanpa kendali." },
+      { type: "heading", text: "Siapa yang Paling Terdampak" },
+      { type: "body", text: "Inflasi paling menyakitkan bagi yang pendapatannya tetap atau lambat naik: buruh dengan UMR yang kenaikannya kalah dengan inflasi, pensiunan dengan tunjangan tetap, dan mereka yang menyimpan uang cash tanpa investasi." },
+      { type: "closing", text: "Memahami inflasi bukan soal menyalahkan siapa. Ini soal memahami sistem — sehingga lo bisa membuat keputusan yang lebih cerdas, dari cara menyimpan uang sampai cara memilih pemimpin." },
+    ],
+  },
+  {
+    id: 6, cat: "logika", series: "bias-101", seriesPart: 2,
+    title: "Ad Hominem: Serang Orangnya, Hindari Argumennya",
+    sub: "Fallasi ini ada di mana-mana — debat politik, kolom komentar, obrolan kantor.",
+    readTime: "3 menit", tag: "FALLASI LOGIKA", featured: false, length: "pendek",
+    content: [
+      { type: "lead", text: "'Lo ngomong soal korupsi? Emang lo sendiri bersih?' — terdengar kuat. Padahal tidak menjawab argumen sama sekali." },
+      { type: "heading", text: "Definisi dan Mekanisme" },
+      { type: "body", text: "Ad hominem (Latin: terhadap orangnya) adalah fallasi logika di mana lo merespons argumen dengan menyerang karakter sumbernya — bukan argumennya itu sendiri." },
+      { type: "callout", text: "Kebenaran sebuah argumen tidak bergantung pada siapa yang mengatakannya. Seorang koruptor bisa benar tentang cara menghitung pajak." },
+      { type: "body", text: "Ini efektif karena otak kita sangat peduli dengan sumber informasi. Kalau sumber tidak bisa dipercaya, kita cenderung abaikan pesannya — bahkan kalau pesannya valid." },
+      { type: "note", text: "Ada versi yang lebih halus: Circumstantial ad hominem ('Lo bilang itu hanya karena lo diuntungkan') dan tu quoque ('Lo sendiri juga begitu'). Keduanya sama-sama tidak menjawab argumen." },
+      { type: "closing", text: "Cara menghadapinya: pisahkan argumen dari orangnya. Tanya: 'Apakah ini menjawab poin yang diangkat?' Kalau tidak — itu bukan debat, itu pengalihan." },
+    ],
+  },
+  {
+    id: 7, cat: "sains", series: null,
+    title: "Evolusi Bukan 'Hanya Teori' — dan Ini Penjelasannya",
+    sub: "Kata 'teori' dalam sains berarti sesuatu yang berbeda dari percakapan sehari-hari. Sangat berbeda.",
+    readTime: "5 menit", tag: "BIOLOGI EVOLUSI", featured: false, length: "pendek",
+    content: [
+      { type: "lead", text: "'Evolusi itu cuma teori.' Kalimat ini sering dipakai untuk meragukan sains. Tapi ada salah paham fundamental tentang apa arti kata 'teori' dalam konteks ilmiah." },
+      { type: "heading", text: "Teori dalam Sains vs Teori dalam Percakapan" },
+      { type: "body", text: "Dalam percakapan sehari-hari, 'teori' berarti tebakan atau spekulasi. Dalam sains, teori adalah penjelasan yang didukung oleh banyak bukti, sudah melalui pengujian berulang, dan bisa digunakan untuk membuat prediksi akurat." },
+      { type: "callout", text: "Gravitasi juga 'hanya teori'. Teori Kuman Penyakit juga 'hanya teori'. Kita tetap jatuh kalau melompat dari gedung, dan dokter tetap pakai antibiotik." },
+      { type: "heading", text: "Bukti Evolusi yang Bisa Lo Cek" },
+      { type: "body", text: "Pertama: fosil dengan urutan yang konsisten di seluruh dunia — tidak ada fosil mamalia di lapisan Kambrium. Kedua: DNA. Kita berbagi 98.7% DNA dengan simpanse dan 60% dengan pisang — angka yang persis diprediksi evolusi. Ketiga: evolusi yang bisa diamati langsung, dari resistensi bakteri terhadap antibiotik sampai perubahan paruh burung finch di Galapagos." },
+      { type: "closing", text: "Meragukan evolusi bukan tanda pikiran kritis — itu tanda kesalahpahaman tentang apa yang disebut bukti. Pikiran kritis justru mengikuti bukti ke mana pun ia mengarah." },
+    ],
+  },
+  {
+    id: 8, cat: "filsafat", series: null,
+    title: "Stoicisme Bukan Soal Nggak Ngerasain Apa-Apa",
+    sub: "Salah kaprah terbesar tentang filsafat yang sedang sangat populer ini.",
+    readTime: "5 menit", tag: "FILSAFAT PRAKTIS", featured: false, length: "pendek",
+    content: [
+      { type: "lead", text: "Di internet, Stoicisme sering digambarkan sebagai 'nggak ngerasain emosi' atau 'tahan banting karena nggak peduli'. Itu salah kaprah total." },
+      { type: "heading", text: "Apa yang Stoicisme Sebenarnya Ajarkan" },
+      { type: "body", text: "Stoicisme adalah tentang membedakan apa yang ada dalam kendali lo dan apa yang tidak. Pikiran, niat, respons lo — itu wilayah lo. Cuaca, opini orang lain, hasil akhir — itu di luar kendali lo. Energi lo seharusnya fokus pada yang pertama." },
+      { type: "callout", text: "\"Bukan hal-hal yang mengganggumu, tapi pikiranmu tentang hal-hal itu.\" — Epictetus, mantan budak yang jadi salah satu filsuf terbesar Roma." },
+      { type: "heading", text: "Stoic Merasakan — Mereka Hanya Tidak Dikendalikan" },
+      { type: "body", text: "Marcus Aurelius, kaisar Romawi dan Stoic terbesar, menulis Meditations sebagai jurnal pribadi penuh pergulatan emosi. Ia marah, sedih, frustrasi. Bedanya: ia tidak membiarkan emosi itu menentukan tindakannya." },
+      { type: "note", text: "Praktik Stoic yang paling berguna untuk sehari-hari: Negative Visualization — bayangkan kehilangan hal yang lo miliki. Ini bukan pesimisme, tapi cara melatih rasa syukur dan kesiapan menghadapi perubahan." },
+      { type: "closing", text: "Stoicisme bukan armor untuk tidak merasakan. Ini cara untuk merasakan sepenuhnya sambil tetap memilih respons lo — bukan dikendalikan olehnya." },
+    ],
+  },
+];
+
+// ─── AI Generator ─────────────────────────────────────────────────────────────
+async function generateArticle(topic, cat, length) {
+  const catName = CATS.find(c => c.id === cat)?.label || cat;
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1000,
+      system: `Kamu adalah penulis untuk platform edukasi Indonesia bernama CCA (Cerdas, Cerah, Asik). Gaya penulisanmu: langsung, padat, tidak menggurui, seperti teman cerdas yang menjelaskan sesuatu yang menarik. Gunakan "lo/kamu" bukan "Anda". Hindari jargon yang tidak perlu. Setiap paragraf harus ada nilainya.
+
+Tulis artikel dalam format JSON dengan struktur ini (HANYA JSON, tidak ada teks lain):
+{
+  "title": "judul menarik dan spesifik",
+  "sub": "subjudul 1 kalimat yang memperjelas dan menarik",
+  "tag": "LABEL KATEGORI (huruf kapital, 2-3 kata)",
+  "readTime": "X menit",
+  "content": [
+    {"type": "lead", "text": "paragraf pembuka yang langsung menarik"},
+    {"type": "heading", "text": "subjudul"},
+    {"type": "body", "text": "paragraf isi"},
+    {"type": "callout", "text": "kutipan atau fakta menarik yang stand-alone"},
+    {"type": "note", "text": "fakta tambahan yang memperkaya"},
+    {"type": "closing", "text": "penutup yang meninggalkan sesuatu untuk dipikirkan"}
+  ]
+}`,
+      messages: [{ role: "user", content: `Tulis artikel ${length === "pendek" ? "pendek (3-5 menit baca, 4-5 blok konten)" : "panjang (7-10 menit baca, 7-9 blok konten)"} tentang: "${topic}" untuk kategori ${catName}.` }],
+    }),
+  });
+  const data = await res.json();
+  const text = data.content?.[0]?.text || "{}";
+  const clean = text.replace(/```json|```/g, "").trim();
+  return JSON.parse(clean);
+}
+
+// ─── Components ───────────────────────────────────────────────────────────────
+
+function ReadingBar({ pct, color }) {
+  return <div style={{ position: "fixed", top: 0, left: 0, height: 3, width: `${pct}%`, background: color, zIndex: 300, transition: "width .1s" }} />;
+}
+
+function ArticleContent({ blocks, color }) {
+  return (
+    <div>
+      {blocks.map((b, i) => {
+        if (b.type === "lead") return (
+          <p key={i} style={{ fontSize: 19, lineHeight: 1.82, color: "#222", borderLeft: `3px solid ${color}`, paddingLeft: 18, marginBottom: 28, fontStyle: "normal" }}>{b.text}</p>
+        );
+        if (b.type === "heading") return (
+          <h2 key={i} style={{ fontSize: 22, fontWeight: 700, color: T.ink, marginTop: 40, marginBottom: 12, lineHeight: 1.28 }}>{b.text}</h2>
+        );
+        if (b.type === "body") return (
+          <p key={i} style={{ fontSize: 16.5, lineHeight: 1.9, color: "#2E2E26", marginBottom: 20 }}>{b.text}</p>
+        );
+        if (b.type === "callout") return (
+          <div key={i} style={{ margin: "32px 0", padding: "20px 24px", borderLeft: `4px solid ${color}`, background: color + "10" }}>
+            <p style={{ fontSize: 18, fontStyle: "italic", color: T.ink, lineHeight: 1.65, margin: 0 }}>{b.text}</p>
+          </div>
+        );
+        if (b.type === "note") return (
+          <div key={i} style={{ margin: "24px 0", padding: "14px 18px", background: T.faint, borderRadius: 0, borderTop: `1px solid ${T.border}` }}>
+            <div style={{ fontSize: 10, fontFamily: "monospace", letterSpacing: 2, color: T.muted, marginBottom: 6 }}>TAHUKAH LO?</div>
+            <p style={{ fontSize: 14.5, lineHeight: 1.75, color: "#555", margin: 0 }}>{b.text}</p>
+          </div>
+        );
+        if (b.type === "closing") return (
+          <p key={i} style={{ fontSize: 16.5, lineHeight: 1.9, color: "#2E2E26", marginBottom: 20, paddingTop: 24, borderTop: `1px solid ${T.border}` }}>{b.text}</p>
+        );
+        return null;
+      })}
+    </div>
+  );
+}
+
+function ArticleReader({ article, onClose }) {
+  const ref = useRef(null);
+  const [prog, setProg] = useState(0);
+  const col = catColor(article.cat);
+  const series = article.series ? SERIES.find(s => s.id === article.series) : null;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const el = ref.current;
+    if (!el) return;
+    const fn = () => setProg(Math.min((el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100, 100));
+    el.addEventListener("scroll", fn);
+    return () => el.removeEventListener("scroll", fn);
+  }, []);
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: T.white, display: "flex", flexDirection: "column" }}>
+      <ReadingBar pct={prog} color={col} />
+
+      {/* Nav */}
+      <div style={{ padding: "14px 24px", borderBottom: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", background: T.white, position: "sticky", top: 0, zIndex: 10 }}>
+        <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 13, color: T.muted, fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
+          ← Kembali
+        </button>
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          {series && <span style={{ fontSize: 10, fontFamily: "monospace", color: T.muted, letterSpacing: 1 }}>Bagian {article.seriesPart}</span>}
+          <span style={{ background: col + "18", color: col, fontSize: 9, padding: "3px 10px", fontFamily: "monospace", letterSpacing: 2 }}>{article.tag}</span>
+          <span style={{ fontSize: 11, color: "#BBB", fontFamily: "monospace" }}>{article.readTime}</span>
+        </div>
+      </div>
+
+      <div ref={ref} style={{ flex: 1, overflowY: "auto" }}>
+        <div style={{ maxWidth: 660, margin: "0 auto", padding: "52px 24px 100px" }}>
+          {series && (
+            <div style={{ marginBottom: 20, padding: "8px 14px", background: col + "10", borderLeft: `3px solid ${col}`, display: "inline-block" }}>
+              <span style={{ fontSize: 11, fontFamily: "monospace", color: col, letterSpacing: 1 }}>{series.label} · Bagian {article.seriesPart} dari {series.count}</span>
+            </div>
+          )}
+          <h1 style={{ fontSize: "clamp(26px,4.5vw,40px)", fontWeight: 700, lineHeight: 1.2, color: T.ink, marginBottom: 14 }}>{article.title}</h1>
+          <p style={{ fontSize: 17, color: T.muted, lineHeight: 1.62, marginBottom: 36, fontStyle: "italic" }}>{article.sub}</p>
+          <div style={{ width: 40, height: 3, background: col, marginBottom: 40 }} />
+          <ArticleContent blocks={article.content} color={col} />
+          <div style={{ marginTop: 60, paddingTop: 24, borderTop: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: 10, color: "#CCC", fontFamily: "monospace", letterSpacing: 2 }}>SELESAI DIBACA</span>
+            <button onClick={onClose} style={{ background: col, border: "none", color: "#fff", fontFamily: "monospace", fontSize: 10, letterSpacing: 2, padding: "10px 22px", cursor: "pointer" }}>
+              BACA LAINNYA →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Card({ article, onRead, featured }) {
+  const col = catColor(article.cat);
+  const [hov, setHov] = useState(false);
+  const series = article.series ? SERIES.find(s => s.id === article.series) : null;
+
+  return (
+    <div onClick={() => onRead(article)}
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{
+        cursor: "pointer",
+        padding: featured ? 30 : 22,
+        background: hov ? T.white : T.bg,
+        border: `1px solid ${hov ? col + "55" : T.border}`,
+        transition: "all .2s ease",
+        display: "flex", flexDirection: "column", gap: 10,
+        gridColumn: featured ? "span 2" : "span 1",
+      }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+          <span style={{ background: col + "18", color: col, fontFamily: "monospace", fontSize: 9, letterSpacing: 2, padding: "3px 9px" }}>{article.tag}</span>
+          {series && <span style={{ fontFamily: "monospace", fontSize: 9, color: T.muted, letterSpacing: 1 }}>SERI · {article.seriesPart}/{series.count}</span>}
+          <span style={{ fontFamily: "monospace", fontSize: 9, color: "#CCC" }}>{article.length}</span>
+        </div>
+        <span style={{ fontFamily: "monospace", fontSize: 10, color: "#CCC" }}>{article.readTime}</span>
+      </div>
+      <h3 style={{ fontFamily: "Georgia,serif", fontSize: featured ? "clamp(20px,2.8vw,26px)" : 17, fontWeight: 700, color: T.ink, lineHeight: 1.28 }}>
+        {article.title}
+      </h3>
+      <p style={{ fontFamily: "Georgia,serif", fontSize: 13, color: T.muted, lineHeight: 1.65, fontStyle: "italic" }}>{article.sub}</p>
+      <div style={{ display: "flex", alignItems: "center", gap: 7, marginTop: 4 }}>
+        <div style={{ height: 2, width: hov ? 32 : 16, background: col, transition: "width .22s" }} />
+        <span style={{ fontFamily: "monospace", fontSize: 9, color: col, letterSpacing: 1 }}>BACA</span>
+      </div>
+    </div>
+  );
+}
+
+function AIGeneratorPanel({ onAdd }) {
+  const [open, setOpen] = useState(false);
+  const [topic, setTopic] = useState("");
+  const [cat, setCat] = useState("logika");
+  const [length, setLength] = useState("pendek");
+  const [loading, setLoading] = useState(false);
+  const [dots, setDots] = useState(0);
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    if (loading) {
+      const t = setInterval(() => setDots(d => (d + 1) % 4), 350);
+      return () => clearInterval(t);
+    }
+  }, [loading]);
+
+  async function generate() {
+    if (!topic.trim()) return;
+    setLoading(true); setErr("");
+    try {
+      const data = await generateArticle(topic, cat, length);
+      const newArt = {
+        id: Date.now(), cat, series: null, featured: false, length,
+        title: data.title, sub: data.sub, tag: data.tag,
+        readTime: data.readTime, content: data.content,
+      };
+      onAdd(newArt);
+      setTopic(""); setOpen(false);
+    } catch (e) {
+      setErr("Gagal generate artikel. Coba lagi.");
+    }
+    setLoading(false);
+  }
+
+  return (
+    <div style={{ marginBottom: 32 }}>
+      {!open ? (
+        <button onClick={() => setOpen(true)} style={{
+          background: "none", border: `1px dashed ${T.border}`,
+          color: T.muted, fontFamily: "monospace", fontSize: 10, letterSpacing: 2,
+          padding: "10px 20px", cursor: "pointer", transition: "all .2s", width: "100%",
+        }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = T.ink; e.currentTarget.style.color = T.ink; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.color = T.muted; }}
+        >
+          + GENERATE ARTIKEL BARU DENGAN AI
+        </button>
+      ) : (
+        <div style={{ border: `1px solid ${T.border}`, padding: 24, background: T.white }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
+            <span style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: 2, color: T.muted }}>GENERATE ARTIKEL</span>
+            <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: T.muted, fontSize: 16 }}>✕</button>
+          </div>
+          <input value={topic} onChange={e => setTopic(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && generate()}
+            placeholder="Topik artikel (mis: 'kenapa kita suka konspirasi')"
+            style={{ width: "100%", background: T.faint, border: "none", outline: "none", fontFamily: "Georgia,serif", fontSize: 15, color: T.ink, padding: "12px 14px", marginBottom: 12 }}
+          />
+          <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+            {CATS.slice(1).map(c => (
+              <button key={c.id} onClick={() => setCat(c.id)} style={{
+                background: cat === c.id ? c.color : "none",
+                border: `1px solid ${cat === c.id ? c.color : T.border}`,
+                color: cat === c.id ? "#fff" : T.muted,
+                fontFamily: "monospace", fontSize: 9, letterSpacing: 1, padding: "5px 12px", cursor: "pointer", transition: "all .15s",
+              }}>{c.label}</button>
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: 8, marginBottom: 18 }}>
+            {["pendek", "panjang"].map(l => (
+              <button key={l} onClick={() => setLength(l)} style={{
+                background: length === l ? T.ink : "none",
+                border: `1px solid ${length === l ? T.ink : T.border}`,
+                color: length === l ? "#fff" : T.muted,
+                fontFamily: "monospace", fontSize: 9, letterSpacing: 1, padding: "5px 14px", cursor: "pointer",
+              }}>{l}</button>
+            ))}
+          </div>
+          {err && <p style={{ color: "#C44", fontFamily: "monospace", fontSize: 11, marginBottom: 12 }}>{err}</p>}
+          <button onClick={generate} disabled={loading || !topic.trim()} style={{
+            background: loading ? T.faint : T.ink, border: "none", color: loading ? T.muted : "#F5F5EF",
+            fontFamily: "monospace", fontSize: 10, letterSpacing: 2, padding: "11px 24px",
+            cursor: loading ? "wait" : "pointer", transition: "all .2s", width: "100%",
+          }}>
+            {loading ? `SEDANG MENULIS${".".repeat(dots)}` : "GENERATE →"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── APP ──────────────────────────────────────────────────────────────────────
+export default function CCA() {
+  const [activeCat, setActiveCat] = useState("all");
+  const [reading, setReading] = useState(null);
+  const [search, setSearch] = useState("");
+  const [extraArticles, setExtraArticles] = useState([]);
+  const [showGen, setShowGen] = useState(false);
+
+  const allArticles = [...ARTICLES, ...extraArticles];
+
+  const filtered = allArticles.filter(a =>
+    (activeCat === "all" || a.cat === activeCat) &&
+    (!search || a.title.toLowerCase().includes(search.toLowerCase()) || a.sub.toLowerCase().includes(search.toLowerCase()))
+  );
+
+  const featured = filtered.filter(a => a.featured);
+  const regular = filtered.filter(a => !a.featured);
+  const showHero = activeCat === "all" && !search;
+
+  return (
+    <div style={{ minHeight: "100vh", background: T.bg, fontFamily: "Georgia,serif", color: T.ink }}>
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)} }
+        .pill { background:none; border:1px solid rgba(28,28,22,.12); color:#7A7A6E; font-family:monospace; font-size:10px; letter-spacing:2px; padding:6px 14px; cursor:pointer; transition:all .18s; white-space:nowrap; }
+        .pill.on { background:#1C1C16; border-color:#1C1C16; color:#F4F2EC; }
+        .pill:hover:not(.on) { border-color:rgba(28,28,22,.3); color:#333; }
+        @media(max-width:580px) { .feat-grid { grid-template-columns:1fr !important; } .feat-grid>div { grid-column:span 1 !important; } }
+      `}</style>
+
+      {reading && <ArticleReader article={reading} onClose={() => setReading(null)} />}
+
+      {/* ─ HEADER ─ */}
+      <header style={{ background: T.bg, borderBottom: `1px solid ${T.border}`, position: "sticky", top: 0, zIndex: 50 }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 0", borderBottom: `1px solid ${T.faint}` }}>
+            <div style={{ cursor: "pointer" }} onClick={() => { setActiveCat("all"); setSearch(""); }}>
+              <div style={{ fontSize: 26, fontWeight: 700, letterSpacing: "-0.5px", lineHeight: 1 }}>CCA</div>
+              <div style={{ fontFamily: "monospace", fontSize: 8, letterSpacing: 3, color: T.muted, marginTop: 2 }}>CERDAS · CERAH · ASIK</div>
+            </div>
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari..."
+                style={{ background: T.faint, border: "none", outline: "none", fontFamily: "monospace", fontSize: 11, color: T.ink, padding: "8px 14px", width: 160 }} />
+              <button onClick={() => setShowGen(v => !v)} style={{
+                background: showGen ? T.ink : "none", border: `1px solid ${T.border}`,
+                color: showGen ? T.bg : T.muted, fontFamily: "monospace", fontSize: 9,
+                letterSpacing: 2, padding: "8px 14px", cursor: "pointer", whiteSpace: "nowrap", transition: "all .18s",
+              }}>+ AI</button>
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: 6, padding: "10px 0", overflowX: "auto" }}>
+            {CATS.map(c => (
+              <button key={c.id} className={`pill ${activeCat === c.id ? "on" : ""}`} onClick={() => setActiveCat(c.id)}>{c.label}</button>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      {/* ─ HERO ─ */}
+      {showHero && (
+        <div style={{ background: "#1C1C16", color: "#F4F2EC", padding: "56px 20px 52px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+            <div style={{ fontFamily: "monospace", fontSize: 9, letterSpacing: 4, color: "rgba(244,242,236,.28)", marginBottom: 18 }}>
+              PLATFORM EDUKASI INDONESIA
+            </div>
+            <h1 style={{ fontSize: "clamp(30px,5.5vw,56px)", fontWeight: 700, lineHeight: 1.14, maxWidth: 640, marginBottom: 14 }}>
+              Ilmu yang dalam.<br />
+              <em style={{ color: "#D4A017", fontStyle: "italic" }}>Bahasa yang manusia.</em>
+            </h1>
+            <p style={{ fontSize: 16, color: "rgba(244,242,236,.5)", lineHeight: 1.7, maxWidth: 500, marginBottom: 36 }}>
+              Logika, sains, sejarah, filsafat, ekonomi — dikemas untuk dibaca, dipahami, dan dipikirkan. Bukan untuk dihapal.
+            </p>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {CATS.slice(1).map(c => (
+                <button key={c.id} onClick={() => setActiveCat(c.id)} style={{
+                  background: "none", border: `1px solid ${c.color}44`, color: c.color,
+                  fontFamily: "monospace", fontSize: 10, letterSpacing: 2, padding: "7px 16px",
+                  cursor: "pointer", transition: "background .18s",
+                }}
+                  onMouseEnter={e => e.currentTarget.style.background = c.color + "1A"}
+                  onMouseLeave={e => e.currentTarget.style.background = "none"}
+                >{c.label}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─ SERIES STRIP ─ */}
+      {showHero && (
+        <div style={{ borderBottom: `1px solid ${T.border}`, background: T.white, padding: "0 20px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", gap: 0, overflowX: "auto" }}>
+            {SERIES.map(s => {
+              const col = catColor(s.cat);
+              return (
+                <button key={s.id} onClick={() => setActiveCat(s.cat)} style={{
+                  background: "none", border: "none", borderRight: `1px solid ${T.border}`,
+                  padding: "14px 20px", cursor: "pointer", textAlign: "left", whiteSpace: "nowrap",
+                  transition: "background .15s",
+                }}
+                  onMouseEnter={e => e.currentTarget.style.background = T.faint}
+                  onMouseLeave={e => e.currentTarget.style.background = "none"}
+                >
+                  <div style={{ fontFamily: "monospace", fontSize: 8, letterSpacing: 2, color: col, marginBottom: 3 }}>SERI · {s.count} BAGIAN</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: T.ink }}>{s.label}</div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ─ MAIN ─ */}
+      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "36px 20px 80px" }}>
+
+        {/* AI Generator */}
+        {showGen && <AIGeneratorPanel onAdd={a => { setExtraArticles(e => [a, ...e]); setShowGen(false); }} />}
+
+        {filtered.length === 0 && (
+          <div style={{ textAlign: "center", padding: "80px 0", color: "#CCC", fontFamily: "monospace", fontSize: 12, letterSpacing: 3 }}>
+            TIDAK ADA ARTIKEL
+          </div>
+        )}
+
+        {featured.length > 0 && (
+          <div style={{ marginBottom: 36 }}>
+            {showHero && <Divider label="PILIHAN EDITOR" />}
+            <div className="feat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 2 }}>
+              {featured.map((a, i) => <Card key={a.id} article={a} onRead={setReading} featured={i === 0} />)}
+            </div>
+          </div>
+        )}
+
+        {regular.length > 0 && (
+          <div>
+            {featured.length > 0 && showHero && <Divider label="SEMUA ARTIKEL" />}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(270px,1fr))", gap: 2 }}>
+              {regular.map((a, i) => (
+                <div key={a.id} style={{ animation: `fadeUp .45s ease forwards ${i * .055}s`, opacity: 0 }}>
+                  <Card article={a} onRead={setReading} featured={false} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </main>
+
+      {/* ─ FOOTER ─ */}
+      <footer style={{ background: "#1C1C16", color: "rgba(244,242,236,.3)", padding: "28px 20px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
+          <div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: "#F4F2EC", marginBottom: 3 }}>CCA</div>
+            <div style={{ fontFamily: "monospace", fontSize: 8, letterSpacing: 3 }}>CERDAS · CERAH · ASIK</div>
+          </div>
+          <div style={{ fontFamily: "monospace", fontSize: 10 }}>Edukasi untuk semua. Gratis selamanya.</div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+function Divider({ label }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+      <span style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: 3, color: T.muted, whiteSpace: "nowrap" }}>{label}</span>
+      <div style={{ flex: 1, height: 1, background: T.border }} />
+    </div>
+  );
+}
