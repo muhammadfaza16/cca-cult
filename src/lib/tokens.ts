@@ -33,7 +33,7 @@ export const T = {
 
 /** 5-Topic category system */
 export const CATS: Record<string, { label: string; color: string; tagline: string }> = {
-  logika:    { label: "Logika",           color: "#B8860B", tagline: "Fondasi penalaran dan cara kita menyimpulkan kebenaran" },
+  logika:    { label: "Logika & Kerangka Berpikir", color: "#B8860B", tagline: "Fondasi penalaran dan cara kita menyimpulkan kebenaran" },
   filsafat:  { label: "Filsafat",         color: "#5B2E91", tagline: "Eksplorasi mendalam tentang eksistensi dan makna" },
   sains:     { label: "Sains",            color: "#0C6B7A", tagline: "Metode empiris untuk membedah realitas alam semesta" },
   ekonomi:   { label: "Ekonomi",          color: "#1B6B3A", tagline: "Memahami sistem, insentif, dan perilaku manusia dalam skala besar" },
@@ -42,7 +42,7 @@ export const CATS: Record<string, { label: string; color: string; tagline: strin
 
 /** Topic label lookup (for article detail pages) */
 export const PILLAR: Record<string, { color: string; label: string }> = {
-  logika:    { color: "#B8860B", label: "LOGIKA" },
+  logika:    { color: "#B8860B", label: "LOGIKA & KERANGKA BERPIKIR" },
   filsafat:  { color: "#5B2E91", label: "FILSAFAT" },
   sains:     { color: "#0C6B7A", label: "SAINS" },
   ekonomi:   { color: "#1B6B3A", label: "EKONOMI" },

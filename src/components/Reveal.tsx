@@ -27,7 +27,7 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0.01, rootMargin: "0px 0px 50px 0px" }
     );
 
     observer.observe(el);
@@ -40,8 +40,8 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(20px)",
-        transition: `opacity 0.5s cubic-bezier(.22,.61,.36,1) ${delay}s, transform 0.5s cubic-bezier(.22,.61,.36,1) ${delay}s`,
+        transform: visible ? "translateY(0)" : "translateY(12px)",
+        transition: `opacity 0.6s cubic-bezier(.2,.8,.4,1) ${delay}s, transform 0.6s cubic-bezier(.2,.8,.4,1) ${delay}s`,
       }}
     >
       {children}

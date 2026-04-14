@@ -105,7 +105,6 @@ export function HomepageClient({ secondary, rest }: Props) {
                           <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: col }}>
                             {CATS[article.topic_pillar]?.label.toUpperCase()}
                           </span>
-                          <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle }}>{article.difficulty}</span>
                         </div>
                         <span style={{
                           fontFamily: "var(--font-display)", fontSize: isWide ? 47 : 36,

@@ -23,12 +23,8 @@ interface Article {
 export function ArtikelClient({ articles }: { articles: Article[] }) {
   const [search, setSearch] = useState("");
   const [activePillar, setActivePillar] = useState("semua");
-  const [activeDiff, setActiveDiff] = useState("semua");
-
-  const filtered = useMemo(() => {
     return articles.filter(a => {
       if (activePillar !== "semua" && a.topic_pillar !== activePillar) return false;
-      if (activeDiff !== "semua" && a.difficulty !== activeDiff) return false;
       if (search.trim()) {
         const q = search.toLowerCase();
         return (
@@ -184,22 +180,6 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             ))}
           </div>
 
-          <div style={{ display: "flex", gap: 4 }}>
-            {DIFFS.map(d => (
-              <button key={d}
-                onClick={() => setActiveDiff(activeDiff === d ? "semua" : d)}
-                style={{
-                  fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500,
-                  letterSpacing: 1.5, padding: `6px 11px`,
-                  border: `1px solid ${activeDiff === d ? T.ink : T.border}`,
-                  background: activeDiff === d ? T.ink : "none",
-                  color: activeDiff === d ? T.bg : T.subtle,
-                  cursor: "pointer", transition: "all .15s",
-                  textTransform: "capitalize",
-                }}
-              >{d}</button>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -215,8 +195,9 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           </div>
         )}
 
-        {showGrouped ? (
-          (activePillar === "logika" ? LOGIC_STAGE_ORDER : Object.keys(CATS)).map((groupId) => {
+        {showGrouped ? (() => {
+          let globalIndex = 0;
+          return (activePillar === "logika" ? LOGIC_STAGE_ORDER : Object.keys(CATS)).map((groupId) => {
             const groupArticles = grouped[groupId];
             if (!groupArticles || groupArticles.length === 0) return null;
 
@@ -225,40 +206,41 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             const groupType = activePillar === "logika" ? "TAHAPAN" : "TOPIK";
 
             return (
-              <Reveal key={groupId} delay={0.05}>
-                <section style={{ marginBottom: φ.xl }}>
-                  <div style={{
-                    display: "flex", alignItems: "center", gap: φ.sm,
-                    marginBottom: φ.md, paddingBottom: φ.sm,
-                    borderBottom: `2px solid ${color}`,
-                  }}>
-                    <span style={{
-                      fontFamily: "var(--font-display)", fontSize: φ.lg,
-                      fontWeight: 400, color: color, lineHeight: 1,
-                    }}>{groupArticles.length}</span>
-                    <span style={{
-                      fontFamily: "var(--font-display)", fontSize: φ.md,
-                      fontWeight: 600, letterSpacing: "-0.01em",
-                    }}>{label}</span>
-                    <div style={{ flex: 1 }} />
-                    <span style={{
-                      fontFamily: "var(--font-mono)", fontSize: 9,
-                      letterSpacing: 2, color: T.muted,
-                    }}>{groupType}</span>
-                  </div>
+              <section key={groupId} style={{ marginBottom: φ.xl }}>
+                <div style={{
+                  display: "flex", alignItems: "center", gap: φ.sm,
+                  marginBottom: φ.md, paddingBottom: φ.sm,
+                  borderBottom: `2px solid ${color}`,
+                }}>
+                  <span style={{
+                    fontFamily: "var(--font-display)", fontSize: φ.lg,
+                    fontWeight: 400, color: color, lineHeight: 1,
+                  }}>{groupArticles.length}</span>
+                  <span style={{
+                    fontFamily: "var(--font-display)", fontSize: φ.md,
+                    fontWeight: 600, letterSpacing: "-0.01em",
+                  }}>{label}</span>
+                  <div style={{ flex: 1 }} />
+                  <span style={{
+                    fontFamily: "var(--font-mono)", fontSize: 9,
+                    letterSpacing: 2, color: T.muted,
+                  }}>{groupType}</span>
+                </div>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                    {groupArticles.map((article, i) => (
-                      <Reveal key={article.slug} delay={i * 0.04}>
-                        <ArticleRow article={article} index={i} color={color} />
+                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  {groupArticles.map((article) => {
+                    const currentIndex = globalIndex++;
+                    return (
+                      <Reveal key={article.slug} delay={Math.min(currentIndex * 0.04, 0.4)}>
+                        <ArticleRow article={article} index={currentIndex} color={color} />
                       </Reveal>
-                    ))}
-                  </div>
-                </section>
-              </Reveal>
+                    );
+                  })}
+                </div>
+              </section>
             );
-          })
-        ) : (
+          });
+        })() : (
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {filtered.map((article, i) => (
               <Reveal key={article.slug} delay={i * 0.03}>
@@ -298,8 +280,6 @@ function ArticleRow({ article, index, color }: { article: Article; index: number
             fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500,
             letterSpacing: 2.5, color,
           }}>{CATS[article.topic_pillar]?.label.toUpperCase()}</span>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle }}>·</span>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle }}>{article.difficulty}</span>
         </div>
         <h3 style={{
           fontFamily: "var(--font-display)", fontWeight: 600,
