@@ -21,6 +21,8 @@ export default async function ArtikelPage() {
     author: a.author,
     reading_time: a.reading_time,
     published_at: a.published_at,
+    logic_stage: a.logic_stage,
+    logic_priority: a.logic_priority,
   }));
 
   return <ArtikelClient articles={serialized} />;

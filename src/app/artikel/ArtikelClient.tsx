@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useMemo } from "react";
-import { T, CATS, φ, DIFFS } from "@/lib/tokens";
+import { T, CATS, φ, DIFFS, LOGIC_STAGE_LABELS, LOGIC_STAGE_ORDER } from "@/lib/tokens";
 import { Reveal } from "@/components/Reveal";
 import { Footer } from "@/components/Footer";
 
@@ -16,6 +16,8 @@ interface Article {
   author: string;
   reading_time: string;
   published_at: string;
+  logic_stage?: string;
+  logic_priority?: number;
 }
 
 export function ArtikelClient({ articles }: { articles: Article[] }) {
@@ -36,19 +38,39 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
         );
       }
       return true;
+    }).sort((a, b) => {
+      if (activePillar === "logika") {
+        return (a.logic_priority || 99) - (b.logic_priority || 99);
+      }
+      return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
     });
   }, [articles, activePillar, activeDiff, search]);
 
   const grouped = useMemo(() => {
     const g: Record<string, Article[]> = {};
-    for (const a of filtered) {
-      if (!g[a.topic_pillar]) g[a.topic_pillar] = [];
-      g[a.topic_pillar].push(a);
+    
+    if (activePillar === "logika") {
+      // Group by Stage
+      for (const a of filtered) {
+        const stage = a.logic_stage || "lanjutan";
+        if (!g[stage]) g[stage] = [];
+        g[stage].push(a);
+      }
+    } else {
+      // Group by Pillar
+      for (const a of filtered) {
+        if (!g[a.topic_pillar]) g[a.topic_pillar] = [];
+        g[a.topic_pillar].push(a);
+      }
+      // Reorder logic specifically even in "semua" view
+      if (g["logika"]) {
+        g["logika"].sort((a, b) => (a.logic_priority || 99) - (b.logic_priority || 99));
+      }
     }
     return g;
-  }, [filtered]);
+  }, [filtered, activePillar]);
 
-  const showGrouped = activePillar === "semua" && !search.trim();
+  const showGrouped = (activePillar === "semua" || activePillar === "logika") && !search.trim();
 
   return (
     <div style={{ minHeight: "100vh", background: T.bg, color: T.ink }}>
@@ -194,37 +216,41 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
         )}
 
         {showGrouped ? (
-          Object.entries(CATS).map(([pillarId, pillar]) => {
-            const pillarArticles = grouped[pillarId];
-            if (!pillarArticles || pillarArticles.length === 0) return null;
+          (activePillar === "logika" ? LOGIC_STAGE_ORDER : Object.keys(CATS)).map((groupId) => {
+            const groupArticles = grouped[groupId];
+            if (!groupArticles || groupArticles.length === 0) return null;
+
+            const label = activePillar === "logika" ? LOGIC_STAGE_LABELS[groupId] : CATS[groupId]?.label;
+            const color = activePillar === "logika" ? CATS.logika.color : CATS[groupId]?.color;
+            const groupType = activePillar === "logika" ? "TAHAPAN" : "TOPIK";
 
             return (
-              <Reveal key={pillarId} delay={0.05}>
+              <Reveal key={groupId} delay={0.05}>
                 <section style={{ marginBottom: φ.xl }}>
                   <div style={{
                     display: "flex", alignItems: "center", gap: φ.sm,
                     marginBottom: φ.md, paddingBottom: φ.sm,
-                    borderBottom: `2px solid ${pillar.color}`,
+                    borderBottom: `2px solid ${color}`,
                   }}>
                     <span style={{
                       fontFamily: "var(--font-display)", fontSize: φ.lg,
-                      fontWeight: 400, color: pillar.color, lineHeight: 1,
-                    }}>{pillarArticles.length}</span>
+                      fontWeight: 400, color: color, lineHeight: 1,
+                    }}>{groupArticles.length}</span>
                     <span style={{
                       fontFamily: "var(--font-display)", fontSize: φ.md,
                       fontWeight: 600, letterSpacing: "-0.01em",
-                    }}>{pillar.label}</span>
+                    }}>{label}</span>
                     <div style={{ flex: 1 }} />
                     <span style={{
                       fontFamily: "var(--font-mono)", fontSize: 9,
                       letterSpacing: 2, color: T.muted,
-                    }}>TOPIK</span>
+                    }}>{groupType}</span>
                   </div>
 
                   <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                    {pillarArticles.map((article, i) => (
+                    {groupArticles.map((article, i) => (
                       <Reveal key={article.slug} delay={i * 0.04}>
-                        <ArticleRow article={article} index={i} color={pillar.color} />
+                        <ArticleRow article={article} index={i} color={color} />
                       </Reveal>
                     ))}
                   </div>

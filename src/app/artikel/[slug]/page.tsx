@@ -46,8 +46,14 @@ export default async function ArticlePage({ params }: Props) {
 
   // ─── Related articles: same pillar first, then others, exclude self ───
   const allArticles = await getAllArticles();
-  const samePillar = allArticles.filter(a => a.topic_pillar === meta.topic_pillar && a.slug !== slug);
+  let samePillar = allArticles.filter(a => a.topic_pillar === meta.topic_pillar && a.slug !== slug);
   const otherPillar = allArticles.filter(a => a.topic_pillar !== meta.topic_pillar && a.slug !== slug);
+
+  // Reorder logic samePillar specifically
+  if (meta.topic_pillar === "logika") {
+    samePillar.sort((a, b) => (a.logic_priority || 99) - (b.logic_priority || 99));
+  }
+
   const related = [...samePillar, ...otherPillar].slice(0, 3);
 
   return (

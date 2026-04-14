@@ -21,6 +21,9 @@ export interface ArticleMeta {
   reading_time_minutes: number;
   og_image?: string;
   seo_description?: string;
+  // logic-specific journey
+  logic_stage?: "pondasi" | "cacat-pikir" | "alat" | "lanjutan";
+  logic_priority?: number;
 }
 
 export interface Article {
@@ -62,6 +65,8 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     reading_time_minutes: Math.ceil(stats.minutes),
     og_image: data.og_image,
     seo_description: data.seo_description,
+    logic_stage: data.logic_stage,
+    logic_priority: data.logic_priority,
   };
 
   return { meta, content };
@@ -100,6 +105,8 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
       reading_time_minutes: Math.ceil(stats.minutes),
       og_image: data.og_image,
       seo_description: data.seo_description,
+      logic_stage: data.logic_stage,
+      logic_priority: data.logic_priority,
     } as ArticleMeta;
   });
 
@@ -117,7 +124,13 @@ export async function getArticlesByPillar(
   pillar: string
 ): Promise<ArticleMeta[]> {
   const all = await getAllArticles();
-  return all.filter((a) => a.topic_pillar === pillar);
+  const filtered = all.filter((a) => a.topic_pillar === pillar);
+  
+  if (pillar === "logika") {
+    return filtered.sort((a, b) => (a.logic_priority || 99) - (b.logic_priority || 99));
+  }
+  
+  return filtered;
 }
 
 /**

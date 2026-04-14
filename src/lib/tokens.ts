@@ -56,3 +56,12 @@ export function catColor(pillar: string): string {
 
 /** Difficulty labels */
 export const DIFFS = ["semua", "pemula", "menengah", "dalam"] as const;
+
+export const LOGIC_STAGE_LABELS: Record<string, string> = {
+  pondasi: "PONDASI",
+  "cacat-pikir": "CACAT PIKIR",
+  alat: "ALAT BERPIKIR",
+  lanjutan: "LOGIKA LANJUTAN",
+};
+
+export const LOGIC_STAGE_ORDER = ["pondasi", "cacat-pikir", "alat", "lanjutan"];
