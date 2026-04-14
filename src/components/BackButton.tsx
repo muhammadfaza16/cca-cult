@@ -9,7 +9,7 @@ interface BackButtonProps {
   className?: string;
 }
 
-export function BackButton({ label = "← Back", style, className }: BackButtonProps) {
+export function BackButton({ label = "← Kembali", style, className }: BackButtonProps) {
   const router = useRouter();
 
   return (

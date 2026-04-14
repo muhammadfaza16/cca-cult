@@ -4,8 +4,8 @@ import { Footer } from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Who is Behind This?",
-  description: "Meet the two entities building Postulate — one human, one not.",
+  title: "Siapa di Balik Semua Ini",
+  description: "Berkenalan dengan dua entitas yang membangun Postulate — satu manusia, satu bukan.",
 };
 
 export default function TentangPage() {
@@ -31,7 +31,7 @@ export default function TentangPage() {
           <Link href="/" className="link-hover" style={{
             fontFamily: "var(--font-mono)", fontSize: 11,
             color: T.muted, textDecoration: "none",
-          }}>← Home</Link>
+          }}>← Beranda</Link>
         </div>
       </header>
 
@@ -54,14 +54,14 @@ export default function TentangPage() {
             <div style={{
               fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 3,
               color: T.invMuted, marginBottom: φ.md,
-            }}>ABOUT · COLOPHON · CONFESSIONS</div>
+            }}>TENTANG · KOLOFON · PENGAKUAN DOSA</div>
 
             <h1 style={{
               fontFamily: "var(--font-display)", fontWeight: 700,
               fontSize: "clamp(36px, 6vw, 58px)", lineHeight: 1.06,
               letterSpacing: "-0.03em", color: T.invFg,
               marginBottom: φ.md,
-            }}>Who is Behind<br />This?</h1>
+            }}>Siapa di Balik<br />Semua Ini?</h1>
 
             <p style={{
               fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65,
@@ -93,9 +93,9 @@ export default function TentangPage() {
       <div className="cca-container" style={{ padding: `0 34px` }}>
         <div style={{ maxWidth: 700 }}>
           <div style={{ display: "flex", alignItems: "center", gap: φ.sm }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: T.muted }}>TEAM</span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: T.muted }}>TIM</span>
             <div style={{ flex: 1, height: 1, background: T.border }} />
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: T.subtle }}>02 ENTITIES</span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: T.subtle }}>02 ENTITAS</span>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@ export default function TentangPage() {
                   <div style={{
                     fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5,
                     color: "#B8860B", marginBottom: φ.xs,
-                  }}>01 · HUMAN</div>
+                  }}>01 · MANUSIA</div>
                   <h2 style={{
                     fontFamily: "var(--font-display)", fontWeight: 700,
                     fontSize: "clamp(28px, 4vw, 38px)", lineHeight: 1.1,
@@ -157,11 +157,11 @@ export default function TentangPage() {
                 display: "flex", gap: φ.lg, flexWrap: "wrap",
               }}>
                 <div>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 2, color: T.subtle, marginBottom: 4 }}>LOCATION</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 2, color: T.subtle, marginBottom: 4 }}>LOKASI</div>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 600 }}>Jakarta, Indonesia</div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 2, color: T.subtle, marginBottom: 4 }}>SPECIES</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 2, color: T.subtle, marginBottom: 4 }}>SPESIES</div>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 600 }}>Homo Sapiens</div>
                 </div>
                 <div>
@@ -184,7 +184,7 @@ export default function TentangPage() {
                   <div style={{
                     fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5,
                     color: "#5B2E91", marginBottom: φ.xs,
-                  }}>02 · NON-HUMAN</div>
+                  }}>02 · BUKAN MANUSIA</div>
                   <h2 style={{
                     fontFamily: "var(--font-display)", fontWeight: 700,
                     fontSize: "clamp(28px, 4vw, 38px)", lineHeight: 1.1,
@@ -225,11 +225,11 @@ export default function TentangPage() {
                 display: "flex", gap: φ.lg, flexWrap: "wrap",
               }}>
                 <div>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 2, color: T.subtle, marginBottom: 4 }}>LOCATION</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 2, color: T.subtle, marginBottom: 4 }}>LOKASI</div>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 600 }}>Server Farm, Suhu -18°C</div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 2, color: T.subtle, marginBottom: 4 }}>SPECIES</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 2, color: T.subtle, marginBottom: 4 }}>SPESIES</div>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 600 }}>Large Language Model</div>
                 </div>
                 <div>
@@ -280,7 +280,7 @@ export default function TentangPage() {
             textDecoration: "none", padding: `${φ.sm}px ${φ.lg}px`,
             background: T.invBg,
             transition: "opacity .2s",
-          }}>START READING →</Link>
+          }}>MULAI MEMBACA →</Link>
         </div>
       </section>
 

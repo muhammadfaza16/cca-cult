@@ -34,15 +34,15 @@ export function Footer() {
             <p style={{
               fontFamily: "var(--font-body)", fontSize: 13,
               fontStyle: "italic", marginTop: 16, color: T.invMuted,
-            }}>A starting point for a doubting mind.</p>
+            }}>Titik awal untuk akal yang meragu.</p>
           </div>
 
           {/* Navigation */}
           <div style={{ display: "flex", gap: φ.md, alignItems: "center", flexWrap: "wrap" }}>
             {[
-              { href: "/artikel", label: "ARCHIVE" },
-              { href: "/tentang", label: "ABOUT" },
-              { href: "/glossarium", label: "GLOSSARY" },
+              { href: "/artikel", label: "ARSIP" },
+              { href: "/tentang", label: "TENTANG" },
+              { href: "/glossarium", label: "GLOSSARIUM" },
             ].map(l => (
               <Link key={l.href} href={l.href} className="link-hover" style={{
                 fontFamily: "var(--font-mono)", fontSize: 9,

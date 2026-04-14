@@ -82,7 +82,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           <Link href="/" className="link-hover" style={{
             fontFamily: "var(--font-mono)", fontSize: 11,
             color: T.muted, textDecoration: "none",
-          }}>← Home</Link>
+          }}>← Beranda</Link>
         </div>
       </header>
 
@@ -97,7 +97,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
               fontFamily: "var(--font-display)", fontWeight: 700,
               fontSize: "clamp(38px, 6vw, 64px)", lineHeight: 1.02,
               letterSpacing: "-0.03em",
-            }}>Archive</h1>
+            }}>Arsip</h1>
             <span style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(38px, 6vw, 64px)", fontWeight: 400,
@@ -110,7 +110,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search articles..."
+              placeholder="Cari artikel..."
               style={{
                 width: "100%",
                 padding: `${φ.sm}px ${φ.md}px ${φ.sm}px 42px`,
@@ -137,7 +137,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6,
           color: T.muted, fontStyle: "italic", maxWidth: 480, marginBottom: φ.lg,
         }}>
-          Search, filter, explore. Order doesn't matter — read what interests you.
+          Cari, filter, jelajahi. Urutan tidak penting — baca yang menarik.
         </p>
 
         {/* ─── Filter Bar ─── */}
@@ -157,7 +157,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                 color: activePillar === "semua" ? T.bg : T.muted,
                 cursor: "pointer", transition: "all .15s",
               }}
-            >ALL TOPICS</button>
+            >SEMUA TOPIK</button>
             {Object.entries(CATS).map(([id, c]) => (
               <button key={id}
                 onClick={() => setActivePillar(activePillar === id ? "semua" : id)}
@@ -184,7 +184,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             color: T.subtle, fontFamily: "var(--font-mono)",
             fontSize: 11, letterSpacing: 3,
           }}>
-            NO ARTICLES MATCH YOUR SEARCH
+            TIDAK ADA ARTIKEL YANG COCOK
           </div>
         )}
 
@@ -196,7 +196,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
 
             const label = CATS[groupId]?.label;
             const color = CATS[groupId]?.color;
-            const groupType = "TOPIC";
+            const groupType = "TOPIK";
 
             return (
               <section key={groupId} style={{ marginBottom: φ.xl }}>

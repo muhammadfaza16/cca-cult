@@ -33,20 +33,20 @@ export const T = {
 
 /** 5-Topic category system */
 export const CATS: Record<string, { label: string; color: string; tagline: string }> = {
-  logika:    { label: "Logic & Reasoning", color: "#B8860B", tagline: "Foundations of reasoning and how we conclude truth" },
-  filsafat:  { label: "Philosophy",        color: "#5B2E91", tagline: "Deep exploration of existence and meaning" },
-  sains:     { label: "Science",           color: "#0C6B7A", tagline: "Empirical methods for dissecting universal reality" },
-  ekonomi:   { label: "Economics",         color: "#1B6B3A", tagline: "Understanding systems, incentives, and human behavior at scale" },
-  psikologi: { label: "Psychology",        color: "#B07D10", tagline: "Navigating the labyrinth of individual mind and behavior" },
+  logika:    { label: "Logika & Penalaran", color: "#B8860B", tagline: "Fondasi penalaran dan cara kita menyimpulkan kebenaran" },
+  filsafat:  { label: "Filsafat",         color: "#5B2E91", tagline: "Eksplorasi mendalam tentang eksistensi dan makna" },
+  sains:     { label: "Sains",            color: "#0C6B7A", tagline: "Metode empiris untuk membedah realitas alam semesta" },
+  ekonomi:   { label: "Ekonomi",          color: "#1B6B3A", tagline: "Memahami sistem, insentif, dan perilaku manusia dalam skala besar" },
+  psikologi: { label: "Psikologi",        color: "#B07D10", tagline: "Menelusuri labirin pikiran dan perilaku individu" },
 };
 
 /** Topic label lookup (for article detail pages) */
 export const PILLAR: Record<string, { color: string; label: string }> = {
-  logika:    { color: "#B8860B", label: "LOGIC & REASONING" },
-  filsafat:  { color: "#5B2E91", label: "PHILOSOPHY" },
-  sains:     { color: "#0C6B7A", label: "SCIENCE" },
-  ekonomi:   { color: "#1B6B3A", label: "ECONOMICS" },
-  psikologi: { color: "#B07D10", label: "PSYCHOLOGY" },
+  logika:    { color: "#B8860B", label: "LOGIKA & PENALARAN" },
+  filsafat:  { color: "#5B2E91", label: "FILSAFAT" },
+  sains:     { color: "#0C6B7A", label: "SAINS" },
+  ekonomi:   { color: "#1B6B3A", label: "EKONOMI" },
+  psikologi: { color: "#B07D10", label: "PSIKOLOGI" },
 };
 
 /** Get pillar color or fallback to ink */

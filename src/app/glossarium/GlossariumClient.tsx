@@ -61,7 +61,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
           <Link href="/" className="link-hover" style={{
             fontFamily: "var(--font-mono)", fontSize: 11,
             color: T.muted, textDecoration: "none",
-          }}>← Home</Link>
+          }}>← Beranda</Link>
         </div>
       </header>
 
@@ -72,15 +72,15 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
           flexWrap: "wrap", gap: φ.md, marginBottom: φ.sm,
         }}>
           <div>
-             <div style={{
+            <div style={{
               fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 3,
               color: T.muted, marginBottom: φ.xs,
-            }}>GLOSSARY · DICTIONARY OF CONCEPTS</div>
+            }}>GLOSSARIUM · KAMUS KONSEP</div>
             <h1 style={{
               fontFamily: "var(--font-display)", fontWeight: 700,
               fontSize: "clamp(38px, 6vw, 64px)", lineHeight: 1.02,
               letterSpacing: "-0.03em",
-            }}>Glossary</h1>
+            }}>Glossarium</h1>
           </div>
 
           {/* Search */}
@@ -89,7 +89,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
               type="text"
               value={search}
               onChange={e => { setSearch(e.target.value); setActiveLetter(null); }}
-              placeholder="Search terms..."
+              placeholder="Cari istilah..."
               style={{
                 width: "100%",
                 padding: `${φ.sm}px ${φ.md}px ${φ.sm}px 42px`,
@@ -116,7 +116,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
           fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6,
           color: T.muted, fontStyle: "italic", maxWidth: 520, marginBottom: φ.md,
         }}>
-          {filtered.length} terms from {totalArticles} articles. Click to read the full context.
+          {filtered.length} istilah dari {totalArticles} artikel. Klik untuk membaca konteks lengkapnya.
         </p>
 
         {/* ─── Alphabet Nav ─── */}
@@ -135,7 +135,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
               color: !activeLetter ? T.bg : T.muted,
               transition: "all .15s",
             }}
-          >ALL</button>
+          >SEMUA</button>
           {letters.map(l => {
             const hasEntries = entries.some(e => e.term[0].toUpperCase() === l);
             return (
@@ -165,7 +165,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
             color: T.subtle, fontFamily: "var(--font-mono)",
             fontSize: 11, letterSpacing: 3,
           }}>
-            NO ENTRIES FOUND
+            TIDAK DITEMUKAN
           </div>
         )}
 
@@ -184,7 +184,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
               <span style={{
                 fontFamily: "var(--font-mono)", fontSize: 9,
                 letterSpacing: 2, color: T.subtle,
-              }}>{grouped[letter].length} ENTRIES</span>
+              }}>{grouped[letter].length} ENTRI</span>
             </div>
 
             {/* Term cards */}
@@ -225,7 +225,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
                       <span style={{
                         fontFamily: "var(--font-mono)", fontSize: 8,
                         letterSpacing: 1.5, color: pillarColor,
-                      }}>READ →</span>
+                      }}>BACA →</span>
                     </div>
                   </Link>
                 );
