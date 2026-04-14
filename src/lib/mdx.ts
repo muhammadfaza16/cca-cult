@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import readingTime from "reading-time";
 
 // Types
-export interface ArticleMeta {
+interface ArticleMeta {
   slug: string;
   title: string;
   subtitle: string;
@@ -26,7 +26,7 @@ export interface ArticleMeta {
   logic_priority?: number;
 }
 
-export interface Article {
+interface Article {
   meta: ArticleMeta;
   content: string;
 }
@@ -117,55 +117,3 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
   );
 }
 
-/**
- * Get articles filtered by topic pillar.
- */
-export async function getArticlesByPillar(
-  pillar: string
-): Promise<ArticleMeta[]> {
-  const all = await getAllArticles();
-  const filtered = all.filter((a) => a.topic_pillar === pillar);
-  
-  if (pillar === "logika") {
-    return filtered.sort((a, b) => (a.logic_priority || 99) - (b.logic_priority || 99));
-  }
-  
-  return filtered;
-}
-
-/**
- * Get articles in a series, ordered by series_order.
- */
-export async function getArticlesBySeries(
-  seriesSlug: string
-): Promise<ArticleMeta[]> {
-  const all = await getAllArticles();
-  return all
-    .filter((a) => a.series_slug === seriesSlug)
-    .sort((a, b) => (a.series_order || 0) - (b.series_order || 0));
-}
-
-/**
- * Topic display names (Previously 'Pillars')
- */
-export const PILLAR_NAMES: Record<string, string> = {
-  logika: "Logika",
-  filsafat: "Filsafat",
-  sains: "Sains",
-  ekonomi: "Ekonomi",
-  psikologi: "Psikologi",
-};
-
-export const PILLAR_DESCRIPTIONS: Record<string, string> = {
-  logika: "Fondasi penalaran, struktur argumen, dan cara menalar dengan jernih.",
-  filsafat: "Pertanyaan mendasar tentang realitas, aksiologi, dan epistemologi.",
-  sains: "Membedah cara kerja alam semesta melalui metode empiris dan logika matematika.",
-  ekonomi: "Sistem, insentif, dan dinamika yang menggerakkan peradaban.",
-  psikologi: "Mengenali arsitektur pikiran dan mekanisme perilaku manusia.",
-};
-
-export const DIFFICULTY_LABELS: Record<string, string> = {
-  pemula: "Pemula",
-  menengah: "Menengah",
-  dalam: "Dalam",
-};

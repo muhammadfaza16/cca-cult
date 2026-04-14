@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useMemo } from "react";
-import { T, CATS, φ, DIFFS, LOGIC_STAGE_LABELS, LOGIC_STAGE_ORDER } from "@/lib/tokens";
+import { T, CATS, φ } from "@/lib/tokens";
 import { Reveal } from "@/components/Reveal";
 import { Footer } from "@/components/Footer";
 
@@ -47,28 +47,19 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
   const grouped = useMemo(() => {
     const g: Record<string, Article[]> = {};
     
-    if (activePillar === "logika") {
-      // Group by Stage
-      for (const a of filtered) {
-        const stage = a.logic_stage || "lanjutan";
-        if (!g[stage]) g[stage] = [];
-        g[stage].push(a);
-      }
-    } else {
-      // Group by Pillar
-      for (const a of filtered) {
-        if (!g[a.topic_pillar]) g[a.topic_pillar] = [];
-        g[a.topic_pillar].push(a);
-      }
-      // Reorder logic specifically even in "semua" view
-      if (g["logika"]) {
-        g["logika"].sort((a, b) => (a.logic_priority || 99) - (b.logic_priority || 99));
-      }
+    // Group by Pillar
+    for (const a of filtered) {
+      if (!g[a.topic_pillar]) g[a.topic_pillar] = [];
+      g[a.topic_pillar].push(a);
+    }
+    // Reorder logic specifically even in "semua" view
+    if (g["logika"]) {
+      g["logika"].sort((a, b) => (a.logic_priority || 99) - (b.logic_priority || 99));
     }
     return g;
-  }, [filtered, activePillar]);
+  }, [filtered]);
 
-  const showGrouped = (activePillar === "semua" || activePillar === "logika") && !search.trim();
+  const showGrouped = activePillar === "semua" && !search.trim();
 
   return (
     <div style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
@@ -91,7 +82,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           <Link href="/" className="link-hover" style={{
             fontFamily: "var(--font-mono)", fontSize: 11,
             color: T.muted, textDecoration: "none",
-          }}>← Beranda</Link>
+          }}>← Home</Link>
         </div>
       </header>
 
@@ -106,7 +97,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
               fontFamily: "var(--font-display)", fontWeight: 700,
               fontSize: "clamp(38px, 6vw, 64px)", lineHeight: 1.02,
               letterSpacing: "-0.03em",
-            }}>Arsip</h1>
+            }}>Archive</h1>
             <span style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(38px, 6vw, 64px)", fontWeight: 400,
@@ -119,7 +110,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Cari artikel..."
+              placeholder="Search articles..."
               style={{
                 width: "100%",
                 padding: `${φ.sm}px ${φ.md}px ${φ.sm}px 42px`,
@@ -146,7 +137,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6,
           color: T.muted, fontStyle: "italic", maxWidth: 480, marginBottom: φ.lg,
         }}>
-          Cari, filter, jelajahi. Urutan tidak penting — baca yang menarik.
+          Search, filter, explore. Order doesn't matter — read what interests you.
         </p>
 
         {/* ─── Filter Bar ─── */}
@@ -166,7 +157,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                 color: activePillar === "semua" ? T.bg : T.muted,
                 cursor: "pointer", transition: "all .15s",
               }}
-            >SEMUA TOPIK</button>
+            >ALL TOPICS</button>
             {Object.entries(CATS).map(([id, c]) => (
               <button key={id}
                 onClick={() => setActivePillar(activePillar === id ? "semua" : id)}
@@ -193,19 +184,19 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             color: T.subtle, fontFamily: "var(--font-mono)",
             fontSize: 11, letterSpacing: 3,
           }}>
-            TIDAK ADA ARTIKEL YANG COCOK
+            NO ARTICLES MATCH YOUR SEARCH
           </div>
         )}
 
         {showGrouped ? (() => {
           let globalIndex = 0;
-          return (activePillar === "logika" ? LOGIC_STAGE_ORDER : Object.keys(CATS)).map((groupId) => {
+          return Object.keys(CATS).map((groupId) => {
             const groupArticles = grouped[groupId];
             if (!groupArticles || groupArticles.length === 0) return null;
 
-            const label = activePillar === "logika" ? LOGIC_STAGE_LABELS[groupId] : CATS[groupId]?.label;
-            const color = activePillar === "logika" ? CATS.logika.color : CATS[groupId]?.color;
-            const groupType = activePillar === "logika" ? "TAHAPAN" : "TOPIK";
+            const label = CATS[groupId]?.label;
+            const color = CATS[groupId]?.color;
+            const groupType = "TOPIC";
 
             return (
               <section key={groupId} style={{ marginBottom: φ.xl }}>

@@ -65,7 +65,7 @@ export function HomepageClient({ secondary, rest }: Props) {
                     <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
                       <div style={{ height: 1, width: φ.lg, background: col }} />
                       <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: col, letterSpacing: 1.5 }}>
-                        BACA · {article.reading_time}
+                        READ · {article.reading_time}
                       </span>
                     </div>
                   </Link>
@@ -80,9 +80,9 @@ export function HomepageClient({ secondary, rest }: Props) {
       {rest.length > 0 && (
         <section className="cca-container section-pt section-pb">
           <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: φ.lg }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: T.muted }}>EKSPLORASI</span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: T.muted }}>EXPLORE</span>
             <div style={{ flex: 1, height: 1, background: T.border }} />
-            <Link href="/artikel" className="link-hover" style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2, color: T.gold, textDecoration: "none" }}>LIHAT ARSIP →</Link>
+            <Link href="/artikel" className="link-hover" style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2, color: T.gold, textDecoration: "none" }}>VIEW ARCHIVE →</Link>
           </div>
 
           <div className="asym-grid">
@@ -123,7 +123,7 @@ export function HomepageClient({ secondary, rest }: Props) {
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
                       <div style={{ height: 1, width: φ.md, background: col }} />
-                      <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: col, letterSpacing: 1.5 }}>BACA · {article.reading_time}</span>
+                      <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: col, letterSpacing: 1.5 }}>READ · {article.reading_time}</span>
                     </div>
                   </Link>
                 </Reveal>
@@ -142,7 +142,7 @@ export function HomepageClient({ secondary, rest }: Props) {
                 background: T.invBg,
                 textDecoration: "none",
                 transition: "opacity .2s",
-              }}>TELUSURI ARSIP LENGKAP →</Link>
+              }}>EXPLORE FULL ARCHIVE →</Link>
             </div>
           )}
         </section>

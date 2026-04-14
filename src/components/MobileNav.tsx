@@ -10,9 +10,9 @@ interface NavLink {
 }
 
 const NAV_LINKS: NavLink[] = [
-  { href: "/artikel", label: "ARSIP" },
-  { href: "/tentang", label: "TENTANG" },
-  { href: "/glossarium", label: "GLOSSARIUM" },
+  { href: "/artikel", label: "ARCHIVE" },
+  { href: "/tentang", label: "ABOUT" },
+  { href: "/glossarium", label: "GLOSSARY" },
 ];
 
 export function MobileNav() {
@@ -121,7 +121,7 @@ export function MobileNav() {
               <span style={{
                 fontFamily: "var(--font-mono)", fontSize: 9,
                 letterSpacing: 2.5, color: "var(--muted)",
-              }}>MODE TAMPILAN</span>
+              }}>THEME MODE</span>
               <ThemeToggle />
             </div>
           </div>

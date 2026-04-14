@@ -57,7 +57,7 @@ export default async function HomePage() {
               fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 3,
               color: "rgba(255,255,255,.4)", marginBottom: φ.md,
             }}>
-              PILIHAN EDITOR · {CATS[hero.topic_pillar]?.label.toUpperCase() || hero.topic_pillar.toUpperCase()}
+              EDITOR'S PICK · {CATS[hero.topic_pillar]?.label.toUpperCase() || hero.topic_pillar.toUpperCase()}
             </div>
 
             <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
@@ -80,7 +80,7 @@ export default async function HomePage() {
                 color: "#fff", textDecoration: "none",
                 border: "1px solid rgba(255,255,255,.3)",
                 transition: "background .2s, border-color .2s",
-              }}>BACA SEKARANG →</Link>
+              }}>READ NOW →</Link>
               <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "rgba(255,255,255,.35)" }}>{hero.reading_time}</span>
             </div>
           </div>
@@ -93,10 +93,10 @@ export default async function HomePage() {
         const totalWords = Math.round(totalMinutes * 200);
         const hours = (totalMinutes / 60).toFixed(1);
         const stats = [
-          { label: "ARTIKEL", value: String(articles.length) },
-          { label: "KATA", value: totalWords.toLocaleString("id-ID") },
-          { label: "JAM BACAAN", value: `~${hours}` },
-          { label: "TOPIK", value: String(Object.keys(CATS).length) },
+          { label: "ARTICLES", value: String(articles.length) },
+          { label: "WORDS", value: totalWords.toLocaleString("id-ID") },
+          { label: "READING HOURS", value: `~${hours}` },
+          { label: "TOPICS", value: String(Object.keys(CATS).length) },
         ];
         return (
           <div style={{ background: T.surface, borderBottom: `1px solid ${T.border}` }}>
