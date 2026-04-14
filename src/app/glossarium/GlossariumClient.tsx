@@ -184,7 +184,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
               <span style={{
                 fontFamily: "var(--font-mono)", fontSize: 9,
                 letterSpacing: 2, color: T.subtle,
-              }}>{grouped[letter].length} ISTILAH</span>
+              }}>{grouped[letter].length} ENTRI</span>
             </div>
 
             {/* Term cards */}

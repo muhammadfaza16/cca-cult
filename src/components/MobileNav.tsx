@@ -34,9 +34,6 @@ export function MobileNav() {
         ))}
       </nav>
 
-      {/* ─── Theme toggle — always visible ─── */}
-      <ThemeToggle />
-
       {/* ─── Burger button (mobile only via CSS) ─── */}
       <button
         className="nav-burger"
@@ -112,6 +109,21 @@ export function MobileNav() {
                 }}>{String(i + 1).padStart(2, "0")}</span>
               </Link>
             ))}
+
+            {/* ─── Addition: Theme Toggle in Menu ─── */}
+            <div style={{
+              marginTop: 20,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingTop: 20,
+            }}>
+              <span style={{
+                fontFamily: "var(--font-mono)", fontSize: 9,
+                letterSpacing: 2.5, color: "var(--muted)",
+              }}>MODE TAMPILAN</span>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       )}

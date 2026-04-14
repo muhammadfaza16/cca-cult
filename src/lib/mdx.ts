@@ -75,7 +75,7 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
     return [];
   }
 
-  const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".mdx"));
+  const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".mdx") && !f.includes(".lama."));
 
   const articles = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
@@ -133,22 +133,22 @@ export async function getArticlesBySeries(
 }
 
 /**
- * Pillar display names
+ * Topic display names (Previously 'Pillars')
  */
 export const PILLAR_NAMES: Record<string, string> = {
-  logika: "Logika & Pikir",
+  logika: "Logika",
   filsafat: "Filsafat",
-  sains: "Sains & Teknologi",
-  ekonomi: "Ekonomi & Politik",
-  psikologi: "Psikologi & Sosial",
+  sains: "Sains",
+  ekonomi: "Ekonomi",
+  psikologi: "Psikologi",
 };
 
 export const PILLAR_DESCRIPTIONS: Record<string, string> = {
-  logika: "Berpikir kritis, sesat pikir, dan cara menalar dengan jernih.",
-  filsafat: "Epistemologi, ontologi, dan pertanyaan-pertanyaan fundamental.",
-  sains: "Fisika, biologi, intuisi matematika, dan teknologi yang mengubah dunia.",
-  ekonomi: "Berpikir sistem, insentif, kebijakan, dan sejarah gagasan.",
-  psikologi: "Bias kognitif, perilaku, dan dinamika sosial yang membentuk kita.",
+  logika: "Fondasi penalaran, struktur argumen, dan cara menalar dengan jernih.",
+  filsafat: "Pertanyaan mendasar tentang realitas, aksiologi, dan epistemologi.",
+  sains: "Membedah cara kerja alam semesta melalui metode empiris dan logika matematika.",
+  ekonomi: "Sistem, insentif, dan dinamika yang menggerakkan peradaban.",
+  psikologi: "Mengenali arsitektur pikiran dan mekanisme perilaku manusia.",
 };
 
 export const DIFFICULTY_LABELS: Record<string, string> = {

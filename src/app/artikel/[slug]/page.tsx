@@ -5,6 +5,7 @@ import { getArticleBySlug, getAllArticles } from "@/lib/mdx";
 import { mdxComponents } from "@/components/mdx/MDXComponents";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { TableOfContents } from "@/components/TableOfContents";
+import { BackButton } from "@/components/BackButton";
 import { T, PILLAR, CATS, φ } from "@/lib/tokens";
 import type { Metadata } from "next";
 import remarkGfm from "remark-gfm";
@@ -66,11 +67,7 @@ export default async function ArticlePage({ params }: Props) {
           display: "flex", justifyContent: "space-between",
           alignItems: "center", height: φ.xl,
         }}>
-          <Link href="/artikel" className="link-hover" style={{
-            fontFamily: "var(--font-mono)", fontSize: 11,
-            color: T.muted, textDecoration: "none",
-            display: "flex", alignItems: "center", gap: 6,
-          }}>← Kembali</Link>
+          <BackButton className="link-hover" />
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
             <span style={{
               fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5,
@@ -132,12 +129,11 @@ export default async function ArticlePage({ params }: Props) {
           display: "flex", justifyContent: "space-between", alignItems: "center",
         }}>
           <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle, letterSpacing: 2.5 }}>SELESAI DIBACA</span>
-          <Link href="/artikel" style={{
-            fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: 2,
-            color: T.bg, textDecoration: "none",
+          <BackButton label="KEMBALI ←" style={{
+            color: T.bg,
             padding: `${φ.sm}px ${φ.lg}px`,
-            background: pillar.color, transition: "opacity .2s",
-          }}>ARSIP →</Link>
+            background: pillar.color,
+          }} />
         </div>
       </article>
 
@@ -145,7 +141,7 @@ export default async function ArticlePage({ params }: Props) {
       {related.length > 0 && (
         <section style={{ maxWidth: 700, margin: "0 auto", padding: `${φ.xl}px ${φ.lg}px ${φ.xxl}px` }}>
           <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: φ.lg }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: T.muted }}>BACA JUGA</span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: T.muted }}>EKSPLORASI LANJUT</span>
             <div style={{ flex: 1, height: 1, background: T.border }} />
           </div>
 

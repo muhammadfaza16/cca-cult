@@ -87,28 +87,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ════════════════ IDENTITY STRIP ════════════════ */}
-      <div className="id-strip" style={{ background: T.invBg, overflow: "hidden" }}>
-        <div style={{
-          maxWidth: 1200, margin: "0 auto",
-          display: "flex", justifyContent: "space-between",
-          alignItems: "center", flexWrap: "wrap", gap: φ.sm,
-        }}>
-          <p style={{
-            fontFamily: "var(--font-display)", fontSize: 16,
-            fontStyle: "italic", color: T.invMuted, margin: 0,
-          }}>&ldquo;Titik awal untuk akal yang meragu.&rdquo;</p>
-          <div style={{ display: "flex", gap: φ.md, flexWrap: "wrap" }}>
-            {Object.entries(CATS).map(([id, c]) => (
-              <Link key={id} href={`/artikel?pillar=${id}`} className="link-hover" style={{
-                fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2,
-                color: c.color, textDecoration: "none",
-              }}>{c.label.toUpperCase()}</Link>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* ════════════════ NERDY STATS ════════════════ */}
       {(() => {
         const totalMinutes = articles.reduce((sum, a) => sum + a.reading_time_minutes, 0);
@@ -118,7 +96,7 @@ export default async function HomePage() {
           { label: "ARTIKEL", value: String(articles.length) },
           { label: "KATA", value: totalWords.toLocaleString("id-ID") },
           { label: "JAM BACAAN", value: `~${hours}` },
-          { label: "PILAR", value: String(Object.keys(CATS).length) },
+          { label: "TOPIK", value: String(Object.keys(CATS).length) },
         ];
         return (
           <div style={{ background: T.surface, borderBottom: `1px solid ${T.border}` }}>
@@ -155,9 +133,6 @@ export default async function HomePage() {
           topic_pillar: a.topic_pillar, difficulty: a.difficulty,
           reading_time: a.reading_time,
         }))}
-        articleCounts={Object.fromEntries(
-          Object.keys(CATS).map(id => [id, articles.filter(a => a.topic_pillar === id).length])
-        )}
       />
 
       {/* ════════════════ FOOTER ════════════════ */}

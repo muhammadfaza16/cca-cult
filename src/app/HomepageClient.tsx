@@ -16,12 +16,11 @@ interface ArticleBrief {
 interface Props {
   secondary: ArticleBrief[];
   rest: ArticleBrief[];
-  articleCounts: Record<string, number>;
 }
 
 const INITIAL_LIMIT = 6;
 
-export function HomepageClient({ secondary, rest, articleCounts }: Props) {
+export function HomepageClient({ secondary, rest }: Props) {
   const visible = rest.slice(0, INITIAL_LIMIT);
   const hasMore = rest.length > INITIAL_LIMIT;
 
@@ -77,48 +76,11 @@ export function HomepageClient({ secondary, rest, articleCounts }: Props) {
         </section>
       )}
 
-      {/* ════════════════ 5 PILLARS ════════════════ */}
-      <section className="cca-container section-pt">
-        <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: φ.lg }}>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: T.muted }}>LIMA PILAR</span>
-          <div style={{ flex: 1, height: 1, background: T.border }} />
-        </div>
-        <div className="pillars-grid">
-          {Object.entries(CATS).map(([id, c], i) => {
-            const count = articleCounts[id] || 0;
-            return (
-              <Reveal key={id} delay={i * 0.06}>
-                <Link href={`/artikel?pillar=${id}`} className="card-hover pillars-grid-item" style={{
-                  textDecoration: "none", color: "inherit",
-                  background: T.white, border: `1px solid ${T.border}`,
-                  borderTop: `3px solid ${c.color}`,
-                  display: "flex", flexDirection: "column", gap: φ.xs,
-                  height: "100%",
-                }}>
-                  <span style={{
-                    fontFamily: "var(--font-display)", fontSize: 36,
-                    fontWeight: 400, color: c.color, lineHeight: 1,
-                  }}>{count}</span>
-                  <span style={{
-                    fontFamily: "var(--font-display)", fontSize: 17,
-                    fontWeight: 600, letterSpacing: "-0.01em",
-                  }}>{c.label}</span>
-                  <span style={{
-                    fontFamily: "var(--font-body)", fontSize: 11.5,
-                    color: T.muted, fontStyle: "italic", lineHeight: 1.4,
-                  }}>{c.tagline}</span>
-                </Link>
-              </Reveal>
-            );
-          })}
-        </div>
-      </section>
-
       {/* ════════════════ REMAINING ARTICLES (limited) ════════════════ */}
       {rest.length > 0 && (
         <section className="cca-container section-pt section-pb">
           <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: φ.lg }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: T.muted }}>SEMUA ARTIKEL</span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: T.muted }}>EKSPLORASI</span>
             <div style={{ flex: 1, height: 1, background: T.border }} />
             <Link href="/artikel" className="link-hover" style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2, color: T.gold, textDecoration: "none" }}>LIHAT ARSIP →</Link>
           </div>
@@ -155,12 +117,10 @@ export function HomepageClient({ secondary, rest, articleCounts }: Props) {
                         fontSize: isWide ? "clamp(22px, 2.8vw, 30px)" : "clamp(18px, 2vw, 22px)",
                         lineHeight: 1.18, letterSpacing: "-0.02em", marginBottom: φ.xs,
                       }}>{article.title}</h3>
-                      {isWide && (
-                        <p style={{
-                          fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.55,
-                          color: T.muted, fontStyle: "italic", maxWidth: 500,
-                        }}>{article.subtitle}</p>
-                      )}
+                      <p style={{
+                        fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.55,
+                        color: T.muted, fontStyle: "italic",
+                      }}>{article.subtitle}</p>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
                       <div style={{ height: 1, width: φ.md, background: col }} />

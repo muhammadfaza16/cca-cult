@@ -73,6 +73,13 @@ export const glossary: GlossaryEntry[] = [
     pillar: "logika",
   },
   {
+    term: "Postulate",
+    definition: "Pernyataan atau asumsi yang dianggap benar tanpa perlu dibuktikan, yang berfungsi sebagai dasar atau titik awal untuk penalaran lebih lanjut.",
+    source_slug: "first-principles-thinking",
+    source_title: "First Principles Thinking",
+    pillar: "logika",
+  },
+  {
     term: "Pisau Cukur Hanlon",
     definition: "Prinsip yang menyatakan: jangan pernah menganggap niat jahat untuk hal yang bisa dijelaskan oleh kebodohan atau ketidaktahuan.",
     source_slug: "pisau-cukur-hanlon",

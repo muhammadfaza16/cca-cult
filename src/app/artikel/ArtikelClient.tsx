@@ -146,7 +146,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                 color: activePillar === "semua" ? T.bg : T.muted,
                 cursor: "pointer", transition: "all .15s",
               }}
-            >SEMUA</button>
+            >SEMUA TOPIK</button>
             {Object.entries(CATS).map(([id, c]) => (
               <button key={id}
                 onClick={() => setActivePillar(activePillar === id ? "semua" : id)}
@@ -218,7 +218,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                     <span style={{
                       fontFamily: "var(--font-mono)", fontSize: 9,
                       letterSpacing: 2, color: T.muted,
-                    }}>ARTIKEL</span>
+                    }}>TOPIK</span>
                   </div>
 
                   <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
