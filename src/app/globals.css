@@ -84,7 +84,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
-  min-height: 100vh;
+  min-height: 100svh;
   position: relative;
   overflow-x: hidden;
   transition: background .3s ease, color .3s ease;

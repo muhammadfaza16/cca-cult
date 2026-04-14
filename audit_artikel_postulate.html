@@ -1,0 +1,347 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.wrap{padding:1rem 0}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.chip{padding:5px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);font-size:12px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .15s}
+.chip.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem}
+.stat-num{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.stat-label{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:.75rem}
+.card-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:.75rem}
+.score-badge{min-width:42px;height:42px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;flex-shrink:0}
+.card-title{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.4}
+.card-meta{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.dims{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:.75rem 0}
+.dim{padding:6px 8px;border-radius:var(--border-radius-md);background:var(--color-background-secondary)}
+.dim-name{font-size:11px;color:var(--color-text-secondary);margin-bottom:3px}
+.dim-bar-bg{height:4px;background:var(--color-border-tertiary);border-radius:2px;overflow:hidden}
+.dim-bar{height:4px;border-radius:2px}
+.dim-val{font-size:11px;font-weight:500;margin-top:2px}
+.issues{margin-top:.5rem}
+.issue{font-size:12px;padding:4px 8px;border-radius:4px;margin-top:4px;line-height:1.4}
+.issue.warn{background:var(--color-background-warning);color:var(--color-text-warning)}
+.issue.info{background:var(--color-background-info);color:var(--color-text-info)}
+.issue.good{background:var(--color-background-success);color:var(--color-text-success)}
+.issue.bad{background:var(--color-background-danger);color:var(--color-text-danger)}
+.pill{display:inline-block;font-size:11px;padding:2px 7px;border-radius:10px;margin-right:4px}
+.pill-topic{background:var(--color-background-info);color:var(--color-text-info)}
+.pill-diff{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.sort-row{display:flex;align-items:center;gap:8px;margin-bottom:1rem}
+.sort-row label{font-size:12px;color:var(--color-text-secondary)}
+.sort-row select{font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:4px 8px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.empty{text-align:center;padding:2rem;color:var(--color-text-secondary);font-size:14px}
+@media(max-width:500px){.stats{grid-template-columns:repeat(2,1fr)}.dims{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="wrap">
+<h2 class="sr-only">Audit kualitas konten artikel Postulate — 22 artikel dievaluasi</h2>
+
+<div class="stats" id="stats"></div>
+
+<div class="filters" id="filters"></div>
+<div class="sort-row">
+  <label>Urutkan:</label>
+  <select id="sortSel">
+    <option value="score-asc">Skor terendah dulu</option>
+    <option value="score-desc">Skor tertinggi dulu</option>
+    <option value="alpha">A–Z judul</option>
+  </select>
+</div>
+<div id="cards"></div>
+</div>
+
+<script>
+const articles = [
+  {slug:"apa-itu-berpikir-kritis",title:"Apa Itu Berpikir Kritis?",topic:"logika",difficulty:"pemula",author:"Tim Postulate",
+   scores:{kedalaman:8,bahasa:8,struktur:9,orisinalitas:8,delivery:9},
+   issues:[
+     {type:"good",msg:"Struktur sangat solid: definisi → tools → bias → latihan. Alur belajar jelas."},
+     {type:"good",msg:"Tone tajam dan konsisten. Subtitle terpenuhi di konten."},
+     {type:"warn",msg:"Hierarki bukti (piramida) disinggung tapi tidak ada referensi ke artikel lanjutan (Bayesian, Heuristik) yang sudah ada."},
+     {type:"info",msg:"Contoh 'Elon Musk bangun jam 4 pagi' agak klise untuk audiens yang melek critical thinking."}
+   ]},
+  {slug:"berpikir-ala-bayesian",title:"Berpikir ala Bayesian",topic:"logika",difficulty:"dalam",author:"Tim Postulate",
+   scores:{kedalaman:9,bahasa:8,struktur:8,orisinalitas:9,delivery:9},
+   issues:[
+     {type:"good",msg:"Penjelasan probabilistik prior/posterior dengan analogi 'dimmer switch' sangat efektif dan orisinal."},
+     {type:"good",msg:"ThinkAbout soal politisi adalah contoh terapan paling kuat di artikel ini."},
+     {type:"warn",msg:"Label difficulty 'dalam' tapi konten cukup aksesibel — mungkin lebih tepat 'menengah'."},
+     {type:"info",msg:"Formula Bayes asli (P(A|B)) tidak ditampilkan sama sekali. Untuk level 'dalam', ini kehilangan satu lapisan kedalaman."}
+   ]},
+  {slug:"bias-konfirmasi",title:"Bias Konfirmasi",topic:"psikologi",difficulty:"pemula",author:"Tim CCA",
+   scores:{kedalaman:8,bahasa:7,struktur:9,orisinalitas:7,delivery:7},
+   issues:[
+     {type:"good",msg:"Studi Lord, Ross & Lepper dikutip dengan benar dan relevan."},
+     {type:"warn",msg:"Tone jauh lebih netral dan akademis dibanding artikel Tim Postulate lainnya — inkonsistensi suara editorial."},
+     {type:"warn",msg:"Backfire effect disebutkan di ThinkAbout tapi ada catatan riset terkini yang meragukan efek ini; artikel tidak memvalidasi nuansa itu."},
+     {type:"info",msg:"Bagian 'cara melawan' sangat bermanfaat tapi agak listy — bisa diperkuat dengan micro-story konkret per poin."}
+   ]},
+  {slug:"efek-dunning-kruger",title:"Efek Dunning-Kruger",topic:"psikologi",difficulty:"pemula",author:"Tim Postulate",
+   scores:{kedalaman:8,bahasa:9,struktur:9,orisinalitas:8,delivery:9},
+   issues:[
+     {type:"good",msg:"Narasi 'Mount Stupid → Valley of Despair' sangat engaging dan membantu pembaca memetakan pengalaman diri sendiri."},
+     {type:"good",msg:"Penutup Socrates adalah landing yang elegan dan tidak klise."},
+     {type:"warn",msg:"Metodologi studi Dunning-Kruger asli telah diperdebatkan (mungkin artefak statistik). Artikel tidak menyentuh ini sama sekali."},
+     {type:"info",msg:"Contoh 'gitar dua minggu langsung YouTube' sangat relatable — ini kekuatan artikel ini."}
+   ]},
+  {slug:"entropi-mengapa-berantakan",title:"Entropi: Fisika Mengapa Hidupmu Selalu Berantakan",topic:"sains",difficulty:"menengah",author:"Tim Postulate",
+   scores:{kedalaman:8,bahasa:9,struktur:8,orisinalitas:9,delivery:9},
+   issues:[
+     {type:"good",msg:"Analogi kamar tidur sebagai contoh probabilitas statistik adalah pencapaian penjelasan sains populer terbaik di seluruh koleksi."},
+     {type:"good",msg:"Ekstensi ke domain sosio-psikologi (cinta, bisnis, korupsi) memperluas relevansi tanpa memaksakan."},
+     {type:"warn",msg:"'Arrow of Time' diperkenalkan tapi tidak benar-benar dijelaskan mekanismenya — bisa membingungkan pembaca menengah."},
+     {type:"info",msg:"Heat Death disebutkan di akhir tapi tidak didefinisikan. Glossary kecil atau hyperlink akan membantu."}
+   ]},
+  {slug:"epigenetika-papan-ketik-dna",title:"Epigenetika: Mengapa Genetik Bukan Takdir",topic:"sains",difficulty:"menengah",author:"Tim Postulate",
+   scores:{kedalaman:9,bahasa:8,struktur:8,orisinalitas:9,delivery:8},
+   issues:[
+     {type:"good",msg:"Contoh kembar identik dan studi Rachel Yehuda adalah bukti empiris terkuat di seluruh koleksi artikel sains."},
+     {type:"good",msg:"Framing 'piano tuts' untuk DNA sangat orisinal dan memorable."},
+     {type:"warn",msg:"Transgenerational epigenetic inheritance masih area riset yang controversial — perlu caveat bahwa ini bukan konsensus penuh sains."},
+     {type:"bad",msg:"Opening paragraf terlalu agresif dengan label moral ('bajingan moral') yang bisa mengalienasi pembaca yang datang dengan rasa penasaran tulus."}
+   ]},
+  {slug:"epistemologi-bagaimana-kita-tahu",title:"Epistemologi: Bagaimana Kita Tahu",topic:"filsafat",difficulty:"dalam",author:"Tim CCA",
+   scores:{kedalaman:9,bahasa:7,struktur:9,orisinalitas:7,delivery:7},
+   issues:[
+     {type:"good",msg:"Cakupan JTB → Gettier → empat sumber adalah struktur akademis yang sangat solid dan progresif."},
+     {type:"good",msg:"Contoh 'jam mati' untuk Gettier Problem adalah yang paling jelas dan mudah dipahami di literatur populer."},
+     {type:"warn",msg:"Tone lebih datar dan 'textbook' dibanding koleksi lainnya — kehilangan voice editorial khas Postulate."},
+     {type:"warn",msg:"Bagian skeptisisme (brain in a vat) berakhir terlalu cepat tanpa solusi/respon praktis yang memadai."}
+   ]},
+  {slug:"first-principles-thinking",title:"First Principles Thinking",topic:"logika",difficulty:"menengah",author:"Tim Postulate",
+   scores:{kedalaman:8,bahasa:8,struktur:8,orisinalitas:7,delivery:8},
+   issues:[
+     {type:"good",msg:"Studi kasus SpaceX dengan breakdown biaya material roket 2% adalah contoh konkret paling meyakinkan."},
+     {type:"warn",msg:"Contoh Elon Musk sangat overused di konten mental model. Membutuhkan counter-example dari konteks non-Silicon Valley."},
+     {type:"warn",msg:"Peringatan 'kapan tidak menggunakannya' datang terlambat di artikel — lebih baik diintegrasikan lebih awal."},
+     {type:"info",msg:"Socratic questioning framework di akhir bagus tapi terasa seperti tambalan — bisa jadi artikel terpisah atau lebih diintegrasikan."}
+   ]},
+  {slug:"groupthink",title:"Groupthink",topic:"psikologi",difficulty:"menengah",author:"Tim CCA",
+   scores:{kedalaman:9,bahasa:7,struktur:9,orisinalitas:8,delivery:7},
+   issues:[
+     {type:"good",msg:"Delapan gejala Janis disajikan dengan urutan yang sangat logis dan contoh per poin."},
+     {type:"good",msg:"Studi kasus Challenger dan Enron berbeda level (teknis vs korporat) — pilihan yang cerdas untuk menunjukkan keluasan aplikasi."},
+     {type:"warn",msg:"Tone artikel ini paling 'textbook' di seluruh koleksi. Hampir tidak ada personality editorial."},
+     {type:"info",msg:"Tip 'bicara terakhir untuk pemimpin' adalah takeaway paling actionable dan harusnya dinaikan posisinya."}
+   ]},
+  {slug:"heuristik-dan-bias",title:"Heuristik dan Bias",topic:"logika",difficulty:"menengah",author:"Tim Postulate",
+   scores:{kedalaman:9,bahasa:9,struktur:8,orisinalitas:8,delivery:9},
+   issues:[
+     {type:"good",msg:"Framing System 1/2 sebagai 'dua karakter berseberangan' adalah presentasi paling vivid dari konsep Kahneman."},
+     {type:"good",msg:"Conjunction Fallacy (Linda the feminist banker) dijelaskan dengan tepat dan akurat."},
+     {type:"warn",msg:"Lima bias dipilih tapi tidak ada penjelasan kriteria seleksinya — mengapa ini lima dan bukan yang lain?"},
+     {type:"info",msg:"Rekomendasi 'Thinking, Fast and Slow' di akhir adalah salah satu CTA paling natural di seluruh koleksi."}
+   ]},
+  {slug:"hukum-brandolini",title:"Hukum Brandolini",topic:"logika",difficulty:"pemula",author:"Tim Postulate",
+   scores:{kedalaman:7,bahasa:9,struktur:8,orisinalitas:8,delivery:9},
+   issues:[
+     {type:"good",msg:"Opening scenario (5 jam vs 15 detik) adalah hook terkuat di seluruh koleksi artikel. Langsung mengeksekusi tesisnya."},
+     {type:"good",msg:"Penjelasan Gish Gallop adalah bonus yang sangat bernilai dan jarang dibahas."},
+     {type:"warn",msg:"Kedalaman konsep agak dangkal untuk topik yang berpotensi lebih dalam (ekonomi atensi, network effects disinformasi)."},
+     {type:"bad",msg:"Penutup 'matikan ponselmu' terasa terlalu pasif dan bahkan kontraproduktif untuk platform media yang mengirimkan artikel ini."}
+   ]},
+  {slug:"inflasi-uangmu-menyusut",title:"Inflasi: Uangmu Diam-diam Menyusut",topic:"ekonomi",difficulty:"pemula",author:"Tim CCA",
+   scores:{kedalaman:8,bahasa:7,struktur:9,orisinalitas:7,delivery:7},
+   issues:[
+     {type:"good",msg:"Tiga penyebab inflasi (demand-pull, cost-push, ekspektasi) distrukturkan dengan sangat bersih dan progresif."},
+     {type:"good",msg:"Penjelasan 'kenapa sedikit inflasi itu baik' adalah counterintuitive insight yang dieksplorasi dengan baik."},
+     {type:"warn",msg:"Tone cenderung netral-akademis. Kalimat 'Dan itu, kalau kamu ingat, adalah semangat CCA' di akhir terasa tiba-tiba dan self-referential."},
+     {type:"info",msg:"Kasus hiperinflasi Zimbabwe/Venezuela sangat menarik tapi bisa diperluas dengan data lebih konkret tentang dampak keseharian."}
+   ]},
+  {slug:"insentif-kekuatan-tersembunyi",title:"Insentif: Kekuatan Tersembunyi",topic:"ekonomi",difficulty:"pemula",author:"Tim CCA",
+   scores:{kedalaman:8,bahasa:7,struktur:9,orisinalitas:7,delivery:7},
+   issues:[
+     {type:"good",msg:"Efek Cobra adalah studi kasus pembuka yang sempurna — konkret, counterintuitive, dan mudah diingat."},
+     {type:"good",msg:"Framework 'tanyakan insentifnya' di callout box adalah salah satu takeaway paling actionable di seluruh koleksi."},
+     {type:"warn",msg:"Tone artikel ini adalah yang paling datar di seluruh koleksi ekonomi. Butuh lebih banyak personality editorial."},
+     {type:"warn",msg:"Bagian 'insentif tersembunyi' (media sosial, politisi) adalah yang paling menarik tapi diposisikan terlalu jauh di akhir."}
+   ]},
+  {slug:"kalender-kosmik-carl-sagan",title:"Kalender Kosmik Carl Sagan",topic:"sains",difficulty:"pemula",author:"Tim Postulate",
+   scores:{kedalaman:7,bahasa:9,struktur:8,orisinalitas:8,delivery:9},
+   issues:[
+     {type:"good",msg:"Eksekusi konsep '14 detik terakhir' adalah momen paling dramatis dan resonan di seluruh koleksi."},
+     {type:"good",msg:"Kutipan Pale Blue Dot Sagan diparafrasekan dengan sangat baik dan dipasang di tempat yang tepat."},
+     {type:"warn",msg:"Kedalaman konsep fisika/astronomi relatif tipis — ini lebih berperan sebagai artikel 'inspirasi eksistensial' daripada sains edukatif."},
+     {type:"info",msg:"Koneksi ke topik lain (Entropi, Paradoks Fermi) tidak dieksplisitkan — peluang cross-link yang terlewat."}
+   ]},
+  {slug:"mengapa-langit-biru",title:"Mengapa Langit Biru?",topic:"sains",difficulty:"pemula",author:"Tim Postulate",
+   scores:{kedalaman:7,bahasa:9,struktur:8,orisinalitas:8,delivery:9},
+   issues:[
+     {type:"good",msg:"Penjelasan mengapa langit tidak ungu (keterbatasan reseptor mata) adalah lapisan ekstra yang membedakan artikel ini dari penjelasan Wikipedia biasa."},
+     {type:"good",msg:"Analogi bola biliar vs ping-pong untuk hamburan Rayleigh sangat intuitif."},
+     {type:"warn",msg:"Opening 'orang dewasa yang dungu' agak judgmental tanpa setup yang cukup. Bisa mengalienasi pembaca di kalimat pertama."},
+     {type:"warn",msg:"Kedalaman sains agak cepat bergerak ke 'refleksi epistemologis' di akhir — transisi terasa sedikit dipaksakan."}
+   ]},
+  {slug:"mengapa-negara-gagal",title:"Mengapa Negara Gagal",topic:"ekonomi",difficulty:"dalam",author:"Tim CCA",
+   scores:{kedalaman:9,bahasa:7,struktur:9,orisinalitas:8,delivery:7},
+   issues:[
+     {type:"good",msg:"Tiga bukti pembuka (Korea, Botswana, Nogales) adalah set argumen pembuka yang paling kuat secara komparatif di seluruh koleksi."},
+     {type:"good",msg:"Resource Curse dan Creative Destruction diintegrasikan dengan sangat mulus ke dalam argumen utama."},
+     {type:"warn",msg:"Tone artikel ini paling 'esai akademis' di seluruh koleksi. Kurang personality editorial yang membuat konten Postulate khas."},
+     {type:"info",msg:"ThinkAbout soal Indonesia adalah yang paling substantif dan berani di seluruh koleksi — ini bisa jadi artikel tersendiri."}
+   ]},
+  {slug:"paradoks-fermi",title:"Paradoks Fermi & The Great Filter",topic:"sains",difficulty:"menengah",author:"Tim Postulate",
+   scores:{kedalaman:9,bahasa:9,struktur:9,orisinalitas:8,delivery:9},
+   issues:[
+     {type:"good",msg:"Struktur artikel ini adalah yang paling dramatik dan membangun: setup angka → paradoks → dua skenario filter → implikasi Mars."},
+     {type:"good",msg:"Kutipan Nick Bostrom tentang 'berita terburuk' adalah reversal yang sangat kuat dan meninggalkan kesan panjang."},
+     {type:"info",msg:"Zoo Hypothesis dan Dark Forest Theory disebutkan sekilas tapi tidak dieksplorasi — menarik sebagai artikel lanjutan."},
+     {type:"info",msg:"Salah satu artikel terkuat di seluruh koleksi dari sisi struktur naratif."}
+   ]},
+  {slug:"paradoks-sorites",title:"Paradoks Sorites",topic:"logika",difficulty:"dalam",author:"Tim Postulate",
+   scores:{kedalaman:9,bahasa:8,struktur:8,orisinalitas:9,delivery:8},
+   issues:[
+     {type:"good",msg:"Aplikasi ke isu hukum nyata (usia dewasa, aborsi) adalah lompatan paling berani dan relevan secara sosial di seluruh koleksi."},
+     {type:"good",msg:"Pengenalan Fuzzy Logic sebagai solusi memberikan resolusi yang memuaskan secara intelektual."},
+     {type:"warn",msg:"Level 'dalam' tapi tidak ada referensi ke literatur filosofis lanjutan (episentik logic, degree theory). Pembaca yang tertarik tidak punya jalur eksplorasi."},
+     {type:"info",msg:"Koneksi ke artikel Berpikir Bayesian bisa dieksplisitkan — keduanya berargumen menolak binerisme."}
+   ]},
+  {slug:"peta-bukanlah-wilayah",title:"Peta Bukanlah Wilayah",topic:"logika",difficulty:"menengah",author:"Tim Postulate",
+   scores:{kedalaman:8,bahasa:8,struktur:8,orisinalitas:8,delivery:8},
+   issues:[
+     {type:"good",msg:"Tiga aplikasi konkret (ujian IQ, GDP, uang) efektif menunjukkan keluasan konsep."},
+     {type:"good",msg:"Kutipan Einstein 'as simple as possible, but not simpler' diposisikan dengan tepat sebagai nuancing."},
+     {type:"warn",msg:"Konsep Korzybski sedikit terburu-buru diperkenalkan — artikel Occam's Razor yang muncul kemudian menggarap asal-usul lebih baik."},
+     {type:"info",msg:"Koneksi ke First Principles dan Paradoks Sorites tidak dieksplisitkan — ketiga artikel ini membentuk cluster yang kuat."}
+   ]},
+  {slug:"pisau-cukur-hanlon",title:"Pisau Cukur Hanlon",topic:"logika",difficulty:"pemula",author:"Tim Postulate",
+   scores:{kedalaman:7,bahasa:9,struktur:8,orisinalitas:7,delivery:9},
+   issues:[
+     {type:"good",msg:"Opening pesan WA yang tidak dibalas adalah hook yang sangat relatable dan langsung relevan."},
+     {type:"good",msg:"Penjelasan evolusioner (Manusia A vs B di savana) efektif membangun empati terhadap bias daripada mengkritisinya."},
+     {type:"warn",msg:"Kedalaman konseptual relatif tipis — artikel ini lebih berfungsi sebagai 'reminder' daripada eksplorasi mendalam."},
+     {type:"info",msg:"Hubungan ke Hanlon's Razor dan Occam's Razor sebagai 'keluarga pisau cukur' tidak dieksplisitkan."}
+   ]},
+  {slug:"pisau-cukur-occam",title:"Pisau Cukur Occam",topic:"logika",difficulty:"pemula",author:"Tim Postulate",
+   scores:{kedalaman:7,bahasa:9,struktur:9,orisinalitas:7,delivery:9},
+   issues:[
+     {type:"good",msg:"Contoh kasus Copernicus vs Ptolemy adalah ilustrasi sejarah yang paling tepat sasaran di seluruh koleksi."},
+     {type:"good",msg:"Peringatan 'sederhana ≠ simplistik' dengan contoh kemiskinan adalah momen paling penting dan sering dilewatkan di penjelasan Occam."},
+     {type:"warn",msg:"Teori konspirasi moon landing sebagai contoh terasa agak lazy — banyak konten internet sudah menggunakan contoh yang sama."},
+     {type:"info",msg:"Hubungan ke Hanlon's Razor dan Pisau Cukur lainnya bisa menjadi artikel meta 'Keluarga Pisau Cukur Mental'."}
+   ]},
+  {slug:"quantum-entanglement-aksi-berhantu",title:"Quantum Entanglement",topic:"sains",difficulty:"dalam",author:"Tim Postulate",
+   scores:{kedalaman:8,bahasa:9,struktur:8,orisinalitas:8,delivery:9},
+   issues:[
+     {type:"good",msg:"Framing Einstein sebagai orang yang 'kalah' pada konsepnya sendiri adalah angle yang menarik dan merendahkan dogma."},
+     {type:"good",msg:"Tone berhasil membuat fisika kuantum terasa existentially threatening tanpa menjadi pseudosains."},
+     {type:"warn",msg:"Level 'dalam' tapi mekanisme entanglement (spin correlation, Bell's theorem) tidak dijelaskan — pembaca yang ingin lebih dalam tidak punya fondasi."},
+     {type:"bad",msg:"Paragraf terakhir bergerak terlalu cepat ke 'refleksi eksistensial tentang hidup' — transisi dari sains ke self-help terasa tiba-tiba dan memotong momentum."}
+   ]},
+  {slug:"sesat-pikir-panduan-logical-fallacies",title:"Sesat Pikir: Logical Fallacies",topic:"logika",difficulty:"menengah",author:"Tim Postulate",
+   scores:{kedalaman:8,bahasa:9,struktur:9,orisinalitas:7,delivery:9},
+   issues:[
+     {type:"good",msg:"Format '10 fallacy dengan contoh kontekstual Indonesia' sangat efektif dan tidak ada yang terasa dipaksakan."},
+     {type:"good",msg:"ThinkAbout tentang konsensus saintifik vs bandwagon adalah distinctions terpenting dan paling sering disalahpahami."},
+     {type:"warn",msg:"Sepuluh fallacy tanpa pengelompokan (formal/informal sudah ada tapi tidak dieksekusi di level per-item) membuat artikel terasa panjang tanpa hirarki."},
+     {type:"info",msg:"Ini artikel yang paling 'reference-worthy' di seluruh koleksi — pertimbangkan format visual diagram/poster sebagai aset tambahan."}
+   ]},
+  {slug:"teori-permainan-matematika-keputusan",title:"Teori Permainan",topic:"sains",difficulty:"menengah",author:"Tim Postulate",
+   scores:{kedalaman:9,bahasa:9,struktur:9,orisinalitas:8,delivery:9},
+   issues:[
+     {type:"good",msg:"Struktur artikel ini adalah yang paling dramatis: setup → dilema → nash equilibrium → resolusi Tit for Tat. Narasi matematika yang lengkap."},
+     {type:"good",msg:"Temuan Axelrod (orang baik menang jangka panjang) adalah reversal yang memuaskan secara emosional dan intelektual."},
+     {type:"good",msg:"Callout tentang Tit for Tat sebagai 'tidak pernah mengeksploitasi siapapun tapi menang kumulatif' adalah insight paling bernilai di seluruh koleksi."},
+     {type:"info",msg:"Salah satu artikel terbaik di seluruh koleksi. Nash Equilibrium dan Tit for Tat keduanya dijelaskan dengan sangat baik."}
+   ]},
+  {slug:"tragedi-commons",title:"Tragedi Commons",topic:"ekonomi",difficulty:"menengah",author:"Tim CCA",
+   scores:{kedalaman:8,bahasa:7,struktur:9,orisinalitas:7,delivery:7},
+   issues:[
+     {type:"good",msg:"Kontribusi Ostrom sebagai 'jalan ketiga' adalah counter-narrative paling penting dan sering absen dari penjelasan populer Tragedy of Commons."},
+     {type:"good",msg:"Delapan prinsip Ostrom disajikan dengan ringkas dan setiap poin masuk akal."},
+     {type:"warn",msg:"Tone artikel ini — seperti artikel Tim CCA lainnya — lebih datar dan akademis. Kehilangan voice editorial."},
+     {type:"info",msg:"ThinkAbout tentang sasi dan subak di Indonesia adalah koneksi lokal paling bernilai di seluruh koleksi ekonomi."}
+   ]}
+];
+
+const topicColors = {logika:'#185FA5',psikologi:'#3B6D11',sains:'#854F0B',ekonomi:'#533AB7',filsafat:'#993556'};
+const topicBg = {logika:'#E6F1FB',psikologi:'#EAF3DE',sains:'#FAEEDA',ekonomi:'#EEEDFE',filsafat:'#FBEAF0'};
+
+function scoreColor(s){
+  if(s>=9) return {bg:'#EAF3DE',color:'#27500A'};
+  if(s>=7) return {bg:'#FAEEDA',color:'#633806'};
+  return {bg:'#FCEBEB',color:'#791F1F'};
+}
+
+function avgScore(a){
+  const v = Object.values(a.scores);
+  return Math.round((v.reduce((s,x)=>s+x,0)/v.length)*10)/10;
+}
+
+let activeFilter = 'semua';
+let sortMode = 'score-asc';
+
+function render(){
+  let data = [...articles];
+  if(activeFilter!=='semua') data = data.filter(a=>a.topic===activeFilter || a.difficulty===activeFilter);
+  if(sortMode==='score-asc') data.sort((a,b)=>avgScore(a)-avgScore(b));
+  else if(sortMode==='score-desc') data.sort((a,b)=>avgScore(b)-avgScore(a));
+  else data.sort((a,b)=>a.title.localeCompare(b.title,'id'));
+
+  const el = document.getElementById('cards');
+  if(!data.length){el.innerHTML='<div class="empty">Tidak ada artikel ditemukan.</div>';return;}
+  el.innerHTML = data.map(a=>{
+    const avg = avgScore(a);
+    const sc = scoreColor(avg);
+    const dims = Object.entries(a.scores);
+    return `<div class="card">
+      <div class="card-header">
+        <div class="score-badge" style="background:${sc.bg};color:${sc.color}">${avg.toFixed(1)}</div>
+        <div style="flex:1">
+          <div class="card-title">${a.title}</div>
+          <div class="card-meta" style="margin-top:4px">
+            <span class="pill pill-topic" style="background:${topicBg[a.topic]||'#eee'};color:${topicColors[a.topic]||'#333'}">${a.topic}</span>
+            <span class="pill pill-diff">${a.difficulty}</span>
+            <span style="font-size:11px;color:var(--color-text-secondary)">${a.author}</span>
+          </div>
+        </div>
+      </div>
+      <div class="dims">${dims.map(([k,v])=>{
+        const pct = (v/10)*100;
+        const c = v>=9?'#639922':v>=7?'#BA7517':'#E24B4A';
+        return `<div class="dim">
+          <div class="dim-name">${k}</div>
+          <div class="dim-bar-bg"><div class="dim-bar" style="width:${pct}%;background:${c}"></div></div>
+          <div class="dim-val" style="color:${c}">${v}/10</div>
+        </div>`;
+      }).join('')}</div>
+      <div class="issues">${a.issues.map(i=>`<div class="issue ${i.type}">${i.msg}</div>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderStats(){
+  const avgs = articles.map(avgScore);
+  const avg = (avgs.reduce((s,x)=>s+x,0)/avgs.length).toFixed(1);
+  const high = articles.filter(a=>avgScore(a)>=8.5).length;
+  const needsWork = articles.filter(a=>avgScore(a)<7.5).length;
+  const teams = [...new Set(articles.map(a=>a.author))].length;
+  document.getElementById('stats').innerHTML = [
+    {num:articles.length,label:'Total artikel'},
+    {num:avg,label:'Rata-rata skor'},
+    {num:high,label:'Artikel ≥ 8.5'},
+    {num:needsWork,label:'Perlu perbaikan'}
+  ].map(s=>`<div class="stat"><div class="stat-num">${s.num}</div><div class="stat-label">${s.label}</div></div>`).join('');
+}
+
+function renderFilters(){
+  const topics = [...new Set(articles.map(a=>a.topic))];
+  const diffs = [...new Set(articles.map(a=>a.difficulty))];
+  const all = ['semua',...topics,...diffs];
+  document.getElementById('filters').innerHTML = all.map(f=>
+    `<div class="chip${f===activeFilter?' active':''}" data-f="${f}">${f}</div>`
+  ).join('');
+  document.querySelectorAll('.chip').forEach(c=>{
+    c.addEventListener('click',()=>{activeFilter=c.dataset.f;renderFilters();render();});
+  });
+}
+
+document.getElementById('sortSel').addEventListener('change',e=>{sortMode=e.target.value;render();});
+
+renderStats();
+renderFilters();
+render();
+</script>

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function TentangPage() {
   return (
-    <div style={{ minHeight: "100vh", background: T.bg, color: T.ink }}>
+    <div style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
 
       {/* ─── Header ─── */}
       <header style={{

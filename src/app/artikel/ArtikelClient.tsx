@@ -71,7 +71,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
   const showGrouped = (activePillar === "semua" || activePillar === "logika") && !search.trim();
 
   return (
-    <div style={{ minHeight: "100vh", background: T.bg, color: T.ink }}>
+    <div style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
       {/* ─── Header — unified 55px ─── */}
       <header style={{
         background: T.bg, borderBottom: `1px solid ${T.border}`,

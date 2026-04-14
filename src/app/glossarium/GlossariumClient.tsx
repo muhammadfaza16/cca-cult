@@ -40,7 +40,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
   const sortedLetters = Object.keys(grouped).sort();
 
   return (
-    <div style={{ minHeight: "100vh", background: T.bg, color: T.ink }}>
+    <div style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
 
       {/* ─── Header ─── */}
       <header style={{

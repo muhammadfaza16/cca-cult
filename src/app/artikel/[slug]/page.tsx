@@ -57,7 +57,7 @@ export default async function ArticlePage({ params }: Props) {
   const related = [...samePillar, ...otherPillar].slice(0, 3);
 
   return (
-    <div style={{ minHeight: "100vh", background: T.white, color: T.ink }}>
+    <div style={{ minHeight: "100svh", background: T.white, color: T.ink }}>
       <ReadingProgress />
       <TableOfContents />
 
