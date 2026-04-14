@@ -54,7 +54,7 @@ export function HomepageClient({ secondary, rest }: Props) {
                       </div>
                       <h3 style={{
                         fontFamily: "var(--font-display)", fontWeight: 600,
-                        fontSize: i === 0 ? "clamp(24px, 3vw, 32px)" : "clamp(20px, 2.5vw, 26px)",
+                        fontSize: "clamp(22px, 3vw, 32px)",
                         lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: φ.sm,
                       }}>{article.title}</h3>
                       <p style={{
@@ -114,7 +114,7 @@ export function HomepageClient({ secondary, rest }: Props) {
                       </div>
                       <h3 style={{
                         fontFamily: "var(--font-display)", fontWeight: 600,
-                        fontSize: isWide ? "clamp(22px, 2.8vw, 30px)" : "clamp(18px, 2vw, 22px)",
+                        fontSize: "clamp(20px, 2.5vw, 28px)",
                         lineHeight: 1.18, letterSpacing: "-0.02em", marginBottom: φ.xs,
                       }}>{article.title}</h3>
                       <p style={{
