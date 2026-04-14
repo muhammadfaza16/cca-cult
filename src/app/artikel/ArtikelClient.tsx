@@ -23,6 +23,8 @@ interface Article {
 export function ArtikelClient({ articles }: { articles: Article[] }) {
   const [search, setSearch] = useState("");
   const [activePillar, setActivePillar] = useState("semua");
+
+  const filtered = useMemo(() => {
     return articles.filter(a => {
       if (activePillar !== "semua" && a.topic_pillar !== activePillar) return false;
       if (search.trim()) {
@@ -40,7 +42,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
       }
       return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
     });
-  }, [articles, activePillar, activeDiff, search]);
+  }, [articles, activePillar, search]);
 
   const grouped = useMemo(() => {
     const g: Record<string, Article[]> = {};
