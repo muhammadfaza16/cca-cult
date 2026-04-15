@@ -1,5 +1,6 @@
 import { getAllArticles } from "@/lib/mdx";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ArtikelClient } from "./ArtikelClient";
 
 export const metadata: Metadata = {
@@ -27,5 +28,9 @@ export default async function ArtikelPage() {
     logic_priority: a.logic_priority,
   }));
 
-  return <ArtikelClient articles={serialized} />;
+  return (
+    <Suspense>
+      <ArtikelClient articles={serialized} />
+    </Suspense>
+  );
 }
