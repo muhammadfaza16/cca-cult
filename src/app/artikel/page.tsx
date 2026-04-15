@@ -15,6 +15,8 @@ export default async function ArtikelPage() {
     slug: a.slug,
     title: a.title,
     subtitle: a.subtitle,
+    excerpt: a.excerpt,
+    discipline: a.discipline,
     topic_pillar: a.topic_pillar,
     difficulty: a.difficulty,
     tags: a.tags,

@@ -330,6 +330,58 @@ body::before {
   box-shadow: 0 8px 30px var(--faint);
 }
 
+.topic-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  min-height: 233px; /* Golden Ratio Base */
+  padding: 34px; /* φ.lg */
+}
+
+.topic-illustration {
+  position: absolute;
+  top: 21px; /* φ.md */
+  right: 21px; /* φ.md */
+  width: 144px; /* φ.xxl + φ.xl - Un-shy */
+  height: 144px;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+.topic-text-container {
+  position: relative;
+  z-index: 2;
+  max-width: 61.8%; /* Golden Ratio Constraint */
+}
+
+@media (max-width: 768px) {
+  .topic-card {
+    min-height: 178px;
+    padding: 21px; /* φ.md */
+  }
+  .topic-illustration {
+    width: 89px; /* φ.xxl */
+    height: 89px;
+    top: 13px;
+    right: 13px;
+  }
+  .topic-text-container {
+    max-width: 75%; /* Tighter constraint for overlapping icons */
+  }
+}
+
+.card-hover:hover .topic-illustration {
+  transform: translateY(-5px) rotate(-2deg) scale(1.08);
+  opacity: 1 !important;
+}
+
 /* ─── Text link hover ─── */
 .link-hover {
   transition: color .2s ease, opacity .2s ease;

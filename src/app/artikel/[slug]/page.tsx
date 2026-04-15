@@ -6,7 +6,7 @@ import { mdxComponents } from "@/components/mdx/MDXComponents";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { TableOfContents } from "@/components/TableOfContents";
 import { BackButton } from "@/components/BackButton";
-import { T, PILLAR, CATS, φ } from "@/lib/tokens";
+import { φ, T, PILLAR, CATS, getDiscColor } from "@/lib/tokens";
 import type { Metadata } from "next";
 import remarkGfm from "remark-gfm";
 
@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: article.meta.title,
-    description: article.meta.seo_description || article.meta.subtitle,
+    description: article.meta.seo_description || article.meta.excerpt,
     openGraph: {
       title: article.meta.title,
-      description: article.meta.seo_description || article.meta.subtitle,
+      description: article.meta.seo_description || article.meta.excerpt,
       type: "article",
       locale: "id_ID",
     },
@@ -76,10 +76,11 @@ export default async function ArticlePage({ params }: Props) {
           <BackButton className="link-hover" />
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
             <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5,
-              color: pillar.color, padding: "3px 10px",
-              background: pillar.color + "12",
-            }}>{pillar.label}</span>
+              fontFamily: "var(--font-mono)", fontSize: 9,
+              letterSpacing: 2.5, color: pillar.color,
+            }}>
+              {pillar.label}
+            </span>
             <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: T.subtle }}>{meta.reading_time}</span>
           </div>
         </div>
@@ -90,18 +91,33 @@ export default async function ArticlePage({ params }: Props) {
 
       {/* ─── Article Header ─── */}
       <header style={{ maxWidth: 700, margin: "0 auto", padding: `${φ.xl}px ${φ.lg}px 0` }}>
+        <div style={{
+          fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 500,
+          letterSpacing: 2.5, color: pillar.color, marginBottom: φ.sm,
+          display: "flex", alignItems: "center", gap: 0,
+        }}>
+          <span>{pillar.label}</span>
+          {meta.discipline && (
+            <>
+              <span style={{ color: T.border, margin: "0 8px" }}>·</span>
+              <span style={{
+                color: getDiscColor(meta.discipline, pillar.color),
+                background: getDiscColor(meta.discipline, pillar.color) + "12",
+                padding: "2px 8px", borderRadius: 2
+              }}>
+                {meta.discipline.toUpperCase()}
+              </span>
+            </>
+          )}
+        </div>
+
         <h1 style={{
           fontFamily: "var(--font-display)", fontWeight: 700,
           fontSize: "clamp(34px, 5.5vw, 52px)", lineHeight: 1.06,
           letterSpacing: "-0.03em", color: T.ink, marginBottom: φ.md,
         }}>{meta.title}</h1>
 
-        {meta.subtitle && (
-          <p style={{
-            fontFamily: "var(--font-body)", fontSize: 19, lineHeight: 1.55,
-            color: T.muted, fontStyle: "italic", marginBottom: φ.lg, maxWidth: 600,
-          }}>{meta.subtitle}</p>
-        )}
+
 
         <div style={{
           display: "flex", flexWrap: "wrap", gap: 12,
@@ -135,11 +151,16 @@ export default async function ArticlePage({ params }: Props) {
           display: "flex", justifyContent: "space-between", alignItems: "center",
         }}>
           <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle, letterSpacing: 2.5 }}>SELESAI DIBACA</span>
-          <BackButton label="KEMBALI ←" style={{
-            color: T.bg,
+          <Link href={`/artikel?topic=${meta.topic_pillar}`} style={{
+            textDecoration: "none", color: T.white,
             padding: `${φ.sm}px ${φ.lg}px`,
             background: pillar.color,
-          }} />
+            fontFamily: "var(--font-mono)", fontSize: 10,
+            fontWeight: 600, letterSpacing: 2,
+            transition: "opacity 0.2s",
+          }} className="link-hover">
+            {pillar.label.toUpperCase()} →
+          </Link>
         </div>
       </article>
 
@@ -171,6 +192,16 @@ export default async function ArticlePage({ params }: Props) {
                     <div style={{ display: "flex", gap: φ.xs, alignItems: "center", marginBottom: 4 }}>
                       <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: rColor }}>
                         {CATS[r.topic_pillar]?.label.toUpperCase()}
+                        {r.discipline && (
+                          <>
+                            <span style={{ color: T.border, margin: "0 4px" }}>·</span>
+                            <span style={{
+                              color: getDiscColor(r.discipline, rColor),
+                              background: getDiscColor(r.discipline, rColor) + "12",
+                              padding: "1px 6px", borderRadius: 2
+                            }}>{r.discipline.toUpperCase()}</span>
+                          </>
+                        )}
                       </span>
                       <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle }}>· {r.reading_time}</span>
                     </div>

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useMemo } from "react";
-import { T, CATS, φ } from "@/lib/tokens";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { φ, T, CATS, getDiscColor } from "@/lib/tokens";
 import { Reveal } from "@/components/Reveal";
 import { Footer } from "@/components/Footer";
 
@@ -10,6 +11,8 @@ interface Article {
   slug: string;
   title: string;
   subtitle: string;
+  excerpt: string;
+  discipline?: string;
   topic_pillar: string;
   difficulty: string;
   tags: string[];
@@ -21,8 +24,10 @@ interface Article {
 }
 
 export function ArtikelClient({ articles }: { articles: Article[] }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [search, setSearch] = useState("");
-  const [activePillar, setActivePillar] = useState("semua");
+  const [activePillar, setActivePillar] = useState(searchParams.get("topic") || "semua");
 
   const filtered = useMemo(() => {
     return articles.filter(a => {
@@ -31,7 +36,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
         const q = search.toLowerCase();
         return (
           a.title.toLowerCase().includes(q) ||
-          a.subtitle.toLowerCase().includes(q) ||
+          a.excerpt.toLowerCase().includes(q) ||
           a.tags.some(t => t.toLowerCase().includes(q))
         );
       }
@@ -40,7 +45,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
       if (activePillar === "logika") {
         return (a.logic_priority || 99) - (b.logic_priority || 99);
       }
-      return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
+      return new Date(a.published_at).getTime() - new Date(b.published_at).getTime();
     });
   }, [articles, activePillar, search]);
 
@@ -126,9 +131,10 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
               onBlur={e => e.target.style.borderColor = T.border as string}
             />
             <span style={{
-              position: "absolute", left: φ.sm, top: "50%", transform: "translateY(-50%)",
-              fontFamily: "var(--font-mono)", fontSize: 13, color: T.subtle,
+              position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)",
+              fontSize: 20, color: T.subtle,
               pointerEvents: "none",
+              lineHeight: 1,
             }}>⌕</span>
           </div>
         </div>
@@ -189,7 +195,6 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
         )}
 
         {showGrouped ? (() => {
-          let globalIndex = 0;
           return Object.keys(CATS).map((groupId) => {
             const groupArticles = grouped[groupId];
             if (!groupArticles || groupArticles.length === 0) return null;
@@ -221,11 +226,10 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  {groupArticles.map((article) => {
-                    const currentIndex = globalIndex++;
+                  {groupArticles.map((article, groupIndex) => {
                     return (
-                      <Reveal key={article.slug} delay={Math.min(currentIndex * 0.04, 0.4)}>
-                        <ArticleRow article={article} index={currentIndex} color={color} />
+                      <Reveal key={article.slug} delay={Math.min(groupIndex * 0.04, 0.4)}>
+                        <ArticleRow article={article} index={groupIndex} color={color} />
                       </Reveal>
                     );
                   })}
@@ -272,7 +276,19 @@ function ArticleRow({ article, index, color }: { article: Article; index: number
           <span style={{
             fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500,
             letterSpacing: 2.5, color,
-          }}>{CATS[article.topic_pillar]?.label.toUpperCase()}</span>
+          }}>
+            {CATS[article.topic_pillar]?.label.toUpperCase()}
+            {article.discipline && (
+              <>
+                <span style={{ color: T.border, margin: "0 4px" }}>·</span>
+                <span style={{
+                  color: getDiscColor(article.discipline, color),
+                  background: getDiscColor(article.discipline, color) + "12",
+                  padding: "1px 6px", borderRadius: 2
+                }}>{article.discipline.toUpperCase()}</span>
+              </>
+            )}
+          </span>
         </div>
         <h3 style={{
           fontFamily: "var(--font-display)", fontWeight: 600,
@@ -282,7 +298,8 @@ function ArticleRow({ article, index, color }: { article: Article; index: number
         <p style={{
           fontFamily: "var(--font-body)", fontSize: 13,
           lineHeight: 1.5, color: T.muted, fontStyle: "italic",
-        }}>{article.subtitle}</p>
+        }}>{article.excerpt}</p>
+
       </div>
 
       <div style={{

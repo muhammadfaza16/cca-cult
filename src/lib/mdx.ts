@@ -21,6 +21,8 @@ interface ArticleMeta {
   reading_time_minutes: number;
   og_image?: string;
   seo_description?: string;
+  excerpt: string;
+  discipline?: string;
   // logic-specific journey
   logic_stage?: "pondasi" | "cacat-pikir" | "alat" | "lanjutan";
   logic_priority?: number;
@@ -65,6 +67,8 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     reading_time_minutes: Math.ceil(stats.minutes),
     og_image: data.og_image,
     seo_description: data.seo_description,
+    excerpt: getExcerpt(content),
+    discipline: data.discipline,
     logic_stage: data.logic_stage,
     logic_priority: data.logic_priority,
   };
@@ -105,6 +109,8 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
       reading_time_minutes: Math.ceil(stats.minutes),
       og_image: data.og_image,
       seo_description: data.seo_description,
+      excerpt: getExcerpt(content),
+      discipline: data.discipline,
       logic_stage: data.logic_stage,
       logic_priority: data.logic_priority,
     } as ArticleMeta;
@@ -115,5 +121,30 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
     (a, b) =>
       new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
   );
+}
+
+/**
+ * Extracts a clean text excerpt from MDX content.
+ * Targets the first paragraph and removes basic markdown/JSX tags.
+ */
+function getExcerpt(content: string, length = 160): string {
+  // 1. Remove JSX/HTML tags (very basic)
+  let text = content.replace(/<[^>]*>/g, "");
+  
+  // 2. Remove markdown symbols
+  text = text
+    .replace(/^#+ .*/g, "") // remove headings
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1") // link text
+    .replace(/!\[([^\]]*)\]\([^\)]+\)/g, "") // hide images
+    .replace(/[*_~`]/g, "") // generic symbols
+    .replace(/> .*/g, "") // blockquotes
+    .replace(/---/g, ""); // hr
+
+  // 3. Find first non-empty paragraph
+  const paragraphs = text.split("\n").map(p => p.trim()).filter(p => p.length > 5);
+  const firstPara = paragraphs[0] || "";
+
+  if (firstPara.length <= length) return firstPara;
+  return firstPara.substring(0, length).trim() + "...";
 }
 

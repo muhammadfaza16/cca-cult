@@ -49,6 +49,20 @@ export const PILLAR: Record<string, { color: string; label: string }> = {
   psikologi: { color: "#B07D10", label: "PSIKOLOGI" },
 };
 
+/** Consolidated color mapping for scientific "Common Threads" */
+export const SCIDIS: Record<string, string> = {
+  "KOSMOLOGI & FISIKA":   "#4834D4", // Deep Indigo
+  "BIOLOGI & NEUROSAINS": "#009432", // Deep Emerald
+  "ANTROPOLOGI & PERILAKU": "#ED4C67", // Rose Coral
+};
+
+/** Get the specific color for a discipline or fallback to pillar color */
+export function getDiscColor(discipline?: string, pillarColor: string = T.ink): string {
+  if (!discipline) return pillarColor;
+  const upper = discipline.toUpperCase();
+  return SCIDIS[upper] || pillarColor;
+}
+
 /** Get pillar color or fallback to ink */
 export function catColor(pillar: string): string {
   return CATS[pillar]?.color || T.ink;

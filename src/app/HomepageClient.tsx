@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { T, CATS, φ, catColor } from "@/lib/tokens";
+import { T, CATS, φ, catColor, getDiscColor } from "@/lib/tokens";
 import { Reveal } from "@/components/Reveal";
 
 interface ArticleBrief {
   slug: string;
   title: string;
   subtitle: string;
+  excerpt: string;
+  discipline?: string;
   topic_pillar: string;
   reading_time: string;
   difficulty?: string;
@@ -46,6 +48,18 @@ export function HomepageClient({ secondary, rest }: Props) {
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: φ.md }}>
                         <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: col }}>
                           {CATS[article.topic_pillar]?.label.toUpperCase()}
+                          {article.discipline && (
+                            <>
+                              <span style={{ color: T.border, margin: "0 4px" }}>·</span>
+                              <span style={{
+                                color: getDiscColor(article.discipline, col),
+                                background: getDiscColor(article.discipline, col) + "12",
+                                padding: "2px 6px", borderRadius: 2
+                              }}>
+                                {article.discipline.toUpperCase()}
+                              </span>
+                            </>
+                          )}
                         </span>
                         <span style={{
                           fontFamily: "var(--font-display)", fontSize: 52,
@@ -60,7 +74,8 @@ export function HomepageClient({ secondary, rest }: Props) {
                       <p style={{
                         fontFamily: "var(--font-body)", fontSize: 14,
                         lineHeight: 1.55, color: T.muted, fontStyle: "italic",
-                      }}>{article.subtitle}</p>
+                      }}>{article.excerpt}</p>
+
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
                       <div style={{ height: 1, width: φ.lg, background: col }} />
@@ -104,6 +119,18 @@ export function HomepageClient({ secondary, rest }: Props) {
                         <div style={{ display: "flex", gap: φ.xs, alignItems: "center", flexWrap: "wrap" }}>
                           <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: col }}>
                             {CATS[article.topic_pillar]?.label.toUpperCase()}
+                            {article.discipline && (
+                              <>
+                                <span style={{ color: T.border, margin: "0 4px" }}>·</span>
+                                <span style={{
+                                  color: getDiscColor(article.discipline, col),
+                                  background: getDiscColor(article.discipline, col) + "12",
+                                  padding: "1px 4px", borderRadius: 2
+                                }}>
+                                  {article.discipline.toUpperCase()}
+                                </span>
+                              </>
+                            )}
                           </span>
                         </div>
                         <span style={{
@@ -119,7 +146,8 @@ export function HomepageClient({ secondary, rest }: Props) {
                       <p style={{
                         fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.55,
                         color: T.muted, fontStyle: "italic",
-                      }}>{article.subtitle}</p>
+                      }}>{article.excerpt}</p>
+
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
                       <div style={{ height: 1, width: φ.md, background: col }} />
