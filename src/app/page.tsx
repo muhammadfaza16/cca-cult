@@ -144,47 +144,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ════════════════ TOPIK UTAMA ════════════════ */}
-      <section className="cca-container" style={{ paddingTop: φ.xl }}>
-        <div style={{
-          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-          gap: φ.md
-        }}>
-          {Object.keys(CATS).map(p => {
-            const data = CATS[p];
-            const count = pillarCounts[p] || 0;
-            return (
-              <Link key={p} href={`/artikel?topic=${p}`} style={{ textDecoration: "none" }} className="card-hover">
-                <div className="topic-card">
-                  {/* Hand-Drawn SVG Illustration (Styled in globals.css) */}
-                  <div className="topic-illustration">
-                    <TopicIcon pillar={p} color={data.color} />
-                  </div>
-
-                  <div className="topic-text-container">
-                    <h2 style={{
-                      fontFamily: "var(--font-display)", fontSize: "clamp(20px, 4vw, 26px)",
-                      fontWeight: 700, color: T.ink, letterSpacing: "-0.01em",
-                      marginBottom: φ.sm
-                    }}>{data.label.split(" & ")[0]}</h2>
-                    <p style={{
-                      fontFamily: "var(--font-body)", fontSize: 13,
-                      lineHeight: 1.6, color: T.muted
-                    }}>{data.tagline}</p>
-                  </div>
-                  <div style={{
-                    fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 500,
-                    color: T.muted, letterSpacing: 1, position: "relative", zIndex: 2
-                  }}>
-                    {count} TULISAN →
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
       <HomepageClient
         secondary={secondary.map(a => ({
           slug: a.slug, title: a.title, subtitle: a.subtitle,
@@ -197,6 +156,52 @@ export default async function HomePage() {
           topic_pillar: a.topic_pillar, difficulty: a.difficulty,
           reading_time: a.reading_time,
         }))}
+        topicSection={
+          /* ════════════════ TOPIK UTAMA ════════════════ */
+          <section key="topic-section" className="cca-container" style={{ paddingTop: φ.xl }}>
+            <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: φ.lg }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: T.muted }}>NAVIGASI TOPIK</span>
+              <div style={{ flex: 1, height: 1, background: T.border }} />
+            </div>
+            <div style={{
+              display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+              gap: φ.md
+            }}>
+              {Object.keys(CATS).map(p => {
+                const data = CATS[p];
+                const count = pillarCounts[p] || 0;
+                return (
+                  <Link key={p} href={`/artikel?topic=${p}`} style={{ textDecoration: "none" }} className="card-hover">
+                    <div className="topic-card">
+                      {/* Hand-Drawn SVG Illustration (Styled in globals.css) */}
+                      <div className="topic-illustration">
+                        <TopicIcon pillar={p} color={data.color} />
+                      </div>
+
+                      <div className="topic-text-container">
+                        <h2 style={{
+                          fontFamily: "var(--font-display)", fontSize: "clamp(20px, 4vw, 26px)",
+                          fontWeight: 700, color: T.ink, letterSpacing: "-0.01em",
+                          marginBottom: φ.sm
+                        }}>{data.label.split(" & ")[0]}</h2>
+                        <p style={{
+                          fontFamily: "var(--font-body)", fontSize: 13,
+                          lineHeight: 1.6, color: T.muted
+                        }}>{data.tagline}</p>
+                      </div>
+                      <div style={{
+                        fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 500,
+                        color: T.muted, letterSpacing: 1, position: "relative", zIndex: 2
+                      }}>
+                        {count} TULISAN →
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        }
       />
 
       {/* ════════════════ FOOTER ════════════════ */}

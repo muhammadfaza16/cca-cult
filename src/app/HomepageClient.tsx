@@ -18,11 +18,12 @@ interface ArticleBrief {
 interface Props {
   secondary: ArticleBrief[];
   rest: ArticleBrief[];
+  topicSection?: React.ReactNode;
 }
 
 const INITIAL_LIMIT = 6;
 
-export function HomepageClient({ secondary, rest }: Props) {
+export function HomepageClient({ secondary, rest, topicSection }: Props) {
   const visible = rest.slice(0, INITIAL_LIMIT);
   const hasMore = rest.length > INITIAL_LIMIT;
 
@@ -89,6 +90,8 @@ export function HomepageClient({ secondary, rest }: Props) {
           </div>
         </section>
       )}
+
+      {topicSection}
 
       {/* ════════════════ REMAINING ARTICLES (limited) ════════════════ */}
       {rest.length > 0 && (

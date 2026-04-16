@@ -28,6 +28,14 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [activePillar, setActivePillar] = useState(searchParams.get("topic") || "semua");
+  const [visibleCounts, setVisibleCounts] = useState<Record<string, number>>({});
+  const [listVisibleCount, setListVisibleCount] = useState(10);
+
+  // Reset limits when filters change
+  useEffect(() => {
+    setVisibleCounts({});
+    setListVisibleCount(10);
+  }, [activePillar, search]);
 
   const filtered = useMemo(() => {
     return articles.filter(a => {
@@ -144,7 +152,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6,
           color: T.muted, fontStyle: "italic", maxWidth: 480, marginBottom: φ.lg,
         }}>
-          Cari, filter, jelajahi. Urutan tidak penting — baca yang menarik.
+          Cari, saring, dan jelajahi. Kumpulan narasi pilihan yang dikurasi dalam berbagai topik.
         </p>
 
         {/* ─── Filter Bar ─── */}
@@ -227,7 +235,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  {groupArticles.map((article, groupIndex) => {
+                  {groupArticles.slice(0, visibleCounts[groupId] || 5).map((article, groupIndex) => {
                     return (
                       <Reveal key={article.slug} delay={Math.min(groupIndex * 0.04, 0.4)}>
                         <ArticleRow article={article} index={groupIndex} color={color} />
@@ -235,20 +243,36 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                     );
                   })}
                 </div>
+
+                {groupArticles.length > (visibleCounts[groupId] || 5) && (
+                  <ShowMoreButton
+                    onClick={() => setVisibleCounts(prev => ({
+                      ...prev,
+                      [groupId]: (prev[groupId] || 5) + 10
+                    }))}
+                  />
+                )}
               </section>
             );
           });
         })() : (
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {filtered.map((article, i) => (
-              <Reveal key={article.slug} delay={i * 0.03}>
-                <ArticleRow
-                  article={article}
-                  index={i}
-                  color={CATS[article.topic_pillar]?.color || T.ink}
-                />
-              </Reveal>
-            ))}
+            {(() => {
+              const items = activePillar !== "semua" ? filtered : filtered.slice(0, listVisibleCount);
+              return items.map((article, i) => (
+                <Reveal key={article.slug} delay={i * 0.03}>
+                  <ArticleRow
+                    article={article}
+                    index={i}
+                    color={CATS[article.topic_pillar]?.color || T.ink}
+                  />
+                </Reveal>
+              ));
+            })()}
+
+            {activePillar === "semua" && filtered.length > listVisibleCount && (
+              <ShowMoreButton onClick={() => setListVisibleCount(prev => prev + 10)} />
+            )}
           </div>
         )}
       </main>
@@ -310,5 +334,36 @@ function ArticleRow({ article, index, color }: { article: Article; index: number
         <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5, color: T.subtle }}>{article.reading_time}</span>
       </div>
     </Link>
+  );
+}
+
+function ShowMoreButton({ onClick }: { onClick: () => void }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "center", marginTop: φ.lg }}>
+      <button
+        onClick={onClick}
+        className="link-hover"
+        style={{
+          fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 500,
+          letterSpacing: 2, padding: `${φ.sm}px ${φ.lg}px`,
+          border: `1px solid ${T.border}`,
+          background: T.white,
+          color: T.muted,
+          cursor: "pointer",
+          transition: "all .2s",
+          textTransform: "uppercase",
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.borderColor = T.ink as string;
+          e.currentTarget.style.color = T.ink as string;
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.borderColor = T.border as string;
+          e.currentTarget.style.color = T.muted as string;
+        }}
+      >
+        Lihat Lebih Banyak ↓
+      </button>
+    </div>
   );
 }
