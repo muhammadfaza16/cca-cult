@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: article.meta.title,
-    description: article.meta.seo_description || article.meta.excerpt,
+    description: article.meta.seo_description || article.meta.subtitle || article.meta.excerpt,
     openGraph: {
       title: article.meta.title,
-      description: article.meta.seo_description || article.meta.excerpt,
+      description: article.meta.seo_description || article.meta.subtitle || article.meta.excerpt,
       type: "article",
       locale: "id_ID",
     },

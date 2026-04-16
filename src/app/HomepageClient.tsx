@@ -74,8 +74,7 @@ export function HomepageClient({ secondary, rest }: Props) {
                       <p style={{
                         fontFamily: "var(--font-body)", fontSize: 14,
                         lineHeight: 1.55, color: T.muted, fontStyle: "italic",
-                      }}>{article.excerpt}</p>
-
+                      }}>{article.subtitle || article.excerpt}</p>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
                       <div style={{ height: 1, width: φ.lg, background: col }} />
@@ -146,8 +145,7 @@ export function HomepageClient({ secondary, rest }: Props) {
                       <p style={{
                         fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.55,
                         color: T.muted, fontStyle: "italic",
-                      }}>{article.excerpt}</p>
-
+                      }}>{article.subtitle || article.excerpt}</p>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
                       <div style={{ height: 1, width: φ.md, background: col }} />

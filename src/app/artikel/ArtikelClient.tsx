@@ -36,6 +36,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
         const q = search.toLowerCase();
         return (
           a.title.toLowerCase().includes(q) ||
+          a.subtitle.toLowerCase().includes(q) ||
           a.excerpt.toLowerCase().includes(q) ||
           a.tags.some(t => t.toLowerCase().includes(q))
         );
@@ -298,7 +299,7 @@ function ArticleRow({ article, index, color }: { article: Article; index: number
         <p style={{
           fontFamily: "var(--font-body)", fontSize: 13,
           lineHeight: 1.5, color: T.muted, fontStyle: "italic",
-        }}>{article.excerpt}</p>
+        }}>{article.subtitle || article.excerpt}</p>
 
       </div>
 

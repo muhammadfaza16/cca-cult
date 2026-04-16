@@ -130,7 +130,7 @@ export default async function HomePage() {
                 fontFamily: "var(--font-body)", fontSize: 19, lineHeight: 1.6,
                 color: "rgba(255,255,255,.6)", maxWidth: 540,
                 marginBottom: φ.lg, fontStyle: "italic",
-              }}>{hero.excerpt}</p>
+              }}>{hero.subtitle || hero.excerpt}</p>
             </Link>
 
             <div style={{ display: "flex", gap: φ.md, alignItems: "center" }}>
