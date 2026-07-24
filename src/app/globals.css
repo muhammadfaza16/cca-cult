@@ -542,16 +542,6 @@ body::before {
   .nav-burger { display: flex !important; }
 }
 
-/* ─── Editorial Card Padding Utility ─── */
-.article-card-padding {
-  padding: 24px 22px;
-}
-@media (max-width: 640px) {
-  .article-card-padding {
-    padding: 18px 16px;
-  }
-}
-
 @media (max-width: 640px) {
   .display-xl {
     font-size: clamp(28px, 7.5vw, 42px);

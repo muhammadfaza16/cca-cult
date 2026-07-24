@@ -140,6 +140,7 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
         borderLeft: `5px solid ${brandAccent}`,
         display: "flex", flexDirection: "column",
         justifyContent: "space-between", height: "100%",
+        padding: article.og_image ? 0 : φ.lg,
         borderRadius: "2px",
         transition: "all 0.3s ease",
       }}>
@@ -164,7 +165,112 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
           />
         </div>
       )}
-      <div className="article-card-padding" style={{
+      <div style={{
+        padding: article.og_image ? φ.lg : 0,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        flex: 1,
+      }}>
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: φ.md }}>
+            <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+              <span style={{
+                fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 700,
+                letterSpacing: 1.5, color: "#FFFFFF",
+                background: brandAccent,
+                padding: "3px 8px", borderRadius: 2,
+                textTransform: "uppercase",
+              }}>
+                {article.series_order ? `BAGIAN ${article.series_order} DARI 5` : article.tipe_tulisan}
+              </span>
+              {article.tags.slice(0, 2).map(tag => (
+                <span key={tag} style={{
+                  fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 600,
+                  letterSpacing: 1.5, color: T.muted, background: T.faint,
+                  border: `1px solid ${T.border}`,
+                  padding: "2px 6px", borderRadius: 2
+                }}>
+                  #{tag.toUpperCase()}
+                </span>
+              ))}
+            </div>
+            <span style={{
+              fontFamily: "var(--font-display)", fontSize: 40,
+              fontWeight: 700, lineHeight: 1, color: hov ? brandAccent : T.subtle, marginTop: -φ.xs,
+              transition: "color 0.3s ease",
+            }}>{String(index + 2).padStart(2, "0")}</span>
+          </div>
+
+          <h3 style={{
+            fontFamily: "var(--font-display)", fontWeight: 700,
+            fontSize: 23,
+            lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: φ.sm,
+            color: hov ? brandAccent : "var(--ink)",
+            transition: "color 0.3s ease",
+          }}>{article.title}</h3>
+          
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: 14.5,
+            lineHeight: 1.6, color: T.muted, fontStyle: "italic",
+          }}>{article.subtitle || article.excerpt}</p>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
+          <div style={{ height: 2, width: hov ? φ.lg + 10 : φ.lg, background: brandAccent, transition: "width 0.3s ease" }} />
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
+            BACA · {article.reading_time.toUpperCase()}
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+/* ─── Stream List Card ─── */
+function ListCardWrapper({ article, index }: { article: ArticleBrief; index: number }) {
+  const [hov, setHov] = useState(false);
+
+  return (
+    <Link href={`/artikel/${article.slug}`}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        textDecoration: "none", color: "inherit",
+        background: "var(--white)",
+        borderTop: `2px solid ${hov ? brandAccent : "var(--border)"}`,
+        borderRight: `2px solid ${hov ? brandAccent : "var(--border)"}`,
+        borderBottom: `2px solid ${hov ? brandAccent : "var(--border)"}`,
+        borderLeft: `5px solid ${brandAccent}`,
+        display: "flex", flexDirection: "column",
+        justifyContent: "space-between", height: "100%",
+        padding: article.og_image ? 0 : φ.lg,
+        borderRadius: "2px",
+        transition: "all 0.3s ease",
+      }}>
+      {article.og_image && (
+        <div style={{
+          width: "100%",
+          aspectRatio: "16 / 10",
+          overflow: "hidden",
+          borderBottom: "1px solid var(--border)",
+          position: "relative",
+        }}>
+          <img
+            src={article.og_image}
+            alt={article.title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "transform 0.5s ease",
+              transform: hov ? "scale(1.03)" : "scale(1)",
+            }}
+          />
+        </div>
+      )}
+      <div style={{
+        padding: article.og_image ? φ.lg : 0,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -197,122 +303,20 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
               fontFamily: "var(--font-display)", fontSize: 36,
               fontWeight: 700, lineHeight: 1, color: hov ? brandAccent : T.subtle, marginTop: -φ.xs,
               transition: "color 0.3s ease",
-            }}>{String(index + 2).padStart(2, "0")}</span>
-          </div>
-
-          <h3 style={{
-            fontFamily: "var(--font-display)", fontWeight: 700,
-            fontSize: 22,
-            lineHeight: 1.22, letterSpacing: "-0.02em", marginBottom: φ.xs,
-            color: hov ? brandAccent : "var(--ink)",
-            transition: "color 0.3s ease",
-          }}>{article.title}</h3>
-          
-          <p style={{
-            fontFamily: "var(--font-body)", fontSize: 14.5,
-            lineHeight: 1.55, color: T.muted,
-          }}>{article.subtitle || article.excerpt}</p>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
-          <div style={{ height: 2, width: hov ? φ.lg + 10 : φ.lg, background: brandAccent, transition: "width 0.3s ease" }} />
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
-            BACA · {article.reading_time.toUpperCase()}
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-/* ─── Stream List Card ─── */
-function ListCardWrapper({ article, index }: { article: ArticleBrief; index: number }) {
-  const [hov, setHov] = useState(false);
-
-  return (
-    <Link href={`/artikel/${article.slug}`}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        textDecoration: "none", color: "inherit",
-        background: "var(--white)",
-        borderTop: `2px solid ${hov ? brandAccent : "var(--border)"}`,
-        borderRight: `2px solid ${hov ? brandAccent : "var(--border)"}`,
-        borderBottom: `2px solid ${hov ? brandAccent : "var(--border)"}`,
-        borderLeft: `5px solid ${brandAccent}`,
-        display: "flex", flexDirection: "column",
-        justifyContent: "space-between", height: "100%",
-        borderRadius: "2px",
-        transition: "all 0.3s ease",
-      }}>
-      {article.og_image && (
-        <div style={{
-          width: "100%",
-          aspectRatio: "16 / 10",
-          overflow: "hidden",
-          borderBottom: "1px solid var(--border)",
-          position: "relative",
-        }}>
-          <img
-            src={article.og_image}
-            alt={article.title}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transition: "transform 0.5s ease",
-              transform: hov ? "scale(1.03)" : "scale(1)",
-            }}
-          />
-        </div>
-      )}
-      <div className="article-card-padding" style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        flex: 1,
-      }}>
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: φ.sm }}>
-            <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
-              <span style={{
-                fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 700,
-                letterSpacing: 1.5, color: "#FFFFFF",
-                background: brandAccent,
-                padding: "3px 8px", borderRadius: 2,
-                textTransform: "uppercase",
-              }}>
-                {article.series_order ? `BAGIAN ${article.series_order} DARI 5` : article.tipe_tulisan}
-              </span>
-              {article.tags.slice(0, 2).map(tag => (
-                <span key={tag} style={{
-                  fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 600,
-                  letterSpacing: 1.5, color: T.muted, background: T.faint,
-                  border: `1px solid ${T.border}`,
-                  padding: "2px 6px", borderRadius: 2
-                }}>
-                  #{tag.toUpperCase()}
-                </span>
-              ))}
-            </div>
-            <span style={{
-              fontFamily: "var(--font-display)", fontSize: 34,
-              fontWeight: 700, lineHeight: 1, color: hov ? brandAccent : T.subtle, marginTop: -φ.xs,
-              transition: "color 0.3s ease",
             }}>{String(index + 5).padStart(2, "0")}</span>
           </div>
 
           <h3 style={{
             fontFamily: "var(--font-display)", fontWeight: 700,
             fontSize: 21,
-            lineHeight: 1.22, letterSpacing: "-0.02em", marginBottom: φ.xs,
+            lineHeight: 1.25, letterSpacing: "-0.02em", marginBottom: φ.xs,
             color: hov ? brandAccent : "var(--ink)",
             transition: "color 0.3s ease",
           }}>{article.title}</h3>
           
           <p style={{
             fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.55,
-            color: T.muted,
+            color: T.muted, fontStyle: "italic",
           }}>{article.subtitle || article.excerpt}</p>
         </div>
 
