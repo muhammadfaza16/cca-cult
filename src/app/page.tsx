@@ -99,7 +99,7 @@ export default async function HomePage() {
           </h1>
 
           {/* Subtitle / Slogan */}
-          <div className="masthead-slogan-wrapper" style={{
+          <div className="masthead-slogan-wrapper hidden md:block" style={{
             paddingTop: φ.xs,
             marginTop: φ.xs,
           }}>
