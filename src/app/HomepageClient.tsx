@@ -159,7 +159,7 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
   );
 }
 
-/* ─── Homepage Standalone Article Card (Regular Grid Layout) ─── */
+/* ─── Homepage Standalone Article Card (Consistent Editorial Grid Layout) ─── */
 function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
   const [hov, setHov] = useState(false);
 
@@ -182,7 +182,7 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
         flexDirection: "column",
         justifyContent: "space-between",
         height: "100%",
-        boxShadow: hov ? "0 10px 30px rgba(0,0,0,0.06)" : "0 2px 10px rgba(0,0,0,0.02)",
+        boxShadow: hov ? "0 8px 24px rgba(0,0,0,0.06)" : "0 2px 10px rgba(0,0,0,0.02)",
         transition: "all 0.3s ease",
       }}
     >
@@ -216,7 +216,8 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
         flex: 1,
       }}>
         <div>
-          <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
+          {/* Top Kicker Bar */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
             <span style={{
               fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
               letterSpacing: 1.5, color: "#FFFFFF", background: brandAccent,
@@ -224,23 +225,19 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
             }}>
               ESAI MANDIRI
             </span>
-            {article.tags.slice(0, 2).map(tag => (
-              <span key={tag} style={{
-                fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 600,
-                letterSpacing: 1.5, color: T.muted, background: T.faint,
-                border: `1px solid ${T.border}`,
-                padding: "3px 7px", borderRadius: 2
-              }}>
-                #{tag.toUpperCase()}
-              </span>
-            ))}
+            <span style={{
+              fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5, color: T.subtle, fontWeight: 600,
+            }}>
+              {article.kategori.toUpperCase()}
+            </span>
           </div>
 
+          {/* Title & Excerpt */}
           <h3 style={{
             fontFamily: "var(--font-display)", fontWeight: 800,
             fontSize: "clamp(20px, 2.2vw, 24px)", lineHeight: 1.25,
             letterSpacing: "-0.02em", color: hov ? brandAccent : T.ink,
-            marginBottom: 12, transition: "color 0.25s ease",
+            marginBottom: 10, transition: "color 0.25s ease",
           }}>
             {article.title}
           </h3>
@@ -253,33 +250,19 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
           </p>
         </div>
 
-        <div style={{
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          marginTop: 24, paddingTop: 16, borderTop: `1px solid ${T.faint}`,
-        }}>
-          <span style={{
-            fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5, color: T.subtle, fontWeight: 500,
-          }}>
-            {article.reading_time.toUpperCase()} WAKTU BACA
+        {/* Footer Action Bar */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 24 }}>
+          <div style={{ height: 2, width: hov ? 28 : 18, background: brandAccent, transition: "width 0.3s ease" }} />
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 8.5, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
+            BACA ESAI · {article.reading_time.toUpperCase()}
           </span>
-
-          <div style={{
-            display: "flex", alignItems: "center", gap: 6,
-            color: brandAccent, fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 700, letterSpacing: 1.5,
-          }}>
-            <span>BACA</span>
-            <span style={{
-              transform: hov ? "translateX(4px)" : "translateX(0)",
-              transition: "transform 0.2s ease",
-            }}>→</span>
-          </div>
         </div>
       </div>
     </Link>
   );
 }
 
-/* ─── Secondary Grid Card ─── */
+/* ─── Secondary Grid Card (Consistent Editorial Grid Layout) ─── */
 function CardWrapper({ article, index }: { article: ArticleBrief; index: number }) {
   const [hov, setHov] = useState(false);
 
@@ -290,14 +273,15 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
       style={{
         textDecoration: "none", color: "inherit",
         background: "var(--white)",
-        borderTop: `2px solid ${hov ? brandAccent : "var(--border)"}`,
-        borderRight: `2px solid ${hov ? brandAccent : "var(--border)"}`,
-        borderBottom: `2px solid ${hov ? brandAccent : "var(--border)"}`,
+        borderTop: `1px solid ${hov ? brandAccent : T.border}`,
+        borderRight: `1px solid ${hov ? brandAccent : T.border}`,
+        borderBottom: `1px solid ${hov ? brandAccent : T.border}`,
         borderLeft: `5px solid ${brandAccent}`,
         display: "flex", flexDirection: "column",
         justifyContent: "space-between", height: "100%",
-        padding: article.og_image ? 0 : "16px 18px",
-        borderRadius: "2px",
+        borderRadius: "3px",
+        overflow: "hidden",
+        boxShadow: hov ? "0 8px 24px rgba(0,0,0,0.06)" : "0 2px 10px rgba(0,0,0,0.02)",
         transition: "all 0.3s ease",
       }}>
       {article.og_image && (
@@ -305,7 +289,7 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
           width: "100%",
           aspectRatio: "16 / 10",
           overflow: "hidden",
-          borderBottom: "1px solid var(--border)",
+          borderBottom: `1px solid ${T.border}`,
           position: "relative",
         }}>
           <img
@@ -315,67 +299,58 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              transition: "transform 0.5s ease",
-              transform: hov ? "scale(1.03)" : "scale(1)",
+              transition: "transform 0.4s ease",
+              transform: hov ? "scale(1.04)" : "scale(1)",
             }}
           />
         </div>
       )}
       <div style={{
-        padding: article.og_image ? "16px 18px" : 0,
+        padding: "24px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         flex: 1,
       }}>
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: φ.md }}>
-            <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
-              <span style={{
-                fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 700,
-                letterSpacing: 1.5, color: "#FFFFFF",
-                background: brandAccent,
-                padding: "3px 8px", borderRadius: 2,
-                textTransform: "uppercase",
-              }}>
-                {article.series_order ? `BAGIAN ${article.series_order} DARI 5` : article.tipe_tulisan}
-              </span>
-              {article.tags.slice(0, 2).map(tag => (
-                <span key={tag} style={{
-                  fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 600,
-                  letterSpacing: 1.5, color: T.muted, background: T.faint,
-                  border: `1px solid ${T.border}`,
-                  padding: "2px 6px", borderRadius: 2
-                }}>
-                  #{tag.toUpperCase()}
-                </span>
-              ))}
-            </div>
+          {/* Top Kicker Bar */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
             <span style={{
-              fontFamily: "var(--font-display)", fontSize: 40,
-              fontWeight: 700, lineHeight: 1, color: hov ? brandAccent : T.subtle, marginTop: -φ.xs,
+              fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
+              letterSpacing: 1.5, color: "#FFFFFF",
+              background: brandAccent,
+              padding: "4px 9px", borderRadius: 2,
+              textTransform: "uppercase",
+            }}>
+              {article.series_order ? `BAGIAN ${article.series_order} DARI 5` : article.tipe_tulisan}
+            </span>
+
+            <span style={{
+              fontFamily: "var(--font-display)", fontSize: 28,
+              fontWeight: 800, lineHeight: 1, color: hov ? brandAccent : T.border,
               transition: "color 0.3s ease",
             }}>{String(index + 2).padStart(2, "0")}</span>
           </div>
 
+          {/* Title & Excerpt */}
           <h3 style={{
-            fontFamily: "var(--font-display)", fontWeight: 700,
-            fontSize: 23,
-            lineHeight: 1.2, letterSpacing: "-0.02em", marginBottom: φ.sm,
-            color: hov ? brandAccent : "var(--ink)",
-            transition: "color 0.3s ease",
+            fontFamily: "var(--font-display)", fontWeight: 800,
+            fontSize: "clamp(20px, 2.2vw, 24px)", lineHeight: 1.25, letterSpacing: "-0.02em",
+            marginBottom: 10, color: hov ? brandAccent : "var(--ink)",
+            transition: "color 0.25s ease",
           }}>{article.title}</h3>
           
           <p style={{
             fontFamily: "var(--font-body)", fontSize: 14.5,
-            lineHeight: 1.6, color: T.muted, fontStyle: "italic",
+            lineHeight: 1.6, color: T.muted, fontStyle: "italic", margin: 0,
           }}>{article.subtitle || article.excerpt}</p>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
-          <div style={{ height: 2, width: hov ? φ.lg + 10 : φ.lg, background: brandAccent, transition: "width 0.3s ease" }} />
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
-            BACA · {article.reading_time.toUpperCase()}
+        {/* Footer Action Bar */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 24 }}>
+          <div style={{ height: 2, width: hov ? 28 : 18, background: brandAccent, transition: "width 0.3s ease" }} />
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 8.5, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
+            BACA BAB · {article.reading_time.toUpperCase()}
           </span>
         </div>
       </div>
