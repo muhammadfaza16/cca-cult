@@ -118,82 +118,85 @@ export default async function HomePage() {
           borderBottom: "1px solid var(--border)",
           position: "relative", overflow: "hidden",
         }}>
-          <div className="cca-container hero-pt" style={{ position: "relative", paddingBottom: φ.xl }}>
+          <div className="cca-container hero-pt" style={{ position: "relative", paddingBottom: φ.xxl }}>
             <div className={hero.og_image ? "hero-split-layout" : ""}>
               
               {/* Content Column */}
-              <div>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: φ.sm }}>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                
+                {/* Eyebrow / Kicker */}
+                <div style={{
+                  display: "flex", alignItems: "center", gap: 10,
+                  marginBottom: φ.sm, flexWrap: "wrap",
+                }}>
                   <span style={{
-                    fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2,
-                    color: "#FFFFFF",
-                    background: brandAccent,
-                    padding: "4px 10px",
-                    borderRadius: 2,
-                    fontWeight: 700,
+                    fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700,
+                    letterSpacing: 2.5, color: brandAccent,
                     textTransform: "uppercase",
                   }}>
-                    {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
+                    {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan.toUpperCase()}
                   </span>
+                  <span style={{ color: T.border }}>·</span>
                   <span style={{
                     fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5,
                     color: T.subtle,
-                    fontWeight: 500,
                   }}>
-                    · {formatIndonesianDate(hero.published_at)}
+                    {formatIndonesianDate(hero.published_at)}
                   </span>
                 </div>
 
+                {/* Headline & Subtitle */}
                 <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
-                  <h1 className="card-hero-title" style={{
+                  <h2 className="card-hero-title" style={{
                     fontFamily: "var(--font-display)", fontWeight: 700,
-                    fontSize: "clamp(34px, 5.5vw, 60px)", lineHeight: 1.08,
+                    fontSize: "clamp(30px, 4.5vw, 54px)", lineHeight: 1.08,
                     letterSpacing: "-0.03em", color: T.ink,
                     marginBottom: φ.md,
                     transition: "color 0.2s ease",
-                    maxWidth: hero.og_image ? "100%" : undefined,
-                  }}
-                  >{hero.title}</h1>
+                  }}>{hero.title}</h2>
                   
                   <p style={{
-                    fontFamily: "var(--font-body)", fontSize: 19, lineHeight: 1.6,
-                    color: T.muted, maxWidth: hero.og_image ? "100%" : 680,
-                    marginBottom: φ.lg, fontStyle: "italic",
+                    fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.6,
+                    color: T.muted,
+                    marginBottom: φ.lg,
                   }}>{hero.subtitle || hero.excerpt}</p>
                 </Link>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: φ.lg }}>
-                  {hero.tags.slice(0, 3).map(tag => (
-                    <span key={tag} style={{
-                      fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 1.5,
-                      color: T.muted, background: T.faint, border: `1px solid ${T.border}`, padding: "3px 8px", borderRadius: 2,
-                    }}>
-                      #{tag.toUpperCase()}
-                    </span>
-                  ))}
-                </div>
-
-                <div style={{ display: "flex", gap: φ.md, alignItems: "center" }}>
+                {/* Action & Metadata Footer Bar */}
+                <div style={{
+                  display: "flex", flexWrap: "wrap", alignItems: "center",
+                  gap: φ.md, paddingTop: φ.md,
+                  borderTop: `1px solid ${T.border}`,
+                }}>
                   <Link
                     href={`/artikel/${hero.slug}`}
+                    className="card-hero-btn"
                     style={{
                       background: brandAccent,
                       color: "#FFFFFF",
-                      padding: `${φ.sm}px ${φ.lg}px`,
+                      padding: "10px 22px",
                       fontFamily: "var(--font-mono)", fontSize: 10,
                       fontWeight: 600, letterSpacing: 2,
                       textDecoration: "none",
                       display: "inline-block",
                       borderRadius: 2,
-                      transition: "background-color 0.2s ease",
+                      transition: "all 0.2s ease",
                     }}
                   >
-                    BACA MULAI DARI SINI →
+                    BACA SEKARANG →
                   </Link>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle, letterSpacing: 1.5 }}>
-                    {hero.reading_time.toUpperCase()} WAKTU BACA
-                  </span>
+
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, color: T.muted, letterSpacing: 1 }}>
+                      {hero.author}
+                    </span>
+                    <span style={{ color: T.subtle, fontSize: 9 }}>·</span>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, color: T.subtle, letterSpacing: 1 }}>
+                      {hero.reading_time.toUpperCase()} WAKTU BACA
+                    </span>
+                  </div>
                 </div>
+
               </div>
 
               {/* Image Column */}
