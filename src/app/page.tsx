@@ -120,15 +120,30 @@ export default async function HomePage() {
         }}>
           <div className="cca-container hero-pt" style={{ position: "relative", paddingBottom: φ.xl }}>
             <div className={hero.og_image ? "hero-split-layout" : ""}>
+
+              {/* Image Column (Left on Desktop / Top on Mobile) */}
+              {hero.og_image && (
+                <Link href={`/artikel/${hero.slug}`} className="hero-image-wrapper" style={{ display: "block" }}>
+                  <img
+                    src={hero.og_image}
+                    alt={hero.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Link>
+              )}
               
               {/* Content Column */}
-              <div>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: φ.sm }}>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: φ.xs }}>
                   <span style={{
                     fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2,
                     color: "#FFFFFF",
                     background: brandAccent,
-                    padding: "4px 10px",
+                    padding: "3px 8px",
                     borderRadius: 2,
                     fontWeight: 700,
                     textTransform: "uppercase",
@@ -145,28 +160,27 @@ export default async function HomePage() {
                 </div>
 
                 <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
-                  <h1 className="card-hero-title" style={{
+                  <h2 style={{
                     fontFamily: "var(--font-display)", fontWeight: 700,
-                    fontSize: "clamp(34px, 5.5vw, 60px)", lineHeight: 1.08,
+                    fontSize: "clamp(26px, 3.8vw, 48px)", lineHeight: 1.1,
                     letterSpacing: "-0.03em", color: T.ink,
-                    marginBottom: φ.md,
+                    marginTop: φ.xs,
+                    marginBottom: φ.xs,
                     transition: "color 0.2s ease",
-                    maxWidth: hero.og_image ? "100%" : undefined,
-                  }}
-                  >{hero.title}</h1>
+                  }}>{hero.title}</h2>
                   
                   <p style={{
-                    fontFamily: "var(--font-body)", fontSize: 19, lineHeight: 1.6,
-                    color: T.muted, maxWidth: hero.og_image ? "100%" : 680,
-                    marginBottom: φ.lg, fontStyle: "italic",
+                    fontFamily: "var(--font-body)", fontSize: 16.5, lineHeight: 1.55,
+                    color: T.muted,
+                    marginBottom: φ.md,
                   }}>{hero.subtitle || hero.excerpt}</p>
                 </Link>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: φ.lg }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: φ.md }}>
                   {hero.tags.slice(0, 3).map(tag => (
                     <span key={tag} style={{
                       fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 1.5,
-                      color: T.muted, background: T.faint, border: `1px solid ${T.border}`, padding: "3px 8px", borderRadius: 2,
+                      color: T.muted, background: T.faint, border: `1px solid ${T.border}`, padding: "2px 6px", borderRadius: 2,
                     }}>
                       #{tag.toUpperCase()}
                     </span>
@@ -179,8 +193,8 @@ export default async function HomePage() {
                     style={{
                       background: brandAccent,
                       color: "#FFFFFF",
-                      padding: `${φ.sm}px ${φ.lg}px`,
-                      fontFamily: "var(--font-mono)", fontSize: 10,
+                      padding: "8px 18px",
+                      fontFamily: "var(--font-mono)", fontSize: 9.5,
                       fontWeight: 600, letterSpacing: 2,
                       textDecoration: "none",
                       display: "inline-block",
@@ -195,21 +209,6 @@ export default async function HomePage() {
                   </span>
                 </div>
               </div>
-
-              {/* Image Column */}
-              {hero.og_image && (
-                <Link href={`/artikel/${hero.slug}`} className="hero-image-wrapper" style={{ display: "block" }}>
-                  <img
-                    src={hero.og_image}
-                    alt={hero.title}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </Link>
-              )}
 
             </div>
           </div>

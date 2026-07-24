@@ -729,8 +729,8 @@ input[type="text"]:focus, select:focus, textarea:focus {
 /* Featured Hero split layout and visual styles */
 .hero-split-layout {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 55px;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 32px;
   align-items: center;
 }
 
