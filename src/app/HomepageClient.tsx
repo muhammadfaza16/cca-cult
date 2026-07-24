@@ -142,7 +142,11 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
             </Link>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+            gap: 36,
+          }}>
             {standaloneArticles.map((article, i) => (
               <Reveal key={article.slug} delay={i * 0.06}>
                 <HomepageStandaloneCard article={article} />
@@ -155,7 +159,7 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
   );
 }
 
-/* ─── Homepage Standalone Article Card ─── */
+/* ─── Homepage Standalone Article Card (Regular Grid Layout) ─── */
 function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
   const [hov, setHov] = useState(false);
 
@@ -175,20 +179,20 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
         borderRadius: "3px",
         overflow: "hidden",
         display: "flex",
-        flexDirection: "row",
-        alignItems: "stretch",
-        boxShadow: hov ? "0 8px 24px rgba(0,0,0,0.06)" : "0 2px 10px rgba(0,0,0,0.02)",
-        transition: "all 0.25s ease",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%",
+        boxShadow: hov ? "0 10px 30px rgba(0,0,0,0.06)" : "0 2px 10px rgba(0,0,0,0.02)",
+        transition: "all 0.3s ease",
       }}
     >
       {article.og_image && (
         <div style={{
-          width: "30%",
-          minWidth: 180,
-          maxWidth: 280,
+          width: "100%",
+          aspectRatio: "16 / 10",
           overflow: "hidden",
+          borderBottom: `1px solid ${T.border}`,
           position: "relative",
-          flexShrink: 0,
         }}>
           <img
             src={article.og_image}
@@ -198,22 +202,21 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
               height: "100%",
               objectFit: "cover",
               transform: hov ? "scale(1.04)" : "scale(1)",
-              transition: "transform 0.3s ease",
+              transition: "transform 0.4s ease",
             }}
           />
         </div>
       )}
 
       <div style={{
-        padding: "24px 32px",
+        padding: "24px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         flex: 1,
-        minWidth: 0,
       }}>
         <div>
-          <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 10 }}>
+          <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
             <span style={{
               fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
               letterSpacing: 1.5, color: "#FFFFFF", background: brandAccent,
@@ -221,24 +224,29 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
             }}>
               ESAI MANDIRI
             </span>
-            <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5, color: T.subtle,
-            }}>
-              · {article.reading_time.toUpperCase()}
-            </span>
+            {article.tags.slice(0, 2).map(tag => (
+              <span key={tag} style={{
+                fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 600,
+                letterSpacing: 1.5, color: T.muted, background: T.faint,
+                border: `1px solid ${T.border}`,
+                padding: "3px 7px", borderRadius: 2
+              }}>
+                #{tag.toUpperCase()}
+              </span>
+            ))}
           </div>
 
           <h3 style={{
             fontFamily: "var(--font-display)", fontWeight: 800,
-            fontSize: "clamp(20px, 2.6vw, 26px)", lineHeight: 1.2,
+            fontSize: "clamp(20px, 2.2vw, 24px)", lineHeight: 1.25,
             letterSpacing: "-0.02em", color: hov ? brandAccent : T.ink,
-            marginBottom: 10, transition: "color 0.25s ease",
+            marginBottom: 12, transition: "color 0.25s ease",
           }}>
             {article.title}
           </h3>
 
           <p style={{
-            fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.6,
+            fontFamily: "var(--font-body)", fontSize: 14.5, lineHeight: 1.6,
             color: T.muted, fontStyle: "italic", margin: 0,
           }}>
             {article.subtitle || article.excerpt}
@@ -246,15 +254,25 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
         </div>
 
         <div style={{
-          display: "flex", alignItems: "center", gap: 6,
-          marginTop: 24, color: brandAccent,
-          fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 700, letterSpacing: 1.5,
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          marginTop: 24, paddingTop: 16, borderTop: `1px solid ${T.faint}`,
         }}>
-          <span>BACA ESAI SELENGKAPNYA</span>
           <span style={{
-            transform: hov ? "translateX(4px)" : "translateX(0)",
-            transition: "transform 0.2s ease",
-          }}>→</span>
+            fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5, color: T.subtle, fontWeight: 500,
+          }}>
+            {article.reading_time.toUpperCase()} WAKTU BACA
+          </span>
+
+          <div style={{
+            display: "flex", alignItems: "center", gap: 6,
+            color: brandAccent, fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 700, letterSpacing: 1.5,
+          }}>
+            <span>BACA</span>
+            <span style={{
+              transform: hov ? "translateX(4px)" : "translateX(0)",
+              transition: "transform 0.2s ease",
+            }}>→</span>
+          </div>
         </div>
       </div>
     </Link>
