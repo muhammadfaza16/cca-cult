@@ -190,20 +190,23 @@ export default async function HomePage() {
                 <div style={{ display: "flex", gap: φ.md, alignItems: "center" }}>
                   <Link
                     href={`/artikel/${hero.slug}`}
+                    className="link-hover"
                     style={{
-                      background: brandAccent,
-                      color: "#FFFFFF",
-                      padding: "6px 14px",
-                      fontFamily: "var(--font-mono)", fontSize: 9,
-                      fontWeight: 600, letterSpacing: 2,
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 9.5,
+                      fontWeight: 700,
+                      letterSpacing: 2,
+                      color: brandAccent,
                       textDecoration: "none",
-                      display: "inline-block",
-                      borderRadius: 2,
-                      transition: "background-color 0.2s ease",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
                     }}
                   >
-                    BACA MULAI DARI SINI →
+                    <span>BACA MULAI DARI SINI</span>
+                    <span style={{ fontSize: 11 }}>→</span>
                   </Link>
+                  <span style={{ color: T.border, fontSize: 9 }}>·</span>
                   <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle, letterSpacing: 1.5 }}>
                     {hero.reading_time.toUpperCase()} WAKTU BACA
                   </span>
