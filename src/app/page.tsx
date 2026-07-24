@@ -59,18 +59,18 @@ export default async function HomePage() {
       {/* ════════════════ MAJESTIC EDITORIAL MASTHEAD ════════════════ */}
       <section style={{
         background: T.white,
-        padding: `${φ.xl}px 0 ${φ.lg}px 0`,
+        padding: "72px 0 48px 0",
         textAlign: "center",
       }}>
         <div className="cca-container">
           {/* Masthead Volume Info */}
           <div className="masthead-sub-bar" style={{
             fontFamily: "var(--font-mono)",
-            fontSize: 9,
-            letterSpacing: 2,
+            fontSize: 9.5,
+            letterSpacing: 2.5,
             color: T.muted,
             paddingBottom: φ.xs,
-            marginBottom: φ.sm,
+            marginBottom: φ.md,
           }}>
             <span>JURNAL ESENSIAL</span>
             <span style={{ fontWeight: 700, color: brandAccent }}>SERI KAJIAN: PSIKOLOGI EVOLUSI</span>
@@ -80,12 +80,12 @@ export default async function HomePage() {
           {/* Majestic lowercased Logo */}
           <h1 style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(48px, 8.5vw, 96px)",
+            fontSize: "clamp(52px, 9vw, 104px)",
             fontWeight: 800,
             letterSpacing: "-0.04em",
             lineHeight: 0.9,
             color: T.ink,
-            margin: `${φ.sm}px 0`,
+            margin: "18px 0 22px 0",
             textTransform: "lowercase",
           }}>
             postulate<span style={{ color: brandAccent }}>.</span>
@@ -98,11 +98,11 @@ export default async function HomePage() {
           }}>
             <p style={{
               fontFamily: "var(--font-body)",
-              fontSize: 16.5,
-              lineHeight: 1.6,
+              fontSize: 17.5,
+              lineHeight: 1.65,
               color: T.muted,
               fontStyle: "italic",
-              maxWidth: 720,
+              maxWidth: 760,
               margin: "0 auto",
             }}>
               &quot;Membongkar arsitektur perilaku, evolusi pemikiran, dan mekanisme tersembunyi kebudayaan manusia.&quot; Esai naratif &amp; analisis kritis.
@@ -116,8 +116,10 @@ export default async function HomePage() {
         <section style={{
           background: T.white,
           position: "relative", overflow: "hidden",
+          borderTop: `1px solid ${T.border}`,
+          padding: "64px 0 72px 0",
         }}>
-          <div className="cca-container hero-pt" style={{ position: "relative", paddingBottom: φ.xl }}>
+          <div className="cca-container" style={{ position: "relative" }}>
             <div className={hero.og_image ? "hero-split-layout" : ""}>
 
               {/* Image Column (Left on Desktop / Top on Mobile) */}
@@ -136,13 +138,13 @@ export default async function HomePage() {
               )}
               
               {/* Content Column */}
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: φ.xs }}>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "12px 0" }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: φ.sm }}>
                   <span style={{
-                    fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2,
+                    fontFamily: "var(--font-mono)", fontSize: 9.5, letterSpacing: 2,
                     color: "#FFFFFF",
                     background: brandAccent,
-                    padding: "3px 8px",
+                    padding: "4px 10px",
                     borderRadius: 2,
                     fontWeight: 700,
                     textTransform: "uppercase",
@@ -150,7 +152,7 @@ export default async function HomePage() {
                     {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
                   </span>
                   <span style={{
-                    fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5,
+                    fontFamily: "var(--font-mono)", fontSize: 9.5, letterSpacing: 1.5,
                     color: T.subtle,
                     fontWeight: 500,
                   }}>
@@ -160,50 +162,50 @@ export default async function HomePage() {
 
                 <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
                   <h2 style={{
-                    fontFamily: "var(--font-display)", fontWeight: 700,
-                    fontSize: "clamp(26px, 3.8vw, 48px)", lineHeight: 1.1,
+                    fontFamily: "var(--font-display)", fontWeight: 800,
+                    fontSize: "clamp(28px, 4vw, 50px)", lineHeight: 1.12,
                     letterSpacing: "-0.03em", color: T.ink,
                     marginTop: φ.xs,
-                    marginBottom: φ.xs,
+                    marginBottom: φ.md,
                     transition: "color 0.2s ease",
                   }}>{hero.title}</h2>
                   
                   <p style={{
-                    fontFamily: "var(--font-body)", fontSize: 16.5, lineHeight: 1.55,
+                    fontFamily: "var(--font-body)", fontSize: 17.5, lineHeight: 1.65,
                     color: T.muted,
-                    marginBottom: φ.md,
+                    marginBottom: φ.lg,
                   }}>{hero.subtitle || hero.excerpt}</p>
                 </Link>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: φ.md }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: φ.lg }}>
                   {hero.tags.slice(0, 3).map(tag => (
                     <span key={tag} style={{
-                      fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 1.5,
-                      color: T.muted, background: T.faint, border: `1px solid ${T.border}`, padding: "2px 6px", borderRadius: 2,
+                      fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5,
+                      color: T.muted, background: T.faint, border: `1px solid ${T.border}`, padding: "3px 8px", borderRadius: 2,
                     }}>
                       #{tag.toUpperCase()}
                     </span>
                   ))}
                 </div>
 
-                <div style={{ display: "flex", gap: φ.md, alignItems: "center" }}>
+                <div style={{ display: "flex", gap: φ.lg, alignItems: "center" }}>
                   <Link
                     href={`/artikel/${hero.slug}`}
                     className="card-hero-btn"
                     style={{
                       background: brandAccent,
                       color: "#FFFFFF",
-                      padding: "10px 22px",
+                      padding: "12px 28px",
                       fontFamily: "var(--font-mono)",
                       fontSize: 11,
-                      fontWeight: 600,
+                      fontWeight: 700,
                       letterSpacing: 1.5,
                       textDecoration: "none",
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
                       borderRadius: 3,
-                      boxShadow: "0 2px 8px rgba(179,45,45,0.2)",
+                      boxShadow: "0 4px 14px rgba(179,45,45,0.25)",
                       transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
                     }}
                   >

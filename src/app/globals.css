@@ -466,16 +466,16 @@ hr, .prose-cca hr, article hr {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .cca-container {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 28px;
 }
 
-.hero-pt { padding-top: 34px; padding-bottom: 24px; }
-.section-pt { padding-top: 24px; }
-.section-pb { padding-bottom: 32px; }
-.footer-p { padding: 32px 20px; }
-.id-strip { padding: 10px 20px; }
+.hero-pt { padding-top: 56px; padding-bottom: 48px; }
+.section-pt { padding-top: 56px; }
+.section-pb { padding-bottom: 72px; }
+.footer-p { padding: 48px 28px; }
+.id-strip { padding: 14px 28px; }
 
 .card-hero-btn { padding: 10px 20px; }
 .card-hero-title { max-width: 100%; }
@@ -736,8 +736,8 @@ input[type="text"]:focus, select:focus, textarea:focus {
 /* Featured Hero split layout and visual styles */
 .hero-split-layout {
   display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: 32px;
+  grid-template-columns: 1.05fr 1.15fr;
+  gap: 52px;
   align-items: center;
 }
 

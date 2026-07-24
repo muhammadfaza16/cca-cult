@@ -44,10 +44,10 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
   return (
     <div suppressHydrationWarning>
       {/* ─── Category Selection Tabs ─── */}
-      <section className="cca-container" style={{ paddingTop: φ.lg }}>
+      <section className="cca-container" style={{ paddingTop: 48, paddingBottom: 12 }}>
         <div style={{
           display: "flex",
-          gap: 6,
+          gap: 10,
           overflowX: "auto",
           paddingBottom: φ.xs,
           scrollbarWidth: "none",
@@ -63,10 +63,10 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
                   border: `1px solid ${active ? T.ink : "var(--border)"}`,
                   color: active ? T.white : T.muted,
                   fontFamily: "var(--font-mono)",
-                  fontSize: 9,
+                  fontSize: 9.5,
                   fontWeight: 600,
                   letterSpacing: 2,
-                  padding: "8px 16px",
+                  padding: "9px 18px",
                   cursor: "pointer",
                   borderRadius: "2px",
                   transition: "all .18s ease",
@@ -95,21 +95,21 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
       {/* ════════════════ UNIFIED SERIES GRID ════════════════ */}
       {filteredArticles.length > 0 && (
         <section className="cca-container section-pt section-pb">
-          <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: φ.lg }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 700, letterSpacing: 2.5, color: T.muted }}>
+          <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: 32 }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 700, letterSpacing: 2.5, color: T.muted }}>
               KELANJUTAN SERI · BAGIAN 2 - 5
             </span>
             <div style={{ flex: 1, height: 1, background: T.border }} />
             <Link href="/artikel" className="link-hover" style={{
-              fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 600,
+              fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 600,
               letterSpacing: 2, color: brandAccent, textDecoration: "none"
             }}>LIHAT SELURUH ARSIP →</Link>
           </div>
 
           <div className="hero-grid" style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: φ.lg,
+            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+            gap: 36,
           }}>
             {filteredArticles.map((article, i) => (
               <Reveal key={article.slug} delay={i * 0.06}>
@@ -125,24 +125,24 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
         <section className="cca-container section-pb">
           <div style={{
             display: "flex", alignItems: "center", gap: φ.sm,
-            marginBottom: φ.lg, marginTop: φ.md,
+            marginBottom: 32, marginTop: 48,
           }}>
             <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700,
+              fontFamily: "var(--font-mono)", fontSize: 10.5, fontWeight: 700,
               letterSpacing: 2.5, color: T.ink, textTransform: "uppercase"
             }}>
               ESAI MANDIRI &amp; KAJIAN TERBARU
             </span>
             <div style={{ flex: 1, height: 1, background: T.border }} />
             <Link href="/artikel" className="link-hover" style={{
-              fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 600,
+              fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 600,
               letterSpacing: 1.5, color: brandAccent, textDecoration: "none"
             }}>
               SEMUA KAJIAN →
             </Link>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: φ.md }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
             {standaloneArticles.map((article, i) => (
               <Reveal key={article.slug} delay={i * 0.06}>
                 <HomepageStandaloneCard article={article} />
@@ -183,9 +183,9 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
     >
       {article.og_image && (
         <div style={{
-          width: "28%",
-          minWidth: 160,
-          maxWidth: 260,
+          width: "30%",
+          minWidth: 180,
+          maxWidth: 280,
           overflow: "hidden",
           position: "relative",
           flexShrink: 0,
@@ -205,7 +205,7 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
       )}
 
       <div style={{
-        padding: `${φ.md}px ${φ.lg}px`,
+        padding: "24px 32px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -213,16 +213,16 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
         minWidth: 0,
       }}>
         <div>
-          <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
+          <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 10 }}>
             <span style={{
               fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
               letterSpacing: 1.5, color: "#FFFFFF", background: brandAccent,
-              padding: "3px 8px", borderRadius: 2, textTransform: "uppercase",
+              padding: "4px 9px", borderRadius: 2, textTransform: "uppercase",
             }}>
               ESAI MANDIRI
             </span>
             <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5, color: T.subtle,
+              fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5, color: T.subtle,
             }}>
               · {article.reading_time.toUpperCase()}
             </span>
@@ -230,15 +230,15 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
 
           <h3 style={{
             fontFamily: "var(--font-display)", fontWeight: 800,
-            fontSize: "clamp(18px, 2.4vw, 24px)", lineHeight: 1.2,
+            fontSize: "clamp(20px, 2.6vw, 26px)", lineHeight: 1.2,
             letterSpacing: "-0.02em", color: hov ? brandAccent : T.ink,
-            marginBottom: 6, transition: "color 0.25s ease",
+            marginBottom: 10, transition: "color 0.25s ease",
           }}>
             {article.title}
           </h3>
 
           <p style={{
-            fontFamily: "var(--font-body)", fontSize: 14.5, lineHeight: 1.55,
+            fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.6,
             color: T.muted, fontStyle: "italic", margin: 0,
           }}>
             {article.subtitle || article.excerpt}
@@ -247,7 +247,7 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
 
         <div style={{
           display: "flex", alignItems: "center", gap: 6,
-          marginTop: φ.md, color: brandAccent,
+          marginTop: 24, color: brandAccent,
           fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 700, letterSpacing: 1.5,
         }}>
           <span>BACA ESAI SELENGKAPNYA</span>
