@@ -323,10 +323,7 @@ body::before {
 }
 
 .prose-cca hr {
-  border: none;
-  height: 1px;
-  background: var(--border);
-  margin: 48px 0;
+  display: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
