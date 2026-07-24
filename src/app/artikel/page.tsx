@@ -24,6 +24,9 @@ export default async function ArtikelPage() {
     author: a.author,
     reading_time: a.reading_time,
     published_at: a.published_at,
+    series_slug: a.series_slug,
+    series_order: a.series_order,
+    og_image: a.og_image,
   }));
 
   return (

@@ -18,7 +18,9 @@ interface Article {
   author: string;
   reading_time: string;
   published_at: string;
+  series_slug?: string;
   series_order?: number;
+  og_image?: string;
 }
 
 function HeaderBackButton() {
@@ -55,20 +57,12 @@ const CATEGORIES = [
 export function ArtikelClient({ articles }: { articles: Article[] }) {
   const [search, setSearch] = useState("");
   const [activeCat, setActiveCat] = useState("all");
-  const [listVisibleCount, setListVisibleCount] = useState(10);
-
-  // Reset limits when filters change
-  useEffect(() => {
-    setListVisibleCount(10);
-  }, [search, activeCat]);
 
   const filtered = useMemo(() => {
     return articles.filter(a => {
-      // Category filter
       if (activeCat !== "all" && a.kategori !== activeCat) {
         return false;
       }
-      // Search filter
       if (search.trim()) {
         const q = search.toLowerCase();
         return (
@@ -79,17 +73,37 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
         );
       }
       return true;
-    }).sort((a, b) => {
-      if (a.series_order !== undefined && b.series_order !== undefined) {
-        return a.series_order - b.series_order;
-      }
-      return new Date(a.published_at).getTime() - new Date(b.published_at).getTime();
     });
   }, [articles, search, activeCat]);
 
+  // Group articles into Series Packages and Standalone Essays
+  const seriesMap = useMemo(() => {
+    const map: Record<string, Article[]> = {};
+    const standalone: Article[] = [];
+
+    filtered.forEach(a => {
+      if (a.series_slug) {
+        if (!map[a.series_slug]) map[a.series_slug] = [];
+        map[a.series_slug].push(a);
+      } else {
+        standalone.push(a);
+      }
+    });
+
+    // Sort series chapters by series_order
+    Object.keys(map).forEach(key => {
+      map[key].sort((a, b) => (a.series_order || 0) - (b.series_order || 0));
+    });
+
+    // Sort standalone chronologically
+    standalone.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
+
+    return { seriesPackages: map, standalone };
+  }, [filtered]);
+
   return (
     <div suppressHydrationWarning style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
-      {/* ─── Header ─── */}
+      {/* ─── Sticky Header ─── */}
       <header className="glass-nav" style={{
         position: "sticky", top: 0, zIndex: 100,
         borderBottom: "1px solid var(--border)",
@@ -102,30 +116,28 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             textDecoration: "none", color: "inherit",
             display: "flex", alignItems: "baseline", gap: φ.xs,
           }}>
-            <span style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 700, letterSpacing: "-0.01em" }}>pos·tu·late</span>
-            <span style={{ fontFamily: "var(--font-body)", fontSize: 14, fontStyle: "italic", color: T.muted }}>noun.</span>
+            <span style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, letterSpacing: "-0.01em" }}>postulate.</span>
           </Link>
           <HeaderBackButton />
         </div>
       </header>
 
-      {/* ─── Title + Search ─── */}
+      {/* ─── Page Title & Search Bar ─── */}
       <section className="cca-container section-pt">
         <div style={{
           display: "flex", alignItems: "flex-end", justifyContent: "space-between",
           flexWrap: "wrap", gap: φ.md, marginBottom: φ.sm,
         }}>
-          <div style={{ display: "flex", alignItems: "flex-end", gap: φ.md }}>
-            <h1 style={{
-              fontFamily: "var(--font-display)", fontWeight: 700,
-              fontSize: "clamp(38px, 6vw, 64px)", lineHeight: 1.02,
-              letterSpacing: "-0.03em",
-            }}>Arsip</h1>
+          <div>
             <span style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(38px, 6vw, 64px)", fontWeight: 400,
-              lineHeight: 1.02, color: T.border, letterSpacing: "-0.03em",
-            }}>{filtered.length}</span>
+              fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 700,
+              letterSpacing: 2.5, color: brandAccent, textTransform: "uppercase"
+            }}>KATALOG ARSIP</span>
+            <h1 style={{
+              fontFamily: "var(--font-display)", fontWeight: 800,
+              fontSize: "clamp(36px, 5.5vw, 60px)", lineHeight: 1.05,
+              letterSpacing: "-0.03em", marginTop: 4,
+            }}>Seri Kajian &amp; Esai</h1>
           </div>
 
           <div style={{ position: "relative", width: "100%", maxWidth: 320 }}>
@@ -133,7 +145,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Cari esai..."
+              placeholder="Cari dalam arsip..."
               style={{
                 width: "100%",
                 padding: "8px 14px 8px 40px",
@@ -142,6 +154,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                 border: `1px solid ${T.border}`,
                 background: T.white,
                 color: T.ink,
+                borderRadius: "2px",
                 transition: "border-color .2s",
               }}
               onFocus={e => e.target.style.borderColor = brandAccent}
@@ -149,7 +162,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             />
             <span style={{
               position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)",
-              fontSize: 20, color: T.subtle,
+              fontSize: 18, color: T.subtle,
               pointerEvents: "none",
               lineHeight: 1,
             }}>⌕</span>
@@ -158,9 +171,9 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
 
         <p style={{
           fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6,
-          color: T.muted, fontStyle: "italic", maxWidth: 500, marginBottom: φ.lg,
+          color: T.muted, fontStyle: "italic", maxWidth: 640, marginBottom: φ.lg,
         }}>
-          Jelajahi arsip esai personal, opini, kritik kebudayaan, dan cerita pendek secara kronologis.
+          Kumpulan esai naratif yang dikemas sebagai paket seri kajian tematis serta katalog esai mandiri.
         </p>
 
         {/* ─── Category Tab Chips ─── */}
@@ -170,9 +183,8 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           overflowX: "auto",
           WebkitOverflowScrolling: "touch",
           paddingBottom: φ.sm,
-          paddingRight: φ.md,
           marginBottom: φ.md,
-          scrollbarWidth: "none", // Firefox
+          scrollbarWidth: "none",
         }}>
           {CATEGORIES.map(c => {
             const active = activeCat === c.id;
@@ -194,34 +206,17 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                   transition: "all .18s ease",
                   whiteSpace: "nowrap",
                 }}
-                onMouseEnter={e => {
-                  if (!active) {
-                    e.currentTarget.style.borderColor = T.ink as string;
-                    e.currentTarget.style.color = T.ink as string;
-                  }
-                }}
-                onMouseLeave={e => {
-                  if (!active) {
-                    e.currentTarget.style.borderColor = "var(--border)";
-                    e.currentTarget.style.color = T.muted as string;
-                  }
-                }}
               >
                 {c.label}
               </button>
             );
           })}
         </div>
-
-        <div style={{
-          marginBottom: φ.lg,
-          borderBottom: `1px solid ${T.border}`,
-        }} />
       </section>
 
-      {/* ─── Results (Chronological Feed) ─── */}
+      {/* ─── Main Content Area ─── */}
       <main className="cca-container section-pb">
-        {filtered.length === 0 && (
+        {filtered.length === 0 ? (
           <div style={{
             textAlign: "center", padding: `${φ.xxl}px 0`,
             color: T.subtle, fontFamily: "var(--font-mono)",
@@ -229,22 +224,63 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           }}>
             TIDAK ADA TULISAN YANG COCOK
           </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: φ.xxl }}>
+
+            {/* ════════════════ SERIES PACKAGES SECTION ════════════════ */}
+            {Object.keys(seriesMap.seriesPackages).length > 0 && (
+              <div>
+                <div style={{
+                  display: "flex", alignItems: "center", gap: φ.sm,
+                  marginBottom: φ.lg,
+                }}>
+                  <span style={{
+                    fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700,
+                    letterSpacing: 2.5, color: T.ink, textTransform: "uppercase"
+                  }}>
+                    PAKET SERI KAJIAN UTAMA
+                  </span>
+                  <div style={{ flex: 1, height: 1, background: T.border }} />
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: φ.xl }}>
+                  {Object.entries(seriesMap.seriesPackages).map(([seriesSlug, seriesArticles]) => (
+                    <Reveal key={seriesSlug}>
+                      <SeriesPackageCard seriesSlug={seriesSlug} chapters={seriesArticles} />
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ════════════════ STANDALONE ESSAYS SECTION ════════════════ */}
+            {seriesMap.standalone.length > 0 && (
+              <div>
+                <div style={{
+                  display: "flex", alignItems: "center", gap: φ.sm,
+                  marginBottom: φ.lg,
+                }}>
+                  <span style={{
+                    fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700,
+                    letterSpacing: 2.5, color: T.muted, textTransform: "uppercase"
+                  }}>
+                    ESAI MANDIRI &amp; KATALOG TULISAN
+                  </span>
+                  <div style={{ flex: 1, height: 1, background: T.border }} />
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {seriesMap.standalone.map((article, i) => (
+                    <Reveal key={article.slug} delay={i * 0.04}>
+                      <StandaloneArticleRow article={article} index={i} />
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          </div>
         )}
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          {filtered.slice(0, listVisibleCount).map((article, i) => (
-            <Reveal key={article.slug} delay={i * 0.03}>
-              <ArticleRow
-                article={article}
-                index={i}
-              />
-            </Reveal>
-          ))}
-
-          {filtered.length > listVisibleCount && (
-            <ShowMoreButton onClick={() => setListVisibleCount(prev => prev + 10)} />
-          )}
-        </div>
       </main>
 
       <Footer />
@@ -253,7 +289,200 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
   );
 }
 
-function ArticleRow({ article, index }: { article: Article; index: number }) {
+/* ─── Encapsulated Series Package Card Component ─── */
+function SeriesPackageCard({ seriesSlug, chapters }: { seriesSlug: string; chapters: Article[] }) {
+  const firstChapter = chapters[0];
+
+  return (
+    <div
+      style={{
+        background: T.white,
+        border: `1px solid ${T.border}`,
+        borderLeft: `6px solid ${brandAccent}`,
+        borderRadius: "3px",
+        overflow: "hidden",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
+      }}
+    >
+      {/* ─── Package Banner Header ─── */}
+      <div style={{ padding: `${φ.lg}px ${φ.lg}px ${φ.md}px ${φ.lg}px` }}>
+        <div style={{
+          display: "flex", justifyContent: "space-between",
+          alignItems: "center", flexWrap: "wrap", gap: 10,
+          marginBottom: φ.sm,
+        }}>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <span style={{
+              fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 700,
+              letterSpacing: 2, color: "#FFFFFF", background: brandAccent,
+              padding: "4px 10px", borderRadius: 2, textTransform: "uppercase",
+            }}>
+              PAKET SERI KAJIAN · {chapters.length} BAB
+            </span>
+            <span style={{
+              fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 600,
+              letterSpacing: 1.5, color: T.muted, background: T.faint,
+              border: `1px solid ${T.border}`, padding: "3px 8px", borderRadius: 2,
+            }}>
+              100% LENGKAP
+            </span>
+          </div>
+
+          <span style={{
+            fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 600,
+            letterSpacing: 1.5, color: T.subtle,
+          }}>
+            SERI #01 · PSIKOLOGI EVOLUSI
+          </span>
+        </div>
+
+        {/* Series Title */}
+        <h2 style={{
+          fontFamily: "var(--font-display)", fontWeight: 800,
+          fontSize: "clamp(26px, 3.5vw, 36px)", lineHeight: 1.15,
+          letterSpacing: "-0.03em", color: T.ink,
+          marginBottom: φ.xs,
+        }}>
+          Seri Kajian: Psikologi Evolusi &amp; Perilaku Manusia
+        </h2>
+
+        {/* Series Description */}
+        <p style={{
+          fontFamily: "var(--font-body)", fontSize: 15.5, lineHeight: 1.6,
+          color: T.muted, fontStyle: "italic", maxWidth: 760,
+          marginBottom: φ.md,
+        }}>
+          Rangkaian 5 esai naratif yang membedah arsitektur perilaku, evolusi pemikiran, dan mekanisme tersembunyi kebudayaan manusia dalam satu paket kajian utuh.
+        </p>
+
+        {/* Action Button */}
+        {firstChapter && (
+          <div style={{ display: "flex", gap: φ.md, alignItems: "center" }}>
+            <Link
+              href={`/artikel/${firstChapter.slug}`}
+              className="card-hero-btn"
+              style={{
+                background: brandAccent,
+                color: "#FFFFFF",
+                padding: "10px 22px",
+                fontFamily: "var(--font-mono)",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: 1.5,
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                borderRadius: 2,
+                boxShadow: "0 2px 8px rgba(179,45,45,0.2)",
+              }}
+            >
+              <span>MULAI MEMBACA SERI (BAB 1)</span>
+              <span>→</span>
+            </Link>
+          </div>
+        )}
+      </div>
+
+      {/* ─── Encapsulated Chapter List Container ─── */}
+      <div style={{
+        background: T.bg,
+        borderTop: `1px solid ${T.border}`,
+        padding: φ.lg,
+      }}>
+        <div style={{
+          fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 700,
+          letterSpacing: 2, color: T.subtle, marginBottom: φ.md,
+          textTransform: "uppercase", display: "flex", alignItems: "center", gap: 8,
+        }}>
+          <span>DAFTAR BAB DALAM PAKET SERI INI</span>
+          <div style={{ flex: 1, height: 1, background: T.border }} />
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {chapters.map((ch, idx) => (
+            <ChapterRow key={ch.slug} chapter={ch} index={idx} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Chapter Row Component inside Series Package ─── */
+function ChapterRow({ chapter, index }: { chapter: Article; index: number }) {
+  const [hov, setHov] = useState(false);
+
+  return (
+    <Link
+      href={`/artikel/${chapter.slug}`}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        textDecoration: "none",
+        color: "inherit",
+        background: T.white,
+        border: `1px solid ${hov ? brandAccent : T.border}`,
+        borderLeft: `4px solid ${hov ? brandAccent : T.ink}`,
+        padding: "14px 18px",
+        borderRadius: "2px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: φ.md,
+        transition: "all 0.2s ease",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: φ.md, minWidth: 0, flex: 1 }}>
+        {/* Chapter Index Badge */}
+        <span style={{
+          fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 700,
+          letterSpacing: 1.5, color: hov ? brandAccent : T.muted,
+          background: T.faint, padding: "4px 8px", borderRadius: 2,
+          flexShrink: 0, transition: "color 0.2s",
+        }}>
+          BAB {String(index + 1).padStart(2, "0")}
+        </span>
+
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <h3 style={{
+            fontFamily: "var(--font-display)", fontWeight: 700,
+            fontSize: 16.5, lineHeight: 1.25, letterSpacing: "-0.015em",
+            color: hov ? brandAccent : T.ink,
+            margin: 0, transition: "color 0.2s",
+          }}>
+            {chapter.title}
+          </h3>
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: 13,
+            color: T.muted, fontStyle: "italic", margin: "2px 0 0 0",
+            whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+          }}>
+            {chapter.subtitle || chapter.excerpt}
+          </p>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
+        <span style={{
+          fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5,
+          color: T.subtle, fontWeight: 500,
+        }}>
+          {chapter.reading_time.toUpperCase()}
+        </span>
+        <span style={{
+          fontFamily: "var(--font-mono)", fontSize: 12, color: hov ? brandAccent : T.subtle,
+          transform: hov ? "translateX(3px)" : "translateX(0)", transition: "transform 0.2s, color 0.2s",
+        }}>
+          →
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+/* ─── Standalone Article Row Component ─── */
+function StandaloneArticleRow({ article, index }: { article: Article; index: number }) {
   const [hov, setHov] = useState(false);
 
   return (
@@ -262,101 +491,47 @@ function ArticleRow({ article, index }: { article: Article; index: number }) {
       onMouseLeave={() => setHov(false)}
       style={{
         textDecoration: "none", color: "inherit",
-        background: "var(--white)",
-        borderTop: `2px solid ${hov ? brandAccent : "var(--border)"}`,
-        borderRight: `2px solid ${hov ? brandAccent : "var(--border)"}`,
-        borderBottom: `2px solid ${hov ? brandAccent : "var(--border)"}`,
-        borderLeft: `5px solid ${brandAccent}`,
-        display: "flex", alignItems: "flex-start", gap: φ.md,
+        background: T.white,
+        border: `1px solid ${hov ? brandAccent : T.border}`,
+        borderLeft: `4px solid ${hov ? brandAccent : T.muted}`,
+        display: "flex", alignItems: "center", gap: φ.md,
         borderRadius: "2px",
         padding: φ.md,
-        transition: "all 0.25s ease",
+        transition: "all 0.2s ease",
       }}>
       <span style={{
-        fontFamily: "var(--font-display)", fontSize: 32,
+        fontFamily: "var(--font-display)", fontSize: 24,
         fontWeight: 700, color: hov ? brandAccent : T.subtle, lineHeight: 1,
-        minWidth: 42, textAlign: "right", flexShrink: 0, marginTop: 2,
-        transition: "color 0.25s",
+        minWidth: 32, textAlign: "right", flexShrink: 0,
+        transition: "color 0.2s",
       }}>{String(index + 1).padStart(2, "0")}</span>
 
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: "flex", gap: φ.xs, alignItems: "center", marginBottom: 6 }}>
+        <div style={{ display: "flex", gap: 6, alignItems: "center", marginBottom: 4 }}>
           <span style={{
             fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 700,
-            letterSpacing: 2, color: "#FFFFFF",
-            background: brandAccent,
-            padding: "3px 8px", borderRadius: 2,
-            textTransform: "uppercase",
+            letterSpacing: 1.5, color: T.muted, background: T.faint,
+            padding: "2px 6px", borderRadius: 2, textTransform: "uppercase",
           }}>
-            {article.series_order ? `BAGIAN ${article.series_order} DARI 5` : article.tipe_tulisan}
+            {article.tipe_tulisan}
           </span>
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-            {article.tags.slice(0, 3).map(tag => (
-              <span key={tag} style={{
-                fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 600,
-                letterSpacing: 1.5, color: T.muted, background: T.faint,
-                border: `1px solid ${T.border}`,
-                padding: "2px 6px", borderRadius: 2
-              }}>
-                #{tag.toUpperCase()}
-              </span>
-            ))}
-          </div>
         </div>
         
         <h3 style={{
           fontFamily: "var(--font-display)", fontWeight: 700,
-          fontSize: 20, lineHeight: 1.2, letterSpacing: "-0.015em",
-          marginBottom: 6,
-          color: hov ? brandAccent : "var(--ink)",
-          transition: "color 0.25s",
+          fontSize: 18, lineHeight: 1.25, letterSpacing: "-0.015em",
+          color: hov ? brandAccent : T.ink,
+          margin: 0, transition: "color 0.2s",
         }}>{article.title}</h3>
-        
-        <p style={{
-          fontFamily: "var(--font-body)", fontSize: 13.5,
-          lineHeight: 1.5, color: T.muted, fontStyle: "italic",
-        }}>{article.subtitle || article.excerpt}</p>
       </div>
 
-      <div style={{
-        display: "flex", flexDirection: "column", alignItems: "flex-end",
-        gap: 4, flexShrink: 0,
+      <span style={{
+        fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5,
+        color: T.subtle, flexShrink: 0,
       }}>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5, color: hov ? brandAccent : T.subtle, fontWeight: hov ? 700 : 500, transition: "color 0.25s" }}>
-          {article.reading_time.toUpperCase()}
-        </span>
-      </div>
+        {article.reading_time.toUpperCase()}
+      </span>
     </Link>
   );
 }
 
-function ShowMoreButton({ onClick }: { onClick: () => void }) {
-  return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: φ.lg }}>
-      <button
-        onClick={onClick}
-        className="link-hover"
-        style={{
-          fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 500,
-          letterSpacing: 2, padding: `${φ.sm}px ${φ.lg}px`,
-          border: `1px solid ${T.border}`,
-          background: T.white,
-          color: T.muted,
-          cursor: "pointer",
-          transition: "all .2s",
-          textTransform: "uppercase",
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.borderColor = T.ink as string;
-          e.currentTarget.style.color = T.ink as string;
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.borderColor = T.border as string;
-          e.currentTarget.style.color = T.muted as string;
-        }}
-      >
-        Lihat Lebih Banyak ↓
-      </button>
-    </div>
-  );
-}
