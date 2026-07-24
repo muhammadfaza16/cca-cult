@@ -190,23 +190,27 @@ export default async function HomePage() {
                 <div style={{ display: "flex", gap: φ.md, alignItems: "center" }}>
                   <Link
                     href={`/artikel/${hero.slug}`}
-                    className="link-hover"
+                    className="card-hero-btn"
                     style={{
+                      background: brandAccent,
+                      color: "#FFFFFF",
+                      padding: "6px 14px",
                       fontFamily: "var(--font-mono)",
-                      fontSize: 9.5,
+                      fontSize: 9,
                       fontWeight: 700,
                       letterSpacing: 2,
-                      color: brandAccent,
                       textDecoration: "none",
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 6,
+                      borderRadius: 2,
+                      boxShadow: "0 2px 8px rgba(179,45,45,0.15)",
+                      transition: "all 0.2s ease",
                     }}
                   >
                     <span>BACA MULAI DARI SINI</span>
-                    <span style={{ fontSize: 11 }}>→</span>
+                    <span style={{ fontSize: 10 }}>→</span>
                   </Link>
-                  <span style={{ color: T.border, fontSize: 9 }}>·</span>
                   <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle, letterSpacing: 1.5 }}>
                     {hero.reading_time.toUpperCase()} WAKTU BACA
                   </span>
