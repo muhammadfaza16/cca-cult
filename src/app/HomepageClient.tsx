@@ -49,7 +49,6 @@ export function HomepageClient({ articles }: Props) {
           gap: 6,
           overflowX: "auto",
           paddingBottom: φ.xs,
-          borderBottom: "1px solid var(--border)",
           scrollbarWidth: "none",
         }}>
           {CATEGORIES.map(c => {

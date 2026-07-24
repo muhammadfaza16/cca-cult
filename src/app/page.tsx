@@ -57,7 +57,6 @@ export default async function HomePage() {
       {/* ════════════════ MAJESTIC EDITORIAL MASTHEAD ════════════════ */}
       <section style={{
         background: T.white,
-        borderBottom: "1.5px solid var(--ink)",
         padding: `${φ.xl}px 0 ${φ.lg}px 0`,
         textAlign: "center",
       }}>
@@ -69,7 +68,6 @@ export default async function HomePage() {
             letterSpacing: 2,
             color: T.muted,
             paddingBottom: φ.xs,
-            borderBottom: "1px solid var(--border)",
             marginBottom: φ.sm,
           }}>
             <span>JURNAL ESENSIAL</span>
@@ -115,7 +113,6 @@ export default async function HomePage() {
       {hero && (
         <section style={{
           background: T.white,
-          borderBottom: "1px solid var(--border)",
           position: "relative", overflow: "hidden",
         }}>
           <div className="cca-container hero-pt" style={{ position: "relative", paddingBottom: φ.xl }}>
