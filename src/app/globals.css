@@ -234,22 +234,17 @@ body::before {
 .prose-cca h2 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 30px;
+  font-size: 32px;
   line-height: 1.15;
   letter-spacing: -0.03em;
   color: var(--ink);
-  margin-top: 52px;
-  margin-bottom: 18px;
-  padding-top: 20px;
-  padding-left: 16px;
-  border-top: 1px solid var(--border);
-  border-left: 4px solid #B32D2D;
+  margin-top: 48px;
+  margin-bottom: 16px;
 }
 
 @media (min-width: 1024px) {
   .prose-cca h2 {
-    font-size: 34px;
-    padding-top: 24px;
+    font-size: 36px;
   }
 }
 
@@ -568,11 +563,9 @@ body::before {
     margin-bottom: 18px;
   }
   .prose-cca h2 {
-    font-size: 25px;
-    margin-top: 40px;
-    margin-bottom: 14px;
-    padding-top: 16px;
-    padding-left: 12px;
+    font-size: 26px;
+    margin-top: 36px;
+    margin-bottom: 12px;
   }
   .prose-cca h3 {
     font-size: 19px;
