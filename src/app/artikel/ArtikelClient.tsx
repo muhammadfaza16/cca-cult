@@ -95,10 +95,26 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
       map[key].sort((a, b) => (a.series_order || 0) - (b.series_order || 0));
     });
 
+    // Enforce preferred series order: Evolution Series ALWAYS first!
+    const preferredOrder = ["psikologi-evolusi", "psikologi-agama"];
+    const orderedSeriesPackages: Record<string, Article[]> = {};
+    const sortedKeys = Object.keys(map).sort((a, b) => {
+      const idxA = preferredOrder.indexOf(a);
+      const idxB = preferredOrder.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a.localeCompare(b);
+    });
+
+    sortedKeys.forEach(k => {
+      orderedSeriesPackages[k] = map[k];
+    });
+
     // Sort standalone chronologically
     standalone.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
 
-    return { seriesPackages: map, standalone };
+    return { seriesPackages: orderedSeriesPackages, standalone };
   }, [filtered]);
 
   return (

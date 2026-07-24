@@ -9,16 +9,13 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 export default async function HomePage() {
   const allArticles = await getAllArticles();
 
-  // All articles, sorted chronologically by series_order (1 -> 5)
-  const curated = allArticles.sort((a, b) => {
-    if (a.series_order !== undefined && b.series_order !== undefined) {
-      return a.series_order - b.series_order;
-    }
-    return new Date(a.published_at).getTime() - new Date(b.published_at).getTime();
-  });
+  // Always showcase the flagship Evolution Series as the starter etalase
+  const evolutionArticles = allArticles
+    .filter(a => a.series_slug === "psikologi-evolusi" || !a.series_slug)
+    .sort((a, b) => (a.series_order || 99) - (b.series_order || 99));
 
-  const hero = curated[0];
-  const seriesArticles = curated.slice(1);
+  const hero = evolutionArticles.find(a => a.series_order === 1) || evolutionArticles[0];
+  const seriesArticles = evolutionArticles.filter(a => a.slug !== hero.slug);
 
   return (
     <div suppressHydrationWarning style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
