@@ -229,7 +229,7 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
           style={{
             position: "fixed",
             bottom: 24,
-            right: 20,
+            left: 20,
             width: 44,
             height: 44,
             borderRadius: "50%",
