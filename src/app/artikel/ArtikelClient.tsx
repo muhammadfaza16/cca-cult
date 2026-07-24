@@ -293,6 +293,23 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
 function SeriesPackageCard({ seriesSlug, chapters }: { seriesSlug: string; chapters: Article[] }) {
   const firstChapter = chapters[0];
 
+  const seriesInfo = useMemo(() => {
+    if (seriesSlug === "psikologi-agama") {
+      return {
+        number: "SERI #02 · PSIKOLOGI AGAMA",
+        title: "Seri Kajian: Arsitektur Otak & Asal-Usul Kepercayaan Supernatural",
+        desc: "Kajian kognitif dan antropologi evolusi yang membedah mengapa arsitektur pikiran manusia membuat kepercayaan supernatural hampir tak terhindarkan.",
+        status: chapters.length >= 5 ? "100% LENGKAP" : `TERSEDIA BAB 1 (${chapters.length}/5)`,
+      };
+    }
+    return {
+      number: "SERI #01 · PSIKOLOGI EVOLUSI",
+      title: "Seri Kajian: Psikologi Evolusi & Perilaku Manusia",
+      desc: "Rangkaian esai naratif yang membedah arsitektur perilaku, evolusi pemikiran, dan mekanisme tersembunyi kebudayaan manusia dalam satu paket kajian utuh.",
+      status: chapters.length >= 5 ? "100% LENGKAP" : `TERSEDIA ${chapters.length} BAB`,
+    };
+  }, [seriesSlug, chapters.length]);
+
   return (
     <div
       style={{
@@ -324,7 +341,7 @@ function SeriesPackageCard({ seriesSlug, chapters }: { seriesSlug: string; chapt
               letterSpacing: 1.5, color: T.muted, background: T.faint,
               border: `1px solid ${T.border}`, padding: "3px 8px", borderRadius: 2,
             }}>
-              100% LENGKAP
+              {seriesInfo.status}
             </span>
           </div>
 
@@ -332,18 +349,18 @@ function SeriesPackageCard({ seriesSlug, chapters }: { seriesSlug: string; chapt
             fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 600,
             letterSpacing: 1.5, color: T.subtle,
           }}>
-            SERI #01 · PSIKOLOGI EVOLUSI
+            {seriesInfo.number}
           </span>
         </div>
 
         {/* Series Title */}
         <h2 style={{
           fontFamily: "var(--font-display)", fontWeight: 800,
-          fontSize: "clamp(26px, 3.5vw, 36px)", lineHeight: 1.15,
+          fontSize: "clamp(24px, 3.5vw, 36px)", lineHeight: 1.15,
           letterSpacing: "-0.03em", color: T.ink,
           marginBottom: φ.xs,
         }}>
-          Seri Kajian: Psikologi Evolusi &amp; Perilaku Manusia
+          {seriesInfo.title}
         </h2>
 
         {/* Series Description */}
@@ -352,7 +369,7 @@ function SeriesPackageCard({ seriesSlug, chapters }: { seriesSlug: string; chapt
           color: T.muted, fontStyle: "italic", maxWidth: 760,
           marginBottom: φ.md,
         }}>
-          Rangkaian 5 esai naratif yang membedah arsitektur perilaku, evolusi pemikiran, dan mekanisme tersembunyi kebudayaan manusia dalam satu paket kajian utuh.
+          {seriesInfo.desc}
         </p>
 
         {/* Action Button */}
