@@ -330,7 +330,9 @@ function SeriesPackageCard({ seriesSlug, chapters }: { seriesSlug: string; chapt
     <div
       style={{
         background: T.white,
-        border: `1px solid ${T.border}`,
+        borderTop: `1px solid ${T.border}`,
+        borderRight: `1px solid ${T.border}`,
+        borderBottom: `1px solid ${T.border}`,
         borderLeft: `6px solid ${brandAccent}`,
         borderRadius: "3px",
         overflow: "hidden",
@@ -455,7 +457,9 @@ function ChapterRow({ chapter, index }: { chapter: Article; index: number }) {
         textDecoration: "none",
         color: "inherit",
         background: T.white,
-        border: `1px solid ${hov ? brandAccent : T.border}`,
+        borderTop: `1px solid ${hov ? brandAccent : T.border}`,
+        borderRight: `1px solid ${hov ? brandAccent : T.border}`,
+        borderBottom: `1px solid ${hov ? brandAccent : T.border}`,
         borderLeft: `4px solid ${hov ? brandAccent : T.ink}`,
         padding: "14px 18px",
         borderRadius: "2px",
@@ -525,7 +529,9 @@ function StandaloneArticleRow({ article, index }: { article: Article; index: num
       style={{
         textDecoration: "none", color: "inherit",
         background: T.white,
-        border: `1px solid ${hov ? brandAccent : T.border}`,
+        borderTop: `1px solid ${hov ? brandAccent : T.border}`,
+        borderRight: `1px solid ${hov ? brandAccent : T.border}`,
+        borderBottom: `1px solid ${hov ? brandAccent : T.border}`,
         borderLeft: `4px solid ${hov ? brandAccent : T.muted}`,
         display: "flex", alignItems: "center", gap: φ.md,
         borderRadius: "2px",
