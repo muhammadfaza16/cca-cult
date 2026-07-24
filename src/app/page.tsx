@@ -59,7 +59,7 @@ export default async function HomePage() {
       {/* ════════════════ COMPACT EDITORIAL MASTHEAD ════════════════ */}
       <section style={{
         background: T.white,
-        padding: "32px 0 24px 0",
+        padding: "24px 0 16px 0",
         borderBottom: `1px solid ${T.faint}`,
         textAlign: "center",
       }}>
@@ -67,12 +67,12 @@ export default async function HomePage() {
           {/* Sleek Logo */}
           <h1 style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(34px, 5.5vw, 52px)",
+            fontSize: "clamp(32px, 5vw, 48px)",
             fontWeight: 800,
             letterSpacing: "-0.03em",
             lineHeight: 1,
             color: T.ink,
-            margin: "0 0 12px 0",
+            margin: "0 0 6px 0",
             textTransform: "lowercase",
           }}>
             postulate<span style={{ color: brandAccent }}>.</span>
@@ -81,15 +81,14 @@ export default async function HomePage() {
           {/* Compact Platform Meta Info */}
           <div style={{
             fontFamily: "var(--font-mono)",
-            fontSize: 9,
-            letterSpacing: 2.5,
+            fontSize: 8.5,
+            letterSpacing: 2,
             color: T.muted,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: 16,
-            marginTop: 8,
+            gap: 10,
           }}>
             <span>PUBLIKASI ESAI &amp; KAJIAN BEBAS</span>
             <span style={{ color: T.border }}>|</span>
@@ -105,7 +104,7 @@ export default async function HomePage() {
         <section style={{
           background: T.white,
           position: "relative", overflow: "hidden",
-          padding: "36px 0 48px 0",
+          padding: "28px 0 48px 0",
         }}>
           <div className="cca-container" style={{ position: "relative" }}>
             <div className={hero.og_image ? "hero-split-layout" : ""}>
@@ -122,33 +121,42 @@ export default async function HomePage() {
                       objectFit: "cover",
                     }}
                   />
+                  {/* Floating Overlay Badge on Image */}
+                  <div style={{
+                    position: "absolute",
+                    top: 14,
+                    left: 14,
+                    zIndex: 10,
+                  }}>
+                    <span style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 9,
+                      fontWeight: 700,
+                      letterSpacing: 2,
+                      color: "#FFFFFF",
+                      background: brandAccent,
+                      padding: "5px 12px",
+                      borderRadius: 2,
+                      textTransform: "uppercase",
+                      boxShadow: "0 4px 14px rgba(0,0,0,0.35)",
+                    }}>
+                      {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
+                    </span>
+                  </div>
                 </Link>
               )}
               
               {/* Content Column */}
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", padding: "8px 0" }}>
                 <div>
-                  {/* Top Kicker Bar — Explicit Series Opener Context */}
+                  {/* Top Kicker Bar */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-                    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-                      <span style={{
-                        fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
-                        letterSpacing: 1.5, color: "#FFFFFF",
-                        background: brandAccent,
-                        padding: "4px 9px", borderRadius: 2,
-                        textTransform: "uppercase",
-                      }}>
-                        SERI #01 · PSIKOLOGI EVOLUSI
-                      </span>
-                      <span style={{
-                        fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 600,
-                        letterSpacing: 1.5, color: T.muted, background: T.faint,
-                        border: `1px solid ${T.border}`, padding: "3px 8px", borderRadius: 2,
-                        textTransform: "uppercase",
-                      }}>
-                        BAB 01 (PEMBUKA SERI)
-                      </span>
-                    </div>
+                    <span style={{
+                      fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 700,
+                      letterSpacing: 2, color: brandAccent, textTransform: "uppercase",
+                    }}>
+                      SERI #01 · PSIKOLOGI EVOLUSI
+                    </span>
 
                     <span style={{
                       fontFamily: "var(--font-display)", fontSize: 32,
@@ -173,7 +181,7 @@ export default async function HomePage() {
                   </Link>
                 </div>
 
-                {/* Unified Footer Action Bar */}
+                {/* Unified Footer Action Bar — Matched to regular cards */}
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 28 }}>
                   <Link
                     href={`/artikel/${hero.slug}`}
@@ -186,7 +194,7 @@ export default async function HomePage() {
                   >
                     <div style={{ height: 2, width: 28, background: brandAccent }} />
                     <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
-                      MULAI MEMBACA BAB 01 · {hero.reading_time.toUpperCase()} WAKTU BACA →
+                      BACA BAB 01 · {hero.reading_time.toUpperCase()} WAKTU BACA →
                     </span>
                   </Link>
                 </div>
