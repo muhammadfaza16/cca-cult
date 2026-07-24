@@ -260,22 +260,37 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
         </button>
 
         {isMobileOpen && (
-          <nav
-            style={{
-              position: "fixed",
-              bottom: 88,
-              right: 24,
-              left: 24,
-              maxHeight: "65vh",
-              overflowY: "auto",
-              background: T.white,
-              border: `2px solid ${brandAccent}`,
-              boxShadow: "0 8px 40px rgba(0,0,0,.3)",
-              zIndex: 90,
-              padding: "20px",
-              animation: "fadeUp .2s ease",
-            }}
-          >
+          <>
+            {/* Full-screen click-away overlay to close drawer when clicking anywhere */}
+            <div
+              onClick={() => setIsMobileOpen(false)}
+              style={{
+                position: "fixed",
+                inset: 0,
+                background: "rgba(0, 0, 0, 0.35)",
+                backdropFilter: "blur(2px)",
+                zIndex: 85,
+                animation: "fadeIn .15s ease",
+              }}
+            />
+
+            <nav
+              style={{
+                position: "fixed",
+                bottom: 80,
+                right: 20,
+                left: 20,
+                maxHeight: "65vh",
+                overflowY: "auto",
+                background: T.white,
+                border: `2px solid ${brandAccent}`,
+                boxShadow: "0 12px 48px rgba(0,0,0,.35)",
+                zIndex: 90,
+                padding: "20px",
+                borderRadius: "4px",
+                animation: "fadeUp .2s ease",
+              }}
+            >
             {headings.length > 0 && (
               <div style={{ marginBottom: 20 }}>
                 <div
@@ -345,7 +360,8 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
               </div>
             </div>
           </nav>
-        )}
+        </>
+      )}
       </div>
     </>
   );
