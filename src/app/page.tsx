@@ -194,22 +194,23 @@ export default async function HomePage() {
                     style={{
                       background: brandAccent,
                       color: "#FFFFFF",
-                      padding: "5px 18px",
+                      padding: "10px 22px",
                       fontFamily: "var(--font-mono)",
-                      fontSize: 9,
-                      fontWeight: 700,
-                      letterSpacing: 2,
-                      lineHeight: 1,
+                      fontSize: 11,
+                      fontWeight: 600,
+                      letterSpacing: 1.5,
                       textDecoration: "none",
-                      display: "inline-block",
-                      borderRadius: 2,
-                      width: "fit-content",
-                      transition: "opacity 0.2s ease",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: 3,
+                      boxShadow: "0 2px 8px rgba(179,45,45,0.2)",
+                      transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
                     }}
                   >
                     BACA MULAI DARI SINI
                   </Link>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle, letterSpacing: 1.5 }}>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, color: T.subtle, letterSpacing: 1.5 }}>
                     {hero.reading_time.toUpperCase()} WAKTU BACA
                   </span>
                 </div>
