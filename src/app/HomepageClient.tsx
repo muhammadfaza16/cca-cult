@@ -125,10 +125,10 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
         <section className="cca-container section-pb">
           <div style={{
             display: "flex", alignItems: "center", gap: φ.sm,
-            marginBottom: 32, marginTop: 48,
+            marginBottom: 20, marginTop: 36,
           }}>
             <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 10.5, fontWeight: 700,
+              fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700,
               letterSpacing: 2.5, color: T.ink, textTransform: "uppercase"
             }}>
               ESAI MANDIRI &amp; KAJIAN TERBARU
@@ -145,7 +145,7 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-            gap: 36,
+            gap: 28,
           }}>
             {standaloneArticles.map((article, i) => (
               <Reveal key={article.slug} delay={i * 0.06}>

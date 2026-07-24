@@ -104,18 +104,18 @@ export default async function HomePage() {
         <section style={{
           background: T.white,
           position: "relative", overflow: "hidden",
-          padding: "28px 0 48px 0",
+          padding: "24px 0 32px 0",
         }}>
           <div className="cca-container" style={{ position: "relative" }}>
             <div className={hero.og_image ? "hero-split-layout" : ""}>
 
               {/* Image Column (Left on Desktop / Top on Mobile) */}
               {hero.og_image && (
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <div>
                     <span style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: 9.5,
+                      fontSize: 9,
                       fontWeight: 700,
                       letterSpacing: 2,
                       color: brandAccent,
@@ -141,10 +141,10 @@ export default async function HomePage() {
               )}
               
               {/* Content Column */}
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", padding: "8px 0" }}>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", padding: "4px 0" }}>
                 <div>
                   {/* Top Kicker Bar */}
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
                     <span style={{
                       fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
                       letterSpacing: 1.5, color: "#FFFFFF",
@@ -156,7 +156,7 @@ export default async function HomePage() {
                     </span>
 
                     <span style={{
-                      fontFamily: "var(--font-display)", fontSize: 32,
+                      fontFamily: "var(--font-display)", fontSize: 28,
                       fontWeight: 800, lineHeight: 1, color: T.border,
                     }}>01</span>
                   </div>
@@ -165,21 +165,21 @@ export default async function HomePage() {
                   <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
                     <h2 style={{
                       fontFamily: "var(--font-display)", fontWeight: 800,
-                      fontSize: "clamp(28px, 4vw, 44px)", lineHeight: 1.15,
+                      fontSize: "clamp(26px, 3.8vw, 42px)", lineHeight: 1.15,
                       letterSpacing: "-0.03em", color: T.ink,
-                      marginBottom: 14,
+                      marginBottom: 10,
                       transition: "color 0.2s ease",
                     }}>{hero.title}</h2>
                     
                     <p style={{
-                      fontFamily: "var(--font-body)", fontSize: 16.5, lineHeight: 1.6,
+                      fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6,
                       color: T.muted, fontStyle: "italic", margin: 0,
                     }}>{hero.subtitle || hero.excerpt}</p>
                   </Link>
                 </div>
 
-                {/* Unified Footer Action Bar — Matched to regular cards */}
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 28 }}>
+                {/* Unified Footer Action Bar */}
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 20 }}>
                   <Link
                     href={`/artikel/${hero.slug}`}
                     style={{
