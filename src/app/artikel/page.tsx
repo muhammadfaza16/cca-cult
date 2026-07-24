@@ -4,8 +4,8 @@ import { Suspense } from "react";
 import { ArtikelClient } from "./ArtikelClient";
 
 export const metadata: Metadata = {
-  title: "Arsip Artikel",
-  description: "Jelajahi seluruh koleksi artikel Postulate — cari, filter, dan temukan yang kamu mau.",
+  title: "Arsip Tulisan",
+  description: "Jelajahi seluruh arsip tulisan dan kajian esai dalam Seri Psikologi Evolusi.",
 };
 
 export default async function ArtikelPage() {
@@ -17,15 +17,13 @@ export default async function ArtikelPage() {
     title: a.title,
     subtitle: a.subtitle,
     excerpt: a.excerpt,
-    discipline: a.discipline,
-    topic_pillar: a.topic_pillar,
-    difficulty: a.difficulty,
+    domain: a.domain || null,
+    kategori: a.kategori,
+    tipe_tulisan: a.tipe_tulisan,
     tags: a.tags,
     author: a.author,
     reading_time: a.reading_time,
     published_at: a.published_at,
-    logic_stage: a.logic_stage,
-    logic_priority: a.logic_priority,
   }));
 
   return (

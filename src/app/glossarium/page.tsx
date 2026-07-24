@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Glossarium — Kamus Konsep",
-  description: "Kamus istilah dan konsep kunci dari seluruh artikel Postulate. Dari Entropi hingga Quantum Entanglement.",
+  description: "Kamus istilah dan konsep kunci dari seluruh tulisan dan esai. Dari Entropi hingga Quantum Entanglement.",
 };
 
 export default async function GlossariumPage() {

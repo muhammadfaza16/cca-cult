@@ -73,15 +73,15 @@ export default function MasukPage() {
             className="text-3xl font-black tracking-tight mb-2"
             style={{ color: "var(--text-primary)", fontFamily: "var(--font-sans)" }}
           >
-            {mode === "login" ? "Selamat Datang Kembali" : "Bergabung dengan CCA"}
+            {mode === "login" ? "Selamat Datang Kembali" : "Bergabung dengan Postulate"}
           </h1>
           <p
             className="text-base"
             style={{ color: "var(--text-secondary)" }}
           >
             {mode === "login"
-              ? "Masuk untuk melanjutkan perjalanan belajarmu."
-              : "Mulai upgrade cara berpikirmu hari ini."}
+              ? "Masuk untuk melanjutkan esai dan catatan dialektika."
+              : "Akses eksplorasi psikologi evolusi & kebudayaan."}
           </p>
         </div>
 

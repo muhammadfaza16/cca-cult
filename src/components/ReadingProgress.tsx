@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from "react";
 
-export function ReadingProgress() {
+interface ReadingProgressProps {
+  color?: string;
+}
+
+export function ReadingProgress({ color = "#C49B1A" }: ReadingProgressProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -18,7 +22,11 @@ export function ReadingProgress() {
   return (
     <div
       className="reading-progress"
-      style={{ width: `${progress}%`, background: "#C49B1A" }}
+      style={{ 
+        width: `${progress}%`, 
+        background: color,
+        height: 3,
+      }}
     />
   );
 }

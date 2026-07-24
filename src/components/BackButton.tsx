@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { T } from "@/lib/tokens";
+import { useState } from "react";
 
 interface BackButtonProps {
   label?: string;
@@ -9,13 +10,16 @@ interface BackButtonProps {
   className?: string;
 }
 
-export function BackButton({ label = "← Kembali", style, className }: BackButtonProps) {
+export function BackButton({ label = "Kembali", style, className }: BackButtonProps) {
   const router = useRouter();
+  const [hov, setHov] = useState(false);
 
   return (
     <button
       onClick={() => router.back()}
-      className={className || "link-hover"}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      className={className}
       style={{
         background: "none",
         border: "none",
@@ -23,15 +27,27 @@ export function BackButton({ label = "← Kembali", style, className }: BackButt
         margin: 0,
         cursor: "pointer",
         fontFamily: "var(--font-mono)",
-        fontSize: 11,
-        color: T.muted,
+        fontSize: 10,
+        letterSpacing: 2,
+        color: hov ? "var(--ink)" : "var(--muted)",
         display: "flex",
         alignItems: "center",
-        gap: 6,
+        gap: 8,
+        transition: "color 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+        textTransform: "uppercase",
         ...style,
       }}
     >
-      {label}
+      <span
+        style={{
+          display: "inline-block",
+          transform: hov ? "translateX(-4px)" : "translateX(0)",
+          transition: "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+      >
+        ←
+      </span>
+      <span>{label}</span>
     </button>
   );
 }

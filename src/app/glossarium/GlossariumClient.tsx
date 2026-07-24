@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useState, useMemo } from "react";
-import { T, CATS, φ } from "@/lib/tokens";
+import { T, DOMAINS, φ } from "@/lib/tokens";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import type { GlossaryEntry } from "@/lib/glossary";
 
 interface Props {
@@ -43,8 +44,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
     <div style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
 
       {/* ─── Header ─── */}
-      <header style={{
-        background: T.bg, borderBottom: `1px solid ${T.border}`,
+      <header className="glass-nav" style={{
         position: "sticky", top: 0, zIndex: 100,
       }}>
         <div className="cca-container" style={{
@@ -58,10 +58,9 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
             <span style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 700, letterSpacing: "-0.01em" }}>pos·tu·late</span>
             <span style={{ fontFamily: "var(--font-body)", fontSize: 14, fontStyle: "italic", color: T.muted }}>noun.</span>
           </Link>
-          <Link href="/" className="link-hover" style={{
-            fontFamily: "var(--font-mono)", fontSize: 11,
-            color: T.muted, textDecoration: "none",
-          }}>← Beranda</Link>
+          <Link href="/" className="back-btn-hover">
+            <span>←</span> Beranda
+          </Link>
         </div>
       </header>
 
@@ -190,7 +189,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
             {/* Term cards */}
             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
               {grouped[letter].map(entry => {
-                const pillarColor = CATS[entry.pillar]?.color || T.ink;
+                const domainColorVal = DOMAINS[entry.domain]?.color || T.ink;
                 return (
                   <Link key={entry.term} href={`/artikel/${entry.source_slug}`}
                     className="card-hover"
@@ -205,8 +204,8 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
                       <div style={{ display: "flex", gap: φ.xs, alignItems: "center", marginBottom: 6 }}>
                         <span style={{
                           fontFamily: "var(--font-mono)", fontSize: 9,
-                          letterSpacing: 2.5, color: pillarColor,
-                        }}>{CATS[entry.pillar]?.label.toUpperCase()}</span>
+                          letterSpacing: 2.5, color: domainColorVal,
+                        }}>{DOMAINS[entry.domain]?.label.toUpperCase()}</span>
                       </div>
                       <h3 style={{
                         fontFamily: "var(--font-display)", fontWeight: 600,
@@ -224,7 +223,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
                     }}>
                       <span style={{
                         fontFamily: "var(--font-mono)", fontSize: 8,
-                        letterSpacing: 1.5, color: pillarColor,
+                        letterSpacing: 1.5, color: domainColorVal,
                       }}>BACA →</span>
                     </div>
                   </Link>
@@ -236,6 +235,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
       </main>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

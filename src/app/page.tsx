@@ -1,83 +1,32 @@
 import Link from "next/link";
 import { getAllArticles } from "@/lib/mdx";
-import { T, CATS, φ, catColor } from "@/lib/tokens";
+import { T, φ, brandAccent, formatIndonesianDate } from "@/lib/tokens";
 import { Footer } from "@/components/Footer";
 import { MobileNav } from "@/components/MobileNav";
 import { HomepageClient } from "./HomepageClient";
-
-function TopicIcon({ pillar, color }: { pillar: string, color: string }) {
-  const fill = color + "26"; // ~15% opacity (Un-shy)
-  switch (pillar) {
-    case "logika":
-      return (
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M25 35 Q28 25 38 25 L65 25 Q75 25 75 35 L75 65 Q75 75 65 75 L38 75 Q28 75 25 65 Z" fill={fill} stroke={color} strokeWidth="1.5" />
-          <path d="M45 45 Q48 35 58 35 L85 35 Q95 35 95 45 L95 75 Q95 85 85 85 L58 85 Q48 85 45 75 Z" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-        </svg>
-      );
-    case "sains":
-      return (
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="12" fill={fill} stroke="currentColor" strokeWidth="2.5" />
-          <ellipse cx="50" cy="50" rx="40" ry="15" stroke={color} strokeWidth="1.5" transform="rotate(45 50 50)" />
-          <ellipse cx="50" cy="50" rx="40" ry="15" stroke="currentColor" strokeWidth="2.5" transform="rotate(-45 50 50)" />
-          <ellipse cx="50" cy="50" rx="15" ry="40" stroke={color} strokeWidth="1.5" />
-        </svg>
-      );
-    case "filsafat":
-      return (
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 50 Q50 10 90 50 Q50 90 10 50" fill={fill} stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-          <circle cx="50" cy="50" r="15" stroke={color} strokeWidth="1.5" />
-          <circle cx="50" cy="50" r="6" fill="currentColor" />
-        </svg>
-      );
-    case "ekonomi":
-      return (
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 30 L80 30" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-          <path d="M50 30 L50 10" stroke="currentColor" strokeWidth="2" />
-          <path d="M25 30 L10 70 L40 70 Z" fill={fill} stroke={color} strokeWidth="1.5" />
-          <path d="M75 30 L60 70 L90 70 Z" fill={fill} stroke="currentColor" strokeWidth="2.5" />
-        </svg>
-      );
-    case "psikologi":
-      return (
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="45" r="25" fill={fill} stroke={color} strokeWidth="1.5" />
-          <circle cx="65" cy="55" r="25" fill={fill} stroke="currentColor" strokeWidth="2.5" />
-          <path d="M45 65 L35 85 L55 75 Z" fill="currentColor" />
-        </svg>
-      );
-    default:
-      return null;
-  }
-}
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 export default async function HomePage() {
   const allArticles = await getAllArticles();
-  
-  // Restore all articles, sorted by date (desc)
-  const curated = allArticles
-    .sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
+
+  // All articles, sorted chronologically by series_order (1 -> 5)
+  const curated = allArticles.sort((a, b) => {
+    if (a.series_order !== undefined && b.series_order !== undefined) {
+      return a.series_order - b.series_order;
+    }
+    return new Date(a.published_at).getTime() - new Date(b.published_at).getTime();
+  });
 
   const hero = curated[0];
-  const secondary = curated.slice(1, 4);
-  const rest = curated.slice(4);
-
-  // Pillar Stats Map
-  const pillarCounts = curated.reduce((acc, a) => {
-    acc[a.topic_pillar] = (acc[a.topic_pillar] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const seriesArticles = curated.slice(1);
 
   return (
-    <div style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
+    <div suppressHydrationWarning style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
 
-      {/* ════════════════ HEADER ════════════════ */}
-      <header style={{
-        background: T.bg, borderBottom: `1px solid ${T.border}`,
+      {/* ════════════════ STICKY UTILITY NAV ════════════════ */}
+      <header className="glass-nav" style={{
         position: "sticky", top: 0, zIndex: 100,
+        borderBottom: "1px solid var(--border)",
       }}>
         <div className="cca-container">
           <div style={{
@@ -88,124 +37,207 @@ export default async function HomePage() {
               textDecoration: "none", color: "inherit",
               display: "flex", alignItems: "baseline", gap: φ.xs,
             }}>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 700, letterSpacing: "-0.01em" }}>pos·tu·late</span>
-              <span style={{ fontFamily: "var(--font-body)", fontSize: 14, fontStyle: "italic", color: T.muted }}>noun.</span>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, letterSpacing: "-0.01em" }}>postulate.</span>
             </Link>
-            <MobileNav />
+            <div style={{ display: "flex", alignItems: "center", gap: φ.lg }}>
+              <Link href="/artikel" style={{
+                fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 600,
+                letterSpacing: 2, color: T.muted, textDecoration: "none"
+              }} className="link-hover">ARSIP</Link>
+              <Link href="/glossarium" style={{
+                fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 600,
+                letterSpacing: 2, color: T.muted, textDecoration: "none"
+              }} className="link-hover">GLOSARIUM</Link>
+              <MobileNav />
+            </div>
           </div>
         </div>
       </header>
 
-      {/* ════════════════ HERO ════════════════ */}
+      {/* ════════════════ MAJESTIC EDITORIAL MASTHEAD ════════════════ */}
+      <section style={{
+        background: T.white,
+        borderBottom: "1.5px solid var(--ink)",
+        padding: `${φ.xl}px 0 ${φ.lg}px 0`,
+        textAlign: "center",
+      }}>
+        <div className="cca-container">
+          {/* Masthead Volume Info */}
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontFamily: "var(--font-mono)",
+            fontSize: 9,
+            letterSpacing: 2,
+            color: T.muted,
+            paddingBottom: φ.xs,
+            borderBottom: "1px solid var(--border)",
+            marginBottom: φ.sm,
+          }}>
+            <span>JURNAL ESENSIAL</span>
+            <span style={{ fontWeight: 700, color: brandAccent }}>SERI KAJIAN: PSIKOLOGI EVOLUSI</span>
+            <span>EDISI 2026</span>
+          </div>
+
+          {/* Majestic lowercased Logo */}
+          <h1 style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(48px, 8.5vw, 96px)",
+            fontWeight: 800,
+            letterSpacing: "-0.04em",
+            lineHeight: 0.9,
+            color: T.ink,
+            margin: `${φ.sm}px 0`,
+            textTransform: "lowercase",
+          }}>
+            postulate<span style={{ color: brandAccent }}>.</span>
+          </h1>
+
+          {/* Subtitle / Slogan */}
+          <div style={{
+            paddingTop: φ.xs,
+            marginTop: φ.xs,
+          }}>
+            <p style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 16.5,
+              lineHeight: 1.6,
+              color: T.muted,
+              fontStyle: "italic",
+              maxWidth: 720,
+              margin: "0 auto",
+            }}>
+              &quot;Membongkar arsitektur perilaku, evolusi pemikiran, dan mekanisme tersembunyi kebudayaan manusia.&quot; Esai naratif &amp; analisis kritis.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════ HERO FEATURED ARTICLE (BAGIAN 1) ════════════════ */}
       {hero && (
         <section style={{
-          background: catColor(hero.topic_pillar),
+          background: T.white,
+          borderBottom: "1px solid var(--border)",
           position: "relative", overflow: "hidden",
         }}>
-          <div style={{
-            position: "absolute", top: 0, right: 0,
-            width: "38.2%", height: "100%",
-            opacity: 0.05,
-            backgroundImage: `repeating-linear-gradient(60deg, transparent, transparent 30px, rgba(255,255,255,.5) 30px, rgba(255,255,255,.5) 31px),
-              repeating-linear-gradient(-60deg, transparent, transparent 30px, rgba(255,255,255,.5) 30px, rgba(255,255,255,.5) 31px)`,
-            pointerEvents: "none",
-          }} />
+          <div className="cca-container hero-pt" style={{ position: "relative", paddingBottom: φ.xl }}>
+            <div className={hero.og_image ? "hero-split-layout" : ""}>
+              
+              {/* Content Column */}
+              <div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: φ.sm }}>
+                  <span style={{
+                    fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2,
+                    color: "#FFFFFF",
+                    background: brandAccent,
+                    padding: "4px 10px",
+                    borderRadius: 2,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                  }}>
+                    {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
+                  </span>
+                  <span style={{
+                    fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5,
+                    color: T.subtle,
+                    fontWeight: 500,
+                  }}>
+                    · {formatIndonesianDate(hero.published_at)}
+                  </span>
+                </div>
 
-          <div className="cca-container hero-pt" style={{ position: "relative" }}>
-            <div style={{
-              fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 3,
-              color: "rgba(255,255,255,.4)", marginBottom: φ.md,
-            }}>
-              TERBARU · {CATS[hero.topic_pillar]?.label.toUpperCase()}
-            </div>
+                <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+                  <h1 className="card-hero-title" style={{
+                    fontFamily: "var(--font-display)", fontWeight: 700,
+                    fontSize: "clamp(34px, 5.5vw, 60px)", lineHeight: 1.08,
+                    letterSpacing: "-0.03em", color: T.ink,
+                    marginBottom: φ.md,
+                    transition: "color 0.2s ease",
+                    maxWidth: hero.og_image ? "100%" : undefined,
+                  }}
+                  >{hero.title}</h1>
+                  
+                  <p style={{
+                    fontFamily: "var(--font-body)", fontSize: 19, lineHeight: 1.6,
+                    color: T.muted, maxWidth: hero.og_image ? "100%" : 680,
+                    marginBottom: φ.lg, fontStyle: "italic",
+                  }}>{hero.subtitle || hero.excerpt}</p>
+                </Link>
 
-            <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
-              <h1 className="card-hero-title" style={{
-                fontFamily: "var(--font-display)", fontWeight: 700,
-                fontSize: "clamp(40px, 7vw, 78px)", lineHeight: 1.02,
-                letterSpacing: "-0.03em", color: "#fff",
-                marginBottom: φ.md,
-              }}>{hero.title}</h1>
-              <p style={{
-                fontFamily: "var(--font-body)", fontSize: 19, lineHeight: 1.6,
-                color: "rgba(255,255,255,.6)", maxWidth: 540,
-                marginBottom: φ.lg, fontStyle: "italic",
-              }}>{hero.subtitle || hero.excerpt}</p>
-            </Link>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: φ.lg }}>
+                  {hero.tags.slice(0, 3).map(tag => (
+                    <span key={tag} style={{
+                      fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 1.5,
+                      color: T.muted, background: T.faint, border: `1px solid ${T.border}`, padding: "3px 8px", borderRadius: 2,
+                    }}>
+                      #{tag.toUpperCase()}
+                    </span>
+                  ))}
+                </div>
 
-            <div style={{ display: "flex", gap: φ.md, alignItems: "center" }}>
-              <Link href={`/artikel/${hero.slug}`} className="card-hero-btn" style={{
-                fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: 2.5,
-                color: "#fff", textDecoration: "none",
-                border: "1px solid rgba(255,255,255,.3)",
-              }}>BACA SEKARANG →</Link>
+                <div style={{ display: "flex", gap: φ.md, alignItems: "center" }}>
+                  <Link
+                    href={`/artikel/${hero.slug}`}
+                    style={{
+                      background: brandAccent,
+                      color: "#FFFFFF",
+                      padding: `${φ.sm}px ${φ.lg}px`,
+                      fontFamily: "var(--font-mono)", fontSize: 10,
+                      fontWeight: 600, letterSpacing: 2,
+                      textDecoration: "none",
+                      display: "inline-block",
+                      borderRadius: 2,
+                      transition: "background-color 0.2s ease",
+                    }}
+                  >
+                    BACA MULAI DARI SINI →
+                  </Link>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle, letterSpacing: 1.5 }}>
+                    {hero.reading_time.toUpperCase()} WAKTU BACA
+                  </span>
+                </div>
+              </div>
+
+              {/* Image Column */}
+              {hero.og_image && (
+                <Link href={`/artikel/${hero.slug}`} className="hero-image-wrapper" style={{ display: "block" }}>
+                  <img
+                    src={hero.og_image}
+                    alt={hero.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Link>
+              )}
+
             </div>
           </div>
         </section>
       )}
 
+      {/* ════════════════ UNIFIED SERIES FEED ════════════════ */}
       <HomepageClient
-        secondary={secondary.map(a => ({
+        articles={seriesArticles.map(a => ({
           slug: a.slug, title: a.title, subtitle: a.subtitle,
-          excerpt: a.excerpt, discipline: a.discipline,
-          topic_pillar: a.topic_pillar, reading_time: a.reading_time,
-        }))}
-        rest={rest.map(a => ({
-          slug: a.slug, title: a.title, subtitle: a.subtitle,
-          excerpt: a.excerpt, discipline: a.discipline,
-          topic_pillar: a.topic_pillar, difficulty: a.difficulty,
+          excerpt: a.excerpt,
+          kategori: a.kategori,
+          tipe_tulisan: a.tipe_tulisan,
+          tags: a.tags,
+          author: a.author,
+          published_at: a.published_at,
           reading_time: a.reading_time,
+          og_image: a.og_image,
+          series_order: a.series_order,
         }))}
-        topicSection={
-          /* ════════════════ TOPIK UTAMA ════════════════ */
-          <section key="topic-section" className="cca-container" style={{ paddingTop: φ.xl }}>
-            <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: φ.lg }}>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500, letterSpacing: 2.5, color: T.muted }}>NAVIGASI TOPIK</span>
-              <div style={{ flex: 1, height: 1, background: T.border }} />
-            </div>
-            <div style={{
-              display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-              gap: φ.md
-            }}>
-              {Object.keys(CATS).map(p => {
-                const data = CATS[p];
-                const count = pillarCounts[p] || 0;
-                return (
-                  <Link key={p} href={`/artikel?topic=${p}`} style={{ textDecoration: "none" }} className="card-hover">
-                    <div className="topic-card">
-                      {/* Hand-Drawn SVG Illustration (Styled in globals.css) */}
-                      <div className="topic-illustration">
-                        <TopicIcon pillar={p} color={data.color} />
-                      </div>
-
-                      <div className="topic-text-container">
-                        <h2 style={{
-                          fontFamily: "var(--font-display)", fontSize: "clamp(20px, 4vw, 26px)",
-                          fontWeight: 700, color: T.ink, letterSpacing: "-0.01em",
-                          marginBottom: φ.sm
-                        }}>{data.label.split(" & ")[0]}</h2>
-                        <p style={{
-                          fontFamily: "var(--font-body)", fontSize: 13,
-                          lineHeight: 1.6, color: T.muted
-                        }}>{data.tagline}</p>
-                      </div>
-                      <div style={{
-                        fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 500,
-                        color: T.muted, letterSpacing: 1, position: "relative", zIndex: 2
-                      }}>
-                        {count} TULISAN →
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        }
       />
 
       {/* ════════════════ FOOTER ════════════════ */}
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

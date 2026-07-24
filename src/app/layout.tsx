@@ -34,11 +34,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Postulate — Titik awal untuk akal yang meragu.",
-    template: "%s | Postulate",
+    default: "postulate. — Jurnal Esai & Dialektika Evolusi Kebudayaan",
+    template: "%s | postulate.",
   },
   description:
-    "Ilmu yang dalam. Bahasa yang manusia. Logika, sains, filsafat, ekonomi, psikologi — dikemas untuk dibaca, dipahami, dan dipikirkan.",
+    "Esai naratif, sains kognitif, dan analisis kritis biologi evolusi serta kebudayaan manusia.",
 };
 
 export default function RootLayout({
@@ -52,7 +52,22 @@ export default function RootLayout({
       className={`${cormorant.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
-      <body><ThemeProvider>{children}</ThemeProvider></body>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (typeof window !== 'undefined') {
+                const _set = Element.prototype.setAttribute;
+                Element.prototype.setAttribute = function(name, val) {
+                  if (name === 'bis_skin_checked') return;
+                  return _set.call(this, name, val);
+                };
+              }
+            `,
+          }}
+        />
+      </head>
+      <body suppressHydrationWarning><ThemeProvider>{children}</ThemeProvider></body>
     </html>
   );
 }

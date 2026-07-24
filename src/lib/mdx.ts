@@ -8,8 +8,9 @@ interface ArticleMeta {
   slug: string;
   title: string;
   subtitle: string;
-  topic_pillar: "logika" | "filsafat" | "sains" | "ekonomi" | "psikologi";
-  difficulty: "pemula" | "menengah" | "dalam";
+  domain?: "absurditas-kebijakan" | "uang-rakyat" | "labirin-birokrasi" | "ekologi-eksploitasi" | "demokrasi-suara";
+  kategori: "Thoughts" | "Stories" | "Refleksi" | "Satir";
+  tipe_tulisan: string;
   tags: string[];
   author: string;
   published_at: string;
@@ -22,10 +23,6 @@ interface ArticleMeta {
   og_image?: string;
   seo_description?: string;
   excerpt: string;
-  discipline?: string;
-  // logic-specific journey
-  logic_stage?: "pondasi" | "cacat-pikir" | "alat" | "lanjutan";
-  logic_priority?: number;
 }
 
 interface Article {
@@ -54,10 +51,11 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     slug,
     title: data.title || "",
     subtitle: data.subtitle || "",
-    topic_pillar: data.topic_pillar || "filsafat",
-    difficulty: data.difficulty || "pemula",
+    domain: data.domain,
+    kategori: data.kategori || "Satir",
+    tipe_tulisan: data.tipe_tulisan || "Satir / Opini",
     tags: data.tags || [],
-    author: data.author || "Tim Postulate",
+    author: data.author || "POSTULATE EDITORIAL",
     published_at: data.published_at || new Date().toISOString(),
     updated_at: data.updated_at,
     prerequisites: data.prerequisites || [],
@@ -68,9 +66,6 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     og_image: data.og_image,
     seo_description: data.seo_description,
     excerpt: getExcerpt(content),
-    discipline: data.discipline,
-    logic_stage: data.logic_stage,
-    logic_priority: data.logic_priority,
   };
 
   return { meta, content };
@@ -96,10 +91,11 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
       slug,
       title: data.title || "",
       subtitle: data.subtitle || "",
-      topic_pillar: data.topic_pillar || "filsafat",
-      difficulty: data.difficulty || "pemula",
+      domain: data.domain,
+      kategori: data.kategori || "Satir",
+      tipe_tulisan: data.tipe_tulisan || "Satir / Opini",
       tags: data.tags || [],
-      author: data.author || "Tim Postulate",
+      author: data.author || "POSTULATE EDITORIAL",
       published_at: data.published_at || new Date().toISOString(),
       updated_at: data.updated_at,
       prerequisites: data.prerequisites || [],
@@ -110,17 +106,16 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
       og_image: data.og_image,
       seo_description: data.seo_description,
       excerpt: getExcerpt(content),
-      discipline: data.discipline,
-      logic_stage: data.logic_stage,
-      logic_priority: data.logic_priority,
     } as ArticleMeta;
   });
 
-  // Sort by published_at descending
-  return articles.sort(
-    (a, b) =>
-      new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
-  );
+  // Sort chronologically by series_order (or published_at ascending)
+  return articles.sort((a, b) => {
+    if (a.series_order !== undefined && b.series_order !== undefined) {
+      return a.series_order - b.series_order;
+    }
+    return new Date(a.published_at).getTime() - new Date(b.published_at).getTime();
+  });
 }
 
 /**
@@ -147,4 +142,3 @@ function getExcerpt(content: string, length = 160): string {
   if (firstPara.length <= length) return firstPara;
   return firstPara.substring(0, length).trim() + "...";
 }
-

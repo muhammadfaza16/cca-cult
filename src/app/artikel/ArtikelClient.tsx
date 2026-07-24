@@ -2,44 +2,73 @@
 
 import Link from "next/link";
 import { useState, useMemo, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { φ, T, CATS, getDiscColor } from "@/lib/tokens";
+import { φ, T, brandAccent } from "@/lib/tokens";
 import { Reveal } from "@/components/Reveal";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 interface Article {
   slug: string;
   title: string;
   subtitle: string;
   excerpt: string;
-  discipline?: string;
-  topic_pillar: string;
-  difficulty: string;
+  kategori: "Thoughts" | "Stories" | "Refleksi" | "Satir";
+  tipe_tulisan: string;
   tags: string[];
   author: string;
   reading_time: string;
   published_at: string;
-  logic_stage?: string;
-  logic_priority?: number;
+  series_order?: number;
 }
 
+function HeaderBackButton() {
+  const [hov, setHov] = useState(false);
+  return (
+    <Link
+      href="/"
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      className="back-btn-hover"
+    >
+      <span
+        style={{
+          display: "inline-block",
+          transform: hov ? "translateX(-3px)" : "translateX(0)",
+          transition: "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+      >
+        ←
+      </span>
+      <span>Beranda</span>
+    </Link>
+  );
+}
+
+const CATEGORIES = [
+  { id: "all", label: "SEMUA TULISAN" },
+  { id: "Thoughts", label: "THOUGHTS" },
+  { id: "Stories", label: "STORIES" },
+  { id: "Refleksi", label: "REFLEKSI" },
+  { id: "Satir", label: "SATIR" }
+];
+
 export function ArtikelClient({ articles }: { articles: Article[] }) {
-  const searchParams = useSearchParams();
-  const router = useRouter();
   const [search, setSearch] = useState("");
-  const [activePillar, setActivePillar] = useState(searchParams.get("topic") || "semua");
-  const [visibleCounts, setVisibleCounts] = useState<Record<string, number>>({});
+  const [activeCat, setActiveCat] = useState("all");
   const [listVisibleCount, setListVisibleCount] = useState(10);
 
   // Reset limits when filters change
   useEffect(() => {
-    setVisibleCounts({});
     setListVisibleCount(10);
-  }, [activePillar, search]);
+  }, [search, activeCat]);
 
   const filtered = useMemo(() => {
     return articles.filter(a => {
-      if (activePillar !== "semua" && a.topic_pillar !== activePillar) return false;
+      // Category filter
+      if (activeCat !== "all" && a.kategori !== activeCat) {
+        return false;
+      }
+      // Search filter
       if (search.trim()) {
         const q = search.toLowerCase();
         return (
@@ -51,36 +80,19 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
       }
       return true;
     }).sort((a, b) => {
-      if (activePillar === "logika") {
-        return (a.logic_priority || 99) - (b.logic_priority || 99);
+      if (a.series_order !== undefined && b.series_order !== undefined) {
+        return a.series_order - b.series_order;
       }
       return new Date(a.published_at).getTime() - new Date(b.published_at).getTime();
     });
-  }, [articles, activePillar, search]);
-
-  const grouped = useMemo(() => {
-    const g: Record<string, Article[]> = {};
-    
-    // Group by Pillar
-    for (const a of filtered) {
-      if (!g[a.topic_pillar]) g[a.topic_pillar] = [];
-      g[a.topic_pillar].push(a);
-    }
-    // Reorder logic specifically even in "semua" view
-    if (g["logika"]) {
-      g["logika"].sort((a, b) => (a.logic_priority || 99) - (b.logic_priority || 99));
-    }
-    return g;
-  }, [filtered]);
-
-  const showGrouped = activePillar === "semua" && !search.trim();
+  }, [articles, search, activeCat]);
 
   return (
     <div style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
-      {/* ─── Header — unified 55px ─── */}
-      <header style={{
-        background: T.bg, borderBottom: `1px solid ${T.border}`,
+      {/* ─── Header ─── */}
+      <header className="glass-nav" style={{
         position: "sticky", top: 0, zIndex: 100,
+        borderBottom: "1px solid var(--border)",
       }}>
         <div className="cca-container" style={{
           display: "flex", justifyContent: "space-between",
@@ -93,10 +105,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             <span style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 700, letterSpacing: "-0.01em" }}>pos·tu·late</span>
             <span style={{ fontFamily: "var(--font-body)", fontSize: 14, fontStyle: "italic", color: T.muted }}>noun.</span>
           </Link>
-          <Link href="/" className="link-hover" style={{
-            fontFamily: "var(--font-mono)", fontSize: 11,
-            color: T.muted, textDecoration: "none",
-          }}>← Beranda</Link>
+          <HeaderBackButton />
         </div>
       </header>
 
@@ -124,7 +133,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Cari artikel..."
+              placeholder="Cari tulisan..."
               style={{
                 width: "100%",
                 padding: `${φ.sm}px ${φ.md}px ${φ.sm}px 42px`,
@@ -136,7 +145,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                 color: T.ink,
                 transition: "border-color .2s",
               }}
-              onFocus={e => e.target.style.borderColor = T.gold}
+              onFocus={e => e.target.style.borderColor = brandAccent}
               onBlur={e => e.target.style.borderColor = T.border as string}
             />
             <span style={{
@@ -150,48 +159,66 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
 
         <p style={{
           fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6,
-          color: T.muted, fontStyle: "italic", maxWidth: 480, marginBottom: φ.lg,
+          color: T.muted, fontStyle: "italic", maxWidth: 500, marginBottom: φ.lg,
         }}>
-          Cari, saring, dan jelajahi. Kumpulan narasi pilihan yang dikurasi dalam berbagai topik.
+          Jelajahi arsip esai personal, opini, kritik kebudayaan, dan cerita pendek secara kronologis.
         </p>
 
-        {/* ─── Filter Bar ─── */}
+        {/* ─── Category Tab Chips ─── */}
         <div style={{
-          display: "flex", gap: φ.lg, alignItems: "flex-start",
-          flexWrap: "wrap", marginBottom: φ.xl,
-          paddingBottom: φ.md, borderBottom: `1px solid ${T.border}`,
+          display: "flex",
+          gap: 6,
+          overflowX: "auto",
+          paddingBottom: φ.sm,
+          marginBottom: φ.md,
+          scrollbarWidth: "none", // Firefox
         }}>
-          <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-            <button
-              onClick={() => setActivePillar("semua")}
-              style={{
-                fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500,
-                letterSpacing: 2, padding: `6px ${φ.sm}px`,
-                border: `1px solid ${activePillar === "semua" ? T.ink : T.border}`,
-                background: activePillar === "semua" ? T.ink : "none",
-                color: activePillar === "semua" ? T.bg : T.muted,
-                cursor: "pointer", transition: "all .15s",
-              }}
-            >SEMUA TOPIK</button>
-            {Object.entries(CATS).map(([id, c]) => (
-              <button key={id}
-                onClick={() => setActivePillar(activePillar === id ? "semua" : id)}
+          {CATEGORIES.map(c => {
+            const active = activeCat === c.id;
+            return (
+              <button
+                key={c.id}
+                onClick={() => setActiveCat(c.id)}
                 style={{
-                  fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500,
-                  letterSpacing: 2, padding: `6px ${φ.sm}px`,
-                  border: `1px solid ${activePillar === id ? c.color : T.border}`,
-                  background: activePillar === id ? c.color : "none",
-                  color: activePillar === id ? T.bg : T.muted,
-                  cursor: "pointer", transition: "all .15s",
+                  background: active ? T.ink : "none",
+                  border: `1px solid ${active ? T.ink : "var(--border)"}`,
+                  color: active ? T.white : T.muted,
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 9,
+                  fontWeight: 600,
+                  letterSpacing: 2,
+                  padding: "6px 14px",
+                  cursor: "pointer",
+                  borderRadius: "2px",
+                  transition: "all .18s ease",
+                  whiteSpace: "nowrap",
                 }}
-              >{c.label.toUpperCase()}</button>
-            ))}
-          </div>
-
+                onMouseEnter={e => {
+                  if (!active) {
+                    e.currentTarget.style.borderColor = T.ink as string;
+                    e.currentTarget.style.color = T.ink as string;
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (!active) {
+                    e.currentTarget.style.borderColor = "var(--border)";
+                    e.currentTarget.style.color = T.muted as string;
+                  }
+                }}
+              >
+                {c.label}
+              </button>
+            );
+          })}
         </div>
+
+        <div style={{
+          marginBottom: φ.lg,
+          borderBottom: `1px solid ${T.border}`,
+        }} />
       </section>
 
-      {/* ─── Results ─── */}
+      {/* ─── Results (Chronological Feed) ─── */}
       <main className="cca-container section-pb">
         {filtered.length === 0 && (
           <div style={{
@@ -199,139 +226,104 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             color: T.subtle, fontFamily: "var(--font-mono)",
             fontSize: 11, letterSpacing: 3,
           }}>
-            TIDAK ADA ARTIKEL YANG COCOK
+            TIDAK ADA TULISAN YANG COCOK
           </div>
         )}
 
-        {showGrouped ? (() => {
-          return Object.keys(CATS).map((groupId) => {
-            const groupArticles = grouped[groupId];
-            if (!groupArticles || groupArticles.length === 0) return null;
+        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          {filtered.slice(0, listVisibleCount).map((article, i) => (
+            <Reveal key={article.slug} delay={i * 0.03}>
+              <ArticleRow
+                article={article}
+                index={i}
+              />
+            </Reveal>
+          ))}
 
-            const label = CATS[groupId]?.label;
-            const color = CATS[groupId]?.color;
-            const groupType = "TOPIK";
-
-            return (
-              <section key={groupId} style={{ marginBottom: φ.xl }}>
-                <div style={{
-                  display: "flex", alignItems: "center", gap: φ.sm,
-                  marginBottom: φ.md, paddingBottom: φ.sm,
-                  borderBottom: `2px solid ${color}`,
-                }}>
-                  <span style={{
-                    fontFamily: "var(--font-display)", fontSize: φ.lg,
-                    fontWeight: 400, color: color, lineHeight: 1,
-                  }}>{groupArticles.length}</span>
-                  <span style={{
-                    fontFamily: "var(--font-display)", fontSize: φ.md,
-                    fontWeight: 600, letterSpacing: "-0.01em",
-                  }}>{label}</span>
-                  <div style={{ flex: 1 }} />
-                  <span style={{
-                    fontFamily: "var(--font-mono)", fontSize: 9,
-                    letterSpacing: 2, color: T.muted,
-                  }}>{groupType}</span>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  {groupArticles.slice(0, visibleCounts[groupId] || 5).map((article, groupIndex) => {
-                    return (
-                      <Reveal key={article.slug} delay={Math.min(groupIndex * 0.04, 0.4)}>
-                        <ArticleRow article={article} index={groupIndex} color={color} />
-                      </Reveal>
-                    );
-                  })}
-                </div>
-
-                {groupArticles.length > (visibleCounts[groupId] || 5) && (
-                  <ShowMoreButton
-                    onClick={() => setVisibleCounts(prev => ({
-                      ...prev,
-                      [groupId]: (prev[groupId] || 5) + 10
-                    }))}
-                  />
-                )}
-              </section>
-            );
-          });
-        })() : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {(() => {
-              const items = activePillar !== "semua" ? filtered : filtered.slice(0, listVisibleCount);
-              return items.map((article, i) => (
-                <Reveal key={article.slug} delay={i * 0.03}>
-                  <ArticleRow
-                    article={article}
-                    index={i}
-                    color={CATS[article.topic_pillar]?.color || T.ink}
-                  />
-                </Reveal>
-              ));
-            })()}
-
-            {activePillar === "semua" && filtered.length > listVisibleCount && (
-              <ShowMoreButton onClick={() => setListVisibleCount(prev => prev + 10)} />
-            )}
-          </div>
-        )}
+          {filtered.length > listVisibleCount && (
+            <ShowMoreButton onClick={() => setListVisibleCount(prev => prev + 10)} />
+          )}
+        </div>
       </main>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }
 
-function ArticleRow({ article, index, color }: { article: Article; index: number; color: string }) {
+function ArticleRow({ article, index }: { article: Article; index: number }) {
+  const [hov, setHov] = useState(false);
+
   return (
-    <Link href={`/artikel/${article.slug}`} className="card-hover archive-row"
+    <Link href={`/artikel/${article.slug}`}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
       style={{
         textDecoration: "none", color: "inherit",
-        background: T.white, border: `1px solid ${T.border}`,
+        background: "var(--white)",
+        borderTop: `2px solid ${hov ? brandAccent : "var(--border)"}`,
+        borderRight: `2px solid ${hov ? brandAccent : "var(--border)"}`,
+        borderBottom: `2px solid ${hov ? brandAccent : "var(--border)"}`,
+        borderLeft: `5px solid ${brandAccent}`,
         display: "flex", alignItems: "flex-start", gap: φ.md,
+        borderRadius: "2px",
+        padding: φ.md,
+        transition: "all 0.25s ease",
       }}>
       <span style={{
-        fontFamily: "var(--font-display)", fontSize: 36,
-        fontWeight: 400, color: T.border, lineHeight: 1,
+        fontFamily: "var(--font-display)", fontSize: 32,
+        fontWeight: 700, color: hov ? brandAccent : T.subtle, lineHeight: 1,
         minWidth: 42, textAlign: "right", flexShrink: 0, marginTop: 2,
+        transition: "color 0.25s",
       }}>{String(index + 1).padStart(2, "0")}</span>
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", gap: φ.xs, alignItems: "center", marginBottom: 6 }}>
           <span style={{
-            fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 500,
-            letterSpacing: 2.5, color,
+            fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 700,
+            letterSpacing: 2, color: "#FFFFFF",
+            background: brandAccent,
+            padding: "3px 8px", borderRadius: 2,
+            textTransform: "uppercase",
           }}>
-            {CATS[article.topic_pillar]?.label.toUpperCase()}
-            {article.discipline && (
-              <>
-                <span style={{ color: T.border, margin: "0 4px" }}>·</span>
-                <span style={{
-                  color: getDiscColor(article.discipline, color),
-                  background: getDiscColor(article.discipline, color) + "12",
-                  padding: "1px 6px", borderRadius: 2
-                }}>{article.discipline.toUpperCase()}</span>
-              </>
-            )}
+            {article.series_order ? `BAGIAN ${article.series_order} DARI 5` : article.tipe_tulisan}
           </span>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+            {article.tags.slice(0, 3).map(tag => (
+              <span key={tag} style={{
+                fontFamily: "var(--font-mono)", fontSize: 8, fontWeight: 600,
+                letterSpacing: 1.5, color: T.muted, background: T.faint,
+                border: `1px solid ${T.border}`,
+                padding: "2px 6px", borderRadius: 2
+              }}>
+                #{tag.toUpperCase()}
+              </span>
+            ))}
+          </div>
         </div>
+        
         <h3 style={{
-          fontFamily: "var(--font-display)", fontWeight: 600,
+          fontFamily: "var(--font-display)", fontWeight: 700,
           fontSize: 20, lineHeight: 1.2, letterSpacing: "-0.015em",
           marginBottom: 6,
+          color: hov ? brandAccent : "var(--ink)",
+          transition: "color 0.25s",
         }}>{article.title}</h3>
+        
         <p style={{
-          fontFamily: "var(--font-body)", fontSize: 13,
+          fontFamily: "var(--font-body)", fontSize: 13.5,
           lineHeight: 1.5, color: T.muted, fontStyle: "italic",
         }}>{article.subtitle || article.excerpt}</p>
-
       </div>
 
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "flex-end",
         gap: 4, flexShrink: 0,
       }}>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5, color: T.subtle }}>{article.reading_time}</span>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5, color: hov ? brandAccent : T.subtle, fontWeight: hov ? 700 : 500, transition: "color 0.25s" }}>
+          {article.reading_time.toUpperCase()}
+        </span>
       </div>
     </Link>
   );

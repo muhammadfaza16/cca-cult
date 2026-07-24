@@ -1,62 +1,61 @@
-@import "tailwindcss";
+@import "../../node_modules/tailwindcss/index.css";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    CCA Design System v2 — Editorial Publication Grade
    ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* ─── Core Palette ─── */
-  --bg:     #F0EDE6;
-  --ink:    #1A1A14;
-  --muted:  #52524A;          /* bumped: WCAG AA 5.3:1 on --bg */
-  --subtle: #8A8A7E;          /* secondary muted for less critical meta */
-  --faint:  rgba(26,26,20,.05);
-  --border: rgba(26,26,20,.10); /* bumped from .08 for card separation */
-  --white:  #FAF9F5;
+  /* ─── Core Palette (Solid Editorial Blueprint) ─── */
+  --bg:     #F3F6F5;          /* Solid warm elegant paper white */
+  --ink:    #111E1E;          /* Deep organic dark teal-charcoal ink */
+  --muted:  #4A5858;          /* Legible editorial dark slate teal */
+  --subtle: #7F8E8E;          /* Secondary metadata teal-grey */
+  --faint:  #E5EFEF;          /* Solid light grey-teal surface */
+  --border: #D1DCDC;          /* Solid crisp border */
+  --white:  #FFFFFF;          /* Pure white card surface */
 
-  /* ─── Inverted Surfaces (footer, identity strip) — always dark ─── */
-  --inv-bg:     #1A1A14;
-  --inv-fg:     #F0EDE6;
-  --inv-muted:  rgba(240,237,230,.35);
-  --inv-border: rgba(240,237,230,.08);
+  /* ─── Inverted Surfaces — always solid dark ─── */
+  --inv-bg:     #0D1515;
+  --inv-fg:     #E4EAE9;
+  --inv-muted:  #788A89;
+  --inv-border: #213232;
 
-  /* ─── Elevated Surface (stats strip, cards needing distinction) ─── */
-  --surface:    #FAF9F5;
+  /* ─── Elevated Surface ─── */
+  --surface:    #E9F0EE;
 
-  /* ─── Pillar Colors — bold, saturated, ownable ─── */
-  --pillar-filsafat:   #5B2E91;
-  --pillar-sains:      #0C6B7A;
-  --pillar-ekonomi:    #1B6B3A;
-  --pillar-psikologi:  #B07D10;
+  /* ─── Domain Colors — bold, solid, saturated ─── */
+  --domain-absurditas-kebijakan:      #C93B2B;
+  --domain-uang-rakyat:               #D4AF37;
+  --domain-labirin-birokrasi:         #2B5876;
+  --domain-ekologi-eksploitasi:       #1A5F35;
+  --domain-demokrasi-suara:           #5C3A21;
 
   /* ─── Accent ─── */
   --gold: #C49B1A;
 
   /* ─── Layout ─── */
-  --content-max: 700px;
-  --page-max: 1200px;
+  --content-max: 840px;
+  --page-max: 1280px;
   --reading-lh: 1.85;
 }
 
-/* ─── Dark mode: deep charcoal editorial ─── */
+/* ─── Dark mode: solid deep dark teal-charcoal ─── */
 [data-theme="dark"] {
-  --bg:     #141413;
-  --ink:    #E8E5DD;
-  --muted:  #A8A59C;
-  --subtle: #706D65;
-  --faint:  rgba(232,229,221,.05);
-  --border: rgba(232,229,221,.10);
-  --white:  #1C1C1A;
+  --bg:     #0C1212;          /* Solid deep rich dark teal-black */
+  --ink:    #E4EAE9;          /* Soft warm teal-white ink */
+  --muted:  #95A5A4;          /* Legible slate teal for body text */
+  --subtle: #6D7D7C;
+  --faint:  #162222;          /* Solid dark surface */
+  --border: #233434;          /* Solid dark border */
+  --white:  #121B1B;          /* Elevated solid card background */
   --gold:   #D4A82A;
 
-  /* Inverted stays dark but even deeper for depth */
-  --inv-bg:     #0A0A09;
-  --inv-fg:     #C8C4BA;
-  --inv-muted:  rgba(200,196,186,.3);
-  --inv-border: rgba(200,196,186,.06);
+  --inv-bg:     #050808;
+  --inv-fg:     #C5CECD;
+  --inv-muted:  #536362;
+  --inv-border: #162424;
 
-  /* Elevated surface: subtle lift from bg */
-  --surface:    #1E1E1C;
+  --surface:    #162424;
 }
 
 @theme inline {
@@ -182,12 +181,54 @@ body::before {
    ARTICLE PROSE — reading view
    ═══════════════════════════════════════════════════════════════════════════ */
 
+.article-desktop-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 21px;
+}
+
+.desktop-sidebar-container {
+  display: none;
+}
+
+.mobile-toc-container {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .article-desktop-grid {
+    grid-template-columns: minmax(0, 840px) 340px;
+    justify-content: space-between;
+    align-items: start;
+    padding: 0 34px;
+  }
+
+  .desktop-sidebar-container {
+    display: flex !important;
+  }
+
+  .mobile-toc-container {
+    display: none !important;
+  }
+}
+
 .prose-cca {
   font-family: var(--font-body);
-  font-size: 17.5px;
+  font-size: 18px;
   line-height: var(--reading-lh);
   color: var(--ink);
   max-width: var(--content-max);
+}
+
+@media (min-width: 1024px) {
+  .prose-cca {
+    font-size: 19px;
+    line-height: 1.85;
+    max-width: 840px;
+  }
 }
 
 .prose-cca h2 {
@@ -201,6 +242,12 @@ body::before {
   margin-bottom: 16px;
 }
 
+@media (min-width: 1024px) {
+  .prose-cca h2 {
+    font-size: 32px;
+  }
+}
+
 .prose-cca h3 {
   font-family: var(--font-display);
   font-weight: 600;
@@ -211,7 +258,25 @@ body::before {
   margin-bottom: 12px;
 }
 
-.prose-cca p { margin-bottom: 22px; }
+@media (min-width: 1024px) {
+  .prose-cca h3 {
+    font-size: 24px;
+  }
+}
+
+.prose-cca p { margin-bottom: 24px; }
+
+/* Premium Drop Cap for literary editorial style */
+.prose-cca > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-size: 4.8rem;
+  float: left;
+  line-height: 0.85;
+  margin-top: 0.12em;
+  margin-right: 0.1em;
+  font-weight: 700;
+  color: #B32D2D; /* brandAccent */
+}
 
 .prose-cca a {
   color: var(--ink);
@@ -227,7 +292,7 @@ body::before {
 .prose-cca em { font-style: italic; }
 
 .prose-cca blockquote {
-  border-left: 3px solid var(--gold);
+  border-left: 3px solid #B32D2D; /* brandAccent crimson */
   padding-left: 24px;
   margin: 40px 0;
   font-family: var(--font-display);
@@ -475,3 +540,178 @@ body::before {
   .nav-desktop { display: none !important; }
   .nav-burger { display: flex !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PREMIUM ADDITIONS — Glassmorphism, Micro-Animations & Glow Focus Focus
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Solid Header Bar */
+.glass-nav {
+  background: var(--bg) !important;
+  border-bottom: 2px solid var(--border) !important;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme="dark"] .glass-nav {
+  background: var(--bg) !important;
+  border-bottom: 2px solid var(--border) !important;
+}
+
+/* Custom solid scrollbar styling */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 99px;
+  transition: background 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink);
+}
+
+/* Interactive Input Focus State */
+input[type="text"]:focus, select:focus, textarea:focus {
+  border-color: var(--gold) !important;
+  outline: 2px solid var(--gold) !important;
+}
+
+/* Floating Scroll-to-Top with Progress styling */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 34px;
+  right: 34px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.2s;
+}
+.scroll-top-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  border-color: var(--gold);
+  box-shadow: 0 8px 30px rgba(196, 155, 26, 0.15);
+}
+.scroll-top-btn:active {
+  transform: translateY(-2px) scale(0.98);
+}
+@media (max-width: 768px) {
+  .scroll-top-btn {
+    bottom: 21px;
+    right: 21px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* Custom premium hover states for topic pills */
+.pill-tab {
+  position: relative;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+.pill-tab.on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+.pill-tab:hover:not(.on) {
+  border-color: var(--gold);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+/* Premium sliding back button hover style */
+.back-btn-hover {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-transform: uppercase;
+}
+.back-btn-hover:hover {
+  color: var(--ink);
+}
+.back-btn-hover span {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.back-btn-hover:hover span {
+  transform: translateX(-3px);
+}
+
+/* Premium dynamic hover state for hero elements in Server Components */
+.card-hero-title {
+  transition: color 0.3s ease;
+}
+.card-hero-title:hover {
+  color: #B32D2D !important;
+}
+.card-hero-btn {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.card-hero-btn:hover {
+  opacity: 0.85 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(179,45,45,0.25);
+}
+
+/* Featured Hero split layout and visual styles */
+.hero-split-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 55px;
+  align-items: center;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.03);
+  overflow: hidden;
+  border-radius: 2px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-image-wrapper:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(179,45,45,0.08), 0 0 0 1px #B32D2D;
+}
+
+@media (max-width: 992px) {
+  .hero-split-layout {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+}
+
+
+

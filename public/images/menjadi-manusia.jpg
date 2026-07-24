@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <!-- Solid Parchment Paper Background -->
+  <rect width="1200" height="675" fill="#F3F6F5"/>
+  <rect x="24" y="24" width="1152" height="627" fill="none" stroke="#D1DCDC" stroke-width="4"/>
+
+  <!-- Left: Seated Hominid Silhouette holding a glowing screen -->
+  <g transform="translate(120, 140)">
+    <!-- Seated Hominid Silhouette -->
+    <path d="M 180 380 Q 140 260 200 180 Q 240 120 300 140 Q 360 160 340 240 Q 380 320 340 380 Z" fill="#111E1E"/>
+    <!-- Animal Skin Sash Accent -->
+    <path d="M 200 180 L 340 240 L 310 300 L 180 230 Z" fill="#B32D2D"/>
+    <!-- Hands holding screen -->
+    <path d="M 280 260 L 400 240 L 410 260 L 290 285 Z" fill="#111E1E"/>
+    <!-- Glowing Screen -->
+    <rect x="400" y="190" width="45" height="90" rx="6" fill="#FFFFFF" stroke="#D4AF37" stroke-width="4" transform="rotate(12, 420, 235)"/>
+  </g>
+
+  <!-- Wall Projection: Massive Geometric Slot Machine & Dopamine Wheel Shadow -->
+  <g transform="translate(520, 90)">
+    <!-- Outer Slot Machine Frame Shadow -->
+    <rect x="60" y="60" width="460" height="380" rx="16" fill="#111E1E"/>
+    <rect x="80" y="80" width="420" height="340" rx="12" fill="#E5EFEF" stroke="#D1DCDC" stroke-width="3"/>
+    
+    <!-- Reel Window 1 -->
+    <rect x="110" y="140" width="100" height="180" rx="8" fill="#FFFFFF" stroke="#B32D2D" stroke-width="4"/>
+    <circle cx="160" cy="230" r="32" fill="#D4AF37"/>
+    <path d="M 160 210 L 175 245 L 145 245 Z" fill="#B32D2D"/>
+
+    <!-- Reel Window 2 -->
+    <rect x="240" y="140" width="100" height="180" rx="8" fill="#FFFFFF" stroke="#B32D2D" stroke-width="4"/>
+    <circle cx="290" cy="230" r="32" fill="#B32D2D"/>
+    <rect x="275" y="215" width="30" height="30" fill="#D4AF37"/>
+
+    <!-- Reel Window 3 -->
+    <rect x="370" y="140" width="100" height="180" rx="8" fill="#FFFFFF" stroke="#B32D2D" stroke-width="4"/>
+    <circle cx="420" cy="230" r="32" fill="#D4AF37"/>
+    <polygon points="420,205 435,240 405,240" fill="#111E1E"/>
+
+    <!-- Jackpot Gold Coins Cascading -->
+    <circle cx="160" cy="380" r="14" fill="#D4AF37" stroke="#111E1E" stroke-width="2"/>
+    <circle cx="210" cy="410" r="18" fill="#D4AF37" stroke="#111E1E" stroke-width="2"/>
+    <circle cx="290" cy="390" r="16" fill="#D4AF37" stroke="#111E1E" stroke-width="2"/>
+    <circle cx="360" cy="420" r="20" fill="#D4AF37" stroke="#111E1E" stroke-width="2"/>
+    <circle cx="420" cy="380" r="14" fill="#D4AF37" stroke="#111E1E" stroke-width="2"/>
+  </g>
+
+  <!-- Right Foreground: Supernormal Fast-Food Caloric Stimulus Symbol -->
+  <g transform="translate(1010, 360)">
+    <path d="M 0 100 L 100 100 L 85 200 L 15 200 Z" fill="#B32D2D"/>
+    <path d="M 10 100 Q 50 40 90 100 Z" fill="#D4AF37"/>
+    <rect x="30" y="130" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#111E1E" stroke-width="2"/>
+  </g>
+
+  <!-- Connecting Light Beam -->
+  <polygon points="565,370 600,230 1020,470 980,500" fill="#D4AF37" opacity="0.15"/>
+</svg>
