@@ -462,17 +462,17 @@ body::before {
 .cca-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 34px;
+  padding: 0 20px;
 }
 
-.hero-pt { padding-top: 89px; padding-bottom: 55px; }
-.section-pt { padding-top: 55px; }
-.section-pb { padding-bottom: 89px; }
-.footer-p { padding: 55px 34px; }
-.id-strip { padding: 13px 34px; }
+.hero-pt { padding-top: 34px; padding-bottom: 24px; }
+.section-pt { padding-top: 24px; }
+.section-pb { padding-bottom: 32px; }
+.footer-p { padding: 32px 20px; }
+.id-strip { padding: 10px 20px; }
 
-.card-hero-btn { padding: 13px 34px; }
-.card-hero-title { max-width: 61.8%; }
+.card-hero-btn { padding: 10px 20px; }
+.card-hero-title { max-width: 100%; }
 
 /* Grid systems */
 .hero-grid {
@@ -480,15 +480,15 @@ body::before {
   grid-template-columns: 8fr 5fr;
   gap: 2px;
 }
-.hero-grid-item { padding: 34px; }
-.hero-grid-item-small { padding: 30px; }
+.hero-grid-item { padding: 18px 16px; }
+.hero-grid-item-small { padding: 16px 14px; }
 
 .pillars-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 2px;
 }
-.pillars-grid-item { padding: 34px 21px; }
+.pillars-grid-item { padding: 18px 14px; }
 
 .asym-grid {
   display: grid;
@@ -497,16 +497,16 @@ body::before {
 }
 .asym-grid-wide {
   grid-column: span 2;
-  padding: 34px;
-  min-height: 165px;
+  padding: 18px 16px;
+  min-height: auto;
 }
 .asym-grid-narrow {
   grid-column: span 1;
-  padding: 30px 22px;
-  min-height: 144px;
+  padding: 16px 14px;
+  min-height: auto;
 }
 
-.archive-row { padding: 21px 28px; }
+.archive-row { padding: 14px 16px; }
 
 /* ─── Mobile Responsiveness Polish ─── */
 @media (max-width: 768px) {

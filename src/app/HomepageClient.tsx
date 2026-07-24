@@ -140,7 +140,7 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
         borderLeft: `5px solid ${brandAccent}`,
         display: "flex", flexDirection: "column",
         justifyContent: "space-between", height: "100%",
-        padding: article.og_image ? 0 : φ.lg,
+        padding: article.og_image ? 0 : "16px 18px",
         borderRadius: "2px",
         transition: "all 0.3s ease",
       }}>
@@ -166,7 +166,7 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
         </div>
       )}
       <div style={{
-        padding: article.og_image ? φ.lg : 0,
+        padding: article.og_image ? "16px 18px" : 0,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -244,7 +244,7 @@ function ListCardWrapper({ article, index }: { article: ArticleBrief; index: num
         borderLeft: `5px solid ${brandAccent}`,
         display: "flex", flexDirection: "column",
         justifyContent: "space-between", height: "100%",
-        padding: article.og_image ? 0 : φ.lg,
+        padding: article.og_image ? 0 : "16px 18px",
         borderRadius: "2px",
         transition: "all 0.3s ease",
       }}>
@@ -270,7 +270,7 @@ function ListCardWrapper({ article, index }: { article: ArticleBrief; index: num
         </div>
       )}
       <div style={{
-        padding: article.og_image ? φ.lg : 0,
+        padding: article.og_image ? "16px 18px" : 0,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
