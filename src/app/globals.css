@@ -322,8 +322,14 @@ body::before {
   margin: 28px 0;
 }
 
-.prose-cca hr {
-  display: none;
+hr, .prose-cca hr, article hr {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

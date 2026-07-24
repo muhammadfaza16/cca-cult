@@ -16,4 +16,5 @@ export const mdxComponents: MDXComponentsType = {
   InlineDefinition,
   DifficultyBadge,
   PillarBadge,
+  hr: () => null,
 };
