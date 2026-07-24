@@ -125,63 +125,59 @@ export default async function HomePage() {
               )}
               
               {/* Content Column */}
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                
-                {/* Tier 1: Single Kicker Header */}
-                <div style={{ marginBottom: 12 }}>
-                  <span style={{
-                    fontFamily: "var(--font-mono)", fontSize: 9.5, letterSpacing: 2,
-                    color: brandAccent, fontWeight: 700, textTransform: "uppercase",
-                  }}>
-                    {hero.series_order ? `SERI #01 · BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan.toUpperCase()}
-                  </span>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", padding: "8px 0" }}>
+                <div>
+                  {/* Top Kicker Bar — Matched to regular cards */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                    <span style={{
+                      fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
+                      letterSpacing: 1.5, color: "#FFFFFF",
+                      background: brandAccent,
+                      padding: "4px 9px", borderRadius: 2,
+                      textTransform: "uppercase",
+                    }}>
+                      {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
+                    </span>
+
+                    <span style={{
+                      fontFamily: "var(--font-display)", fontSize: 32,
+                      fontWeight: 800, lineHeight: 1, color: T.border,
+                    }}>01</span>
+                  </div>
+
+                  {/* Title & Subtitle/Excerpt */}
+                  <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+                    <h2 style={{
+                      fontFamily: "var(--font-display)", fontWeight: 800,
+                      fontSize: "clamp(28px, 4vw, 44px)", lineHeight: 1.15,
+                      letterSpacing: "-0.03em", color: T.ink,
+                      marginBottom: 14,
+                      transition: "color 0.2s ease",
+                    }}>{hero.title}</h2>
+                    
+                    <p style={{
+                      fontFamily: "var(--font-body)", fontSize: 16.5, lineHeight: 1.6,
+                      color: T.muted, fontStyle: "italic", margin: 0,
+                    }}>{hero.subtitle || hero.excerpt}</p>
+                  </Link>
                 </div>
 
-                {/* Tier 2: Core Narrative (Title + Excerpt) */}
-                <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
-                  <h2 style={{
-                    fontFamily: "var(--font-display)", fontWeight: 800,
-                    fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.12,
-                    letterSpacing: "-0.03em", color: T.ink,
-                    marginBottom: 16,
-                    transition: "color 0.2s ease",
-                  }}>{hero.title}</h2>
-                  
-                  <p style={{
-                    fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.65,
-                    color: T.muted,
-                    marginBottom: 28,
-                  }}>{hero.subtitle || hero.excerpt}</p>
-                </Link>
-
-                {/* Tier 3: Unified Action Footer */}
-                <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
+                {/* Unified Footer Action Bar — Matched to regular cards */}
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 28 }}>
                   <Link
                     href={`/artikel/${hero.slug}`}
-                    className="card-hero-btn"
                     style={{
-                      background: brandAccent,
-                      color: "#FFFFFF",
-                      padding: "10px 20px",
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 10.5,
-                      fontWeight: 700,
-                      letterSpacing: 1.5,
                       textDecoration: "none",
-                      display: "inline-flex",
+                      display: "flex",
                       alignItems: "center",
-                      gap: 6,
-                      borderRadius: 2,
-                      boxShadow: "0 2px 10px rgba(179,45,45,0.22)",
-                      transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+                      gap: 10,
                     }}
                   >
-                    <span>BACA MULAI DARI SINI</span>
-                    <span>→</span>
+                    <div style={{ height: 2, width: 28, background: brandAccent }} />
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
+                      BACA BAB 01 · {hero.reading_time.toUpperCase()} WAKTU BACA →
+                    </span>
                   </Link>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, color: T.subtle, letterSpacing: 1.5, fontWeight: 500 }}>
-                    {hero.reading_time.toUpperCase()} WAKTU BACA
-                  </span>
                 </div>
               </div>
 
