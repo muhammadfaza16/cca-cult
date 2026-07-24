@@ -58,11 +58,53 @@ export default function RootLayout({
             __html: `
               (function() {
                 if (typeof window === 'undefined') return;
+
+                // 1. Intercept setAttribute
                 var origSet = Element.prototype.setAttribute;
                 Element.prototype.setAttribute = function(name, value) {
-                  if (name && name.indexOf('bis_') === 0) return;
+                  if (name && (name === 'bis_skin_checked' || name.indexOf('bis_') === 0)) return;
                   return origSet.apply(this, arguments);
                 };
+
+                // 2. Intercept setAttributeNS
+                var origSetNS = Element.prototype.setAttributeNS;
+                Element.prototype.setAttributeNS = function(ns, name, value) {
+                  if (name && (name === 'bis_skin_checked' || name.indexOf('bis_') === 0)) return;
+                  return origSetNS.apply(this, arguments);
+                };
+
+                // 3. Define property trap on Element prototype
+                try {
+                  Object.defineProperty(Element.prototype, 'bis_skin_checked', {
+                    get: function() { return undefined; },
+                    set: function() { return true; },
+                    configurable: true
+                  });
+                } catch(e) {}
+
+                // 4. Remove any pre-injected bis_skin_checked attributes synchronously
+                function cleanBis() {
+                  try {
+                    var els = document.querySelectorAll('[bis_skin_checked]');
+                    for (var i = 0; i < els.length; i++) {
+                      els[i].removeAttribute('bis_skin_checked');
+                    }
+                  } catch(e) {}
+                }
+                cleanBis();
+
+                // 5. MutationObserver to strip bis_skin_checked dynamically
+                try {
+                  var obs = new MutationObserver(function(mutations) {
+                    for (var i = 0; i < mutations.length; i++) {
+                      var m = mutations[i];
+                      if (m.type === 'attributes' && m.attributeName && m.attributeName.indexOf('bis_') === 0) {
+                        m.target.removeAttribute(m.attributeName);
+                      }
+                    }
+                  });
+                  obs.observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ['bis_skin_checked'] });
+                } catch(e) {}
               })();
             `,
           }}
