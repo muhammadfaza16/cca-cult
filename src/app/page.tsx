@@ -111,39 +111,36 @@ export default async function HomePage() {
 
               {/* Image Column (Left on Desktop / Top on Mobile) */}
               {hero.og_image && (
-                <Link href={`/artikel/${hero.slug}`} className="hero-image-wrapper" style={{ display: "block" }}>
-                  <img
-                    src={hero.og_image}
-                    alt={hero.title}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                  {/* Floating Overlay Badge on Image */}
-                  <div style={{
-                    position: "absolute",
-                    top: 14,
-                    left: 14,
-                    zIndex: 10,
-                  }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div>
                     <span style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: 9,
+                      fontSize: 8.5,
                       fontWeight: 700,
-                      letterSpacing: 2,
+                      letterSpacing: 1.5,
                       color: "#FFFFFF",
                       background: brandAccent,
-                      padding: "5px 12px",
+                      padding: "4px 9px",
                       borderRadius: 2,
                       textTransform: "uppercase",
-                      boxShadow: "0 4px 14px rgba(0,0,0,0.35)",
+                      display: "inline-block",
                     }}>
                       {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
                     </span>
                   </div>
-                </Link>
+
+                  <Link href={`/artikel/${hero.slug}`} className="hero-image-wrapper" style={{ display: "block" }}>
+                    <img
+                      src={hero.og_image}
+                      alt={hero.title}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </Link>
+                </div>
               )}
               
               {/* Content Column */}
