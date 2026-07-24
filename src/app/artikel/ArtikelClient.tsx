@@ -128,20 +128,19 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             }}>{filtered.length}</span>
           </div>
 
-          <div style={{ position: "relative", width: "clamp(200px, 30vw, 320px)" }}>
+          <div style={{ position: "relative", width: "100%", maxWidth: 320 }}>
             <input
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Cari tulisan..."
+              placeholder="Cari esai..."
               style={{
                 width: "100%",
-                padding: `${φ.sm}px ${φ.md}px ${φ.sm}px 42px`,
-                background: T.white,
-                border: `1px solid ${T.border}`,
-                outline: "none",
+                padding: "8px 14px 8px 40px",
                 fontFamily: "var(--font-body)",
                 fontSize: 14,
+                border: `1px solid ${T.border}`,
+                background: T.white,
                 color: T.ink,
                 transition: "border-color .2s",
               }}
@@ -169,7 +168,9 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           display: "flex",
           gap: 6,
           overflowX: "auto",
+          WebkitOverflowScrolling: "touch",
           paddingBottom: φ.sm,
+          paddingRight: φ.md,
           marginBottom: φ.md,
           scrollbarWidth: "none", // Firefox
         }}>

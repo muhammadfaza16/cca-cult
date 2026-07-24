@@ -508,37 +508,81 @@ body::before {
 
 .archive-row { padding: 21px 28px; }
 
+/* ─── Mobile Responsiveness Polish ─── */
 @media (max-width: 768px) {
-  .cca-container { padding: 0 20px; }
+  .cca-container { padding: 0 18px; }
   
-  .hero-pt { padding-top: 55px; padding-bottom: 34px; }
-  .section-pt { padding-top: 40px; }
-  .section-pb { padding-bottom: 55px; }
-  .footer-p { padding: 40px 20px; }
-  .id-strip { padding: 13px 20px; }
+  .hero-pt { padding-top: 34px; padding-bottom: 28px; }
+  .section-pt { padding-top: 34px; }
+  .section-pb { padding-bottom: 44px; }
+  .footer-p { padding: 36px 18px; }
+  .id-strip { padding: 10px 18px; }
   
-  .card-hero-btn { padding: 13px 20px; }
+  .card-hero-btn { padding: 10px 18px; }
   .card-hero-title { max-width: 100%; }
 
   .hero-grid { grid-template-columns: 1fr; }
-  .hero-grid-item, .hero-grid-item-small { padding: 24px 20px; min-height: auto; }
+  .hero-grid-item, .hero-grid-item-small { padding: 20px 18px; min-height: auto; }
 
   .pillars-grid { grid-template-columns: repeat(2, 1fr); }
   .pillars-grid > *:last-child:nth-child(odd) { grid-column: span 2; }
-  .pillars-grid-item { padding: 24px 20px; }
+  .pillars-grid-item { padding: 18px 16px; }
 
   .asym-grid { grid-template-columns: 1fr; }
   .asym-grid-wide, .asym-grid-narrow { 
     grid-column: span 1 !important; 
-    padding: 24px 20px !important;
+    padding: 20px 18px !important;
     min-height: auto !important; 
   }
 
-  .archive-row { padding: 24px 20px; }
+  .archive-row { padding: 18px 16px; }
 
-  /* ─── Mobile Nav ─── */
+  /* Mobile Nav */
   .nav-desktop { display: none !important; }
   .nav-burger { display: flex !important; }
+}
+
+@media (max-width: 640px) {
+  .display-xl {
+    font-size: clamp(28px, 7.5vw, 42px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .display-lg {
+    font-size: clamp(22px, 5.5vw, 30px);
+    line-height: 1.15;
+  }
+  .display-md {
+    font-size: clamp(19px, 4.5vw, 24px);
+  }
+  .prose-cca {
+    font-size: 16.5px;
+    line-height: 1.75;
+  }
+  .prose-cca p {
+    margin-bottom: 18px;
+  }
+  .prose-cca h2 {
+    font-size: 22px;
+    margin-top: 36px;
+    margin-bottom: 12px;
+  }
+  .prose-cca h3 {
+    font-size: 19px;
+    margin-top: 26px;
+    margin-bottom: 10px;
+  }
+  .prose-cca blockquote {
+    font-size: 19px;
+    padding-left: 14px;
+    margin: 24px 0;
+    line-height: 1.45;
+  }
+  .prose-cca > p:first-of-type::first-letter {
+    font-size: 3.6rem;
+    line-height: 0.85;
+    margin-right: 0.08em;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

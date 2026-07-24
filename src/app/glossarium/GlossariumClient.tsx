@@ -120,8 +120,11 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
 
         {/* ─── Alphabet Nav ─── */}
         <div style={{
-          display: "flex", gap: 2, flexWrap: "wrap",
-          marginBottom: φ.xl, paddingBottom: φ.md,
+          display: "flex", gap: 4,
+          overflowX: "auto",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          marginBottom: φ.lg, paddingBottom: φ.sm,
           borderBottom: `1px solid ${T.border}`,
         }}>
           <button

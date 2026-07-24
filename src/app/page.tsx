@@ -63,10 +63,7 @@ export default async function HomePage() {
       }}>
         <div className="cca-container">
           {/* Masthead Volume Info */}
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+          <div className="masthead-sub-bar" style={{
             fontFamily: "var(--font-mono)",
             fontSize: 9,
             letterSpacing: 2,
