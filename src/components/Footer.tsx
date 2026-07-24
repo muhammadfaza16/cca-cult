@@ -20,188 +20,177 @@ export function Footer() {
     <footer style={{
       background: T.invBg,
       color: T.invMuted,
-      padding: `${φ.xl}px ${φ.lg}px`,
+      padding: "28px 0 20px 0",
       borderTop: `1px solid ${T.invBorder}`,
     }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div className="cca-container">
         
-        {/* Footer Top Grid */}
+        {/* Footer Top Grid - 2 Columns */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          gap: φ.lg,
-          paddingBottom: φ.lg,
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: 36,
+          paddingBottom: 16,
         }}>
           
-          {/* Column 1: Brand & Tagline */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+          {/* Column 1: Brand & Newsletter */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
               <span style={{
-                fontFamily: "var(--font-display)", fontSize: 32,
+                fontFamily: "var(--font-display)", fontSize: 24,
                 fontWeight: 700, color: T.invFg, letterSpacing: "-0.01em",
               }}>pos·tu·late</span>
               <span style={{
-                fontFamily: "var(--font-body)", fontSize: 15,
+                fontFamily: "var(--font-body)", fontSize: 13,
                 fontStyle: "italic", color: T.invMuted,
               }}>noun.</span>
+              <span style={{
+                fontFamily: "var(--font-mono)", fontSize: 8,
+                letterSpacing: 1.5, color: T.invMuted, marginLeft: 4,
+              }}>/ˈPÄSCHƏˌLĀT/</span>
             </div>
-            <div style={{
-              fontFamily: "var(--font-mono)", fontSize: 9,
-              letterSpacing: 2, color: T.invMuted,
-            }}>/ˈPÄSCHƏˌLĀT/</div>
+            
             <p style={{
-              fontFamily: "var(--font-body)", fontSize: 13,
-              fontStyle: "italic", color: T.invMuted,
-              lineHeight: 1.6,
-              maxWidth: 240,
-              marginTop: 12,
+              fontFamily: "var(--font-body)", fontSize: 12.5,
+              color: T.invMuted,
+              lineHeight: 1.45,
+              maxWidth: 420,
             }}>
               Esai naratif dan analisis kritis membongkar biologi evolusi, sains kognitif, serta arsitektur kebudayaan manusia.
             </p>
-          </div>
 
-          {/* Column 2: Key Topics */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 9,
-              letterSpacing: 2.5, color: T.invFg,
-              fontWeight: 600,
-            }}>TOPIK UTAMA</span>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {[
-                { href: "/artikel?search=evolusi", label: "Sains & Biologi Evolusi" },
-                { href: "/artikel?search=otak", label: "Kognisi & Arsitektur Otak" },
-                { href: "/artikel?search=pasangan", label: "Perilaku & Seleksi Pasangan" },
-                { href: "/artikel?search=moralitas", label: "Moralitas, Agama, & Budaya" },
-                { href: "/artikel?search=modern", label: "Manusia di Era Modern" },
-              ].map(t => (
-                <Link key={t.href} href={t.href}
-                  style={{
-                    fontFamily: "var(--font-body)", fontSize: 13,
-                    color: T.invMuted, textDecoration: "none",
-                    transition: "color 0.2s, padding-left 0.2s",
-                    display: "inline-block",
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.color = "var(--gold)";
-                    e.currentTarget.style.paddingLeft = "4px";
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.color = T.invMuted;
-                    e.currentTarget.style.paddingLeft = "0px";
-                  }}
-                >
-                  {t.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Column 3: Quick Navigation */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 9,
-              letterSpacing: 2.5, color: T.invFg,
-              fontWeight: 600,
-            }}>NAVIGASI CEPAT</span>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {[
-                { href: "/artikel", label: "ARSIP TULISAN" },
-                { href: "/tentang", label: "TENTANG KAMI" },
-                { href: "/glossarium", label: "GLOSSARIUM ISTILAH" },
-              ].map(l => (
-                <Link key={l.href} href={l.href}
-                  style={{
-                    fontFamily: "var(--font-mono)", fontSize: 10,
-                    letterSpacing: 1.5, color: T.invMuted, textDecoration: "none",
-                    transition: "color 0.2s",
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.color = T.invFg}
-                  onMouseLeave={e => e.currentTarget.style.color = T.invMuted}
-                >
-                  {l.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Column 4: Newsletter signup */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 9,
-              letterSpacing: 2.5, color: T.invFg,
-              fontWeight: 600,
-            }}>BULETIN POSTULAT</span>
-            <p style={{
-              fontFamily: "var(--font-body)", fontSize: 13,
-              color: T.invMuted, lineHeight: 1.5,
-            }}>
-              Dapatkan satu pemikiran mendalam langsung di inbox kamu setiap akhir pekan.
-            </p>
-            {subscribed ? (
-              <div style={{
-                fontFamily: "var(--font-mono)", fontSize: 10,
-                color: "var(--gold)", letterSpacing: 1,
-                padding: "8px 0",
-              }}>
-                ✓ Terima kasih! Kamu telah terdaftar.
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} style={{ display: "flex", gap: 0, borderBottom: `1px solid ${T.invBorder}`, paddingBottom: 4 }}>
-                <input
-                  type="text"
-                  placeholder="Alamat email..."
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  style={{
-                    flex: 1,
-                    background: "none",
-                    border: "none",
-                    color: T.invFg,
-                    fontFamily: "var(--font-body)",
-                    fontSize: 13,
-                    outline: "none",
-                    padding: "4px 0",
-                  }}
-                />
-                <button type="submit" style={{
-                  background: "none",
-                  border: "none",
-                  color: "var(--gold)",
-                  cursor: "pointer",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 12,
-                  padding: "0 6px",
+            {/* Newsletter inline */}
+            <div style={{ marginTop: 4, maxWidth: 360 }}>
+              {subscribed ? (
+                <div style={{
+                  fontFamily: "var(--font-mono)", fontSize: 9,
+                  color: "var(--gold)", letterSpacing: 1,
                 }}>
-                  →
-                </button>
-              </form>
-            )}
+                  ✓ Terima kasih! Kamu telah terdaftar dalam buletin Postulat.
+                </div>
+              ) : (
+                <form onSubmit={handleSubscribe} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                  <input
+                    type="email"
+                    placeholder="Langganan buletin email..."
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    style={{
+                      flex: 1,
+                      background: "none",
+                      border: "none",
+                      borderBottom: `1px solid ${T.invBorder}`,
+                      color: T.invFg,
+                      fontFamily: "var(--font-body)",
+                      fontSize: 12,
+                      outline: "none",
+                      padding: "4px 0",
+                    }}
+                  />
+                  <button type="submit" style={{
+                    background: "var(--crimson)",
+                    border: "none",
+                    borderRadius: 2,
+                    color: "#FFFFFF",
+                    cursor: "pointer",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 8.5,
+                    fontWeight: 700,
+                    letterSpacing: 1.5,
+                    padding: "4px 10px",
+                  }}>
+                    GABUNG
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
+
+          {/* Column 2: Navigation & Topics Side-by-Side */}
+          <div style={{ display: "flex", gap: 32, flexWrap: "wrap", justifyContent: "space-between" }}>
+            {/* Sub-Col 1: Topics */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1, minWidth: 160 }}>
+              <span style={{
+                fontFamily: "var(--font-mono)", fontSize: 8.5,
+                letterSpacing: 2, color: T.invFg,
+                fontWeight: 600,
+              }}>TOPIK UTAMA</span>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                {[
+                  { href: "/artikel?search=evolusi", label: "Biologi Evolusi" },
+                  { href: "/artikel?search=otak", label: "Arsitektur Kognisi" },
+                  { href: "/artikel?search=pasangan", label: "Seleksi Pasangan" },
+                  { href: "/artikel?search=moralitas", label: "Moralitas & Budaya" },
+                  { href: "/artikel?search=modern", label: "Manusia Modern" },
+                ].map(t => (
+                  <Link key={t.href} href={t.href}
+                    style={{
+                      fontFamily: "var(--font-body)", fontSize: 12,
+                      color: T.invMuted, textDecoration: "none",
+                      transition: "color 0.2s",
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.color = T.invFg}
+                    onMouseLeave={e => e.currentTarget.style.color = T.invMuted}
+                  >
+                    {t.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Sub-Col 2: Navigation */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1, minWidth: 140 }}>
+              <span style={{
+                fontFamily: "var(--font-mono)", fontSize: 8.5,
+                letterSpacing: 2, color: T.invFg,
+                fontWeight: 600,
+              }}>NAVIGASI</span>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                {[
+                  { href: "/artikel", label: "ARSIP TULISAN" },
+                  { href: "/tentang", label: "TENTANG PUBLIKASI" },
+                  { href: "/glossarium", label: "GLOSSARIUM ISTILAH" },
+                ].map(l => (
+                  <Link key={l.href} href={l.href}
+                    style={{
+                      fontFamily: "var(--font-mono)", fontSize: 9,
+                      letterSpacing: 1.5, color: T.invMuted, textDecoration: "none",
+                      transition: "color 0.2s",
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.color = T.invFg}
+                    onMouseLeave={e => e.currentTarget.style.color = T.invMuted}
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
         </div>
 
         {/* Footer Bottom / Copyright */}
         <div style={{
-          marginTop: φ.lg,
-          paddingTop: φ.md,
+          marginTop: 12,
+          paddingTop: 10,
           borderTop: `1px solid ${T.invBorder}`,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
-          gap: 12,
+          gap: 8,
         }}>
           <span style={{
-            fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 1.5,
+            fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5,
             color: T.invMuted,
           }}>
             © {new Date().getFullYear()} POSTULATE · ARSIP PEMIKIRAN & DIALEKTIKA EVOLUSI.
           </span>
           <span style={{
-            fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 2,
+            fontFamily: "var(--font-mono)", fontSize: 8, letterSpacing: 1.5,
             color: T.invMuted,
           }}>
-            JAKARTA, INDONESIA · DIKEMBANGKAN OLEH MANUSIA
+            JAKARTA, INDONESIA
           </span>
         </div>
       </div>
