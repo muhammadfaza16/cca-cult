@@ -125,80 +125,61 @@ export default async function HomePage() {
               )}
               
               {/* Content Column */}
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "12px 0" }}>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: φ.sm }}>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                
+                {/* Tier 1: Single Kicker Header */}
+                <div style={{ marginBottom: 12 }}>
                   <span style={{
                     fontFamily: "var(--font-mono)", fontSize: 9.5, letterSpacing: 2,
-                    color: "#FFFFFF",
-                    background: brandAccent,
-                    padding: "4px 10px",
-                    borderRadius: 2,
-                    fontWeight: 700,
-                    textTransform: "uppercase",
+                    color: brandAccent, fontWeight: 700, textTransform: "uppercase",
                   }}>
-                    {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
-                  </span>
-                  <span style={{
-                    fontFamily: "var(--font-mono)", fontSize: 9.5, letterSpacing: 1.5,
-                    color: T.subtle,
-                    fontWeight: 500,
-                  }}>
-                    · {formatIndonesianDate(hero.published_at)}
+                    {hero.series_order ? `SERI #01 · BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan.toUpperCase()}
                   </span>
                 </div>
 
+                {/* Tier 2: Core Narrative (Title + Excerpt) */}
                 <Link href={`/artikel/${hero.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
                   <h2 style={{
                     fontFamily: "var(--font-display)", fontWeight: 800,
-                    fontSize: "clamp(28px, 4vw, 50px)", lineHeight: 1.12,
+                    fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.12,
                     letterSpacing: "-0.03em", color: T.ink,
-                    marginTop: φ.xs,
-                    marginBottom: φ.md,
+                    marginBottom: 16,
                     transition: "color 0.2s ease",
                   }}>{hero.title}</h2>
                   
                   <p style={{
-                    fontFamily: "var(--font-body)", fontSize: 17.5, lineHeight: 1.65,
+                    fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.65,
                     color: T.muted,
-                    marginBottom: φ.lg,
+                    marginBottom: 28,
                   }}>{hero.subtitle || hero.excerpt}</p>
                 </Link>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: φ.lg }}>
-                  {hero.tags.slice(0, 3).map(tag => (
-                    <span key={tag} style={{
-                      fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5,
-                      color: T.muted, background: T.faint, border: `1px solid ${T.border}`, padding: "3px 8px", borderRadius: 2,
-                    }}>
-                      #{tag.toUpperCase()}
-                    </span>
-                  ))}
-                </div>
-
-                <div style={{ display: "flex", gap: φ.lg, alignItems: "center" }}>
+                {/* Tier 3: Unified Action Footer */}
+                <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
                   <Link
                     href={`/artikel/${hero.slug}`}
                     className="card-hero-btn"
                     style={{
                       background: brandAccent,
                       color: "#FFFFFF",
-                      padding: "8px 16px",
+                      padding: "10px 20px",
                       fontFamily: "var(--font-mono)",
-                      fontSize: 10,
+                      fontSize: 10.5,
                       fontWeight: 700,
                       letterSpacing: 1.5,
                       textDecoration: "none",
                       display: "inline-flex",
                       alignItems: "center",
-                      justifyContent: "center",
+                      gap: 6,
                       borderRadius: 2,
-                      boxShadow: "0 2px 8px rgba(179,45,45,0.2)",
+                      boxShadow: "0 2px 10px rgba(179,45,45,0.22)",
                       transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
                     }}
                   >
-                    BACA MULAI DARI SINI
+                    <span>BACA MULAI DARI SINI</span>
+                    <span>→</span>
                   </Link>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, color: T.subtle, letterSpacing: 1.5 }}>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, color: T.subtle, letterSpacing: 1.5, fontWeight: 500 }}>
                     {hero.reading_time.toUpperCase()} WAKTU BACA
                   </span>
                 </div>
