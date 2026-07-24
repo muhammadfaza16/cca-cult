@@ -115,17 +115,14 @@ export default async function HomePage() {
                   <div>
                     <span style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: 8.5,
+                      fontSize: 9.5,
                       fontWeight: 700,
-                      letterSpacing: 1.5,
-                      color: "#FFFFFF",
-                      background: brandAccent,
-                      padding: "4px 9px",
-                      borderRadius: 2,
+                      letterSpacing: 2,
+                      color: brandAccent,
                       textTransform: "uppercase",
                       display: "inline-block",
                     }}>
-                      {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
+                      SERI #01 · PSIKOLOGI EVOLUSI
                     </span>
                   </div>
 
@@ -149,10 +146,13 @@ export default async function HomePage() {
                   {/* Top Kicker Bar */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
                     <span style={{
-                      fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 700,
-                      letterSpacing: 2, color: brandAccent, textTransform: "uppercase",
+                      fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
+                      letterSpacing: 1.5, color: "#FFFFFF",
+                      background: brandAccent,
+                      padding: "4px 9px", borderRadius: 2,
+                      textTransform: "uppercase",
                     }}>
-                      SERI #01 · PSIKOLOGI EVOLUSI
+                      {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
                     </span>
 
                     <span style={{
