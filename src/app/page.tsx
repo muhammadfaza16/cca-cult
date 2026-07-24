@@ -194,23 +194,20 @@ export default async function HomePage() {
                     style={{
                       background: brandAccent,
                       color: "#FFFFFF",
-                      padding: "4px 10px",
+                      padding: "5px 18px",
                       fontFamily: "var(--font-mono)",
                       fontSize: 9,
                       fontWeight: 700,
-                      letterSpacing: 1.5,
+                      letterSpacing: 2,
                       lineHeight: 1,
                       textDecoration: "none",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 5,
+                      display: "inline-block",
                       borderRadius: 2,
                       width: "fit-content",
                       transition: "opacity 0.2s ease",
                     }}
                   >
-                    <span>BACA MULAI DARI SINI</span>
-                    <span style={{ fontSize: 10, lineHeight: 1 }}>→</span>
+                    BACA MULAI DARI SINI
                   </Link>
                   <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: T.subtle, letterSpacing: 1.5 }}>
                     {hero.reading_time.toUpperCase()} WAKTU BACA
