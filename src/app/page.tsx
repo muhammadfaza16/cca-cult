@@ -195,17 +195,17 @@ export default async function HomePage() {
                     style={{
                       background: brandAccent,
                       color: "#FFFFFF",
-                      padding: "12px 28px",
+                      padding: "8px 16px",
                       fontFamily: "var(--font-mono)",
-                      fontSize: 11,
+                      fontSize: 10,
                       fontWeight: 700,
                       letterSpacing: 1.5,
                       textDecoration: "none",
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      borderRadius: 3,
-                      boxShadow: "0 4px 14px rgba(179,45,45,0.25)",
+                      borderRadius: 2,
+                      boxShadow: "0 2px 8px rgba(179,45,45,0.2)",
                       transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
                     }}
                   >
