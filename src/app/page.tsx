@@ -63,7 +63,7 @@ export default async function HomePage() {
         textAlign: "center",
       }}>
         <div className="cca-container">
-          {/* Masthead Volume Info */}
+          {/* Masthead Platform Metadata Bar */}
           <div className="masthead-sub-bar" style={{
             fontFamily: "var(--font-mono)",
             fontSize: 9.5,
@@ -71,10 +71,17 @@ export default async function HomePage() {
             color: T.muted,
             paddingBottom: φ.xs,
             marginBottom: φ.md,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 14,
           }}>
-            <span>JURNAL ESENSIAL</span>
-            <span style={{ fontWeight: 700, color: brandAccent }}>SERI KAJIAN: PSIKOLOGI EVOLUSI</span>
-            <span>EDISI 2026</span>
+            <span>PUBLIKASI ESAI &amp; KAJIAN BEBAS</span>
+            <span style={{ color: T.border }}>|</span>
+            <span style={{ fontWeight: 700, color: brandAccent }}>JURNAL INDEPENDEN</span>
+            <span style={{ color: T.border }}>|</span>
+            <span>EDISI DIGITAL 2026</span>
           </div>
 
           {/* Majestic lowercased Logo */}
