@@ -41,7 +41,7 @@ export function HomepageClient({ articles }: Props) {
   }, [articles, activeCat]);
 
   return (
-    <>
+    <div suppressHydrationWarning>
       {/* ─── Category Selection Tabs ─── */}
       <section className="cca-container" style={{ paddingTop: φ.lg }}>
         <div style={{
@@ -119,7 +119,7 @@ export function HomepageClient({ articles }: Props) {
           </div>
         </section>
       )}
-    </>
+    </div>
   );
 }
 

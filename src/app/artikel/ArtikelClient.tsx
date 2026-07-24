@@ -88,7 +88,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
   }, [articles, search, activeCat]);
 
   return (
-    <div style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
+    <div suppressHydrationWarning style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
       {/* ─── Header ─── */}
       <header className="glass-nav" style={{
         position: "sticky", top: 0, zIndex: 100,

@@ -56,18 +56,21 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              if (typeof window !== 'undefined') {
-                const _set = Element.prototype.setAttribute;
-                Element.prototype.setAttribute = function(name, val) {
-                  if (name === 'bis_skin_checked') return;
-                  return _set.call(this, name, val);
+              (function() {
+                if (typeof window === 'undefined') return;
+                var origSet = Element.prototype.setAttribute;
+                Element.prototype.setAttribute = function(name, value) {
+                  if (name && name.indexOf('bis_') === 0) return;
+                  return origSet.apply(this, arguments);
                 };
-              }
+              })();
             `,
           }}
         />
       </head>
-      <body suppressHydrationWarning><ThemeProvider>{children}</ThemeProvider></body>
+      <body suppressHydrationWarning>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -41,7 +41,7 @@ export function GlossariumClient({ entries, letters, totalArticles }: Props) {
   const sortedLetters = Object.keys(grouped).sort();
 
   return (
-    <div style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
+    <div suppressHydrationWarning style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
 
       {/* ─── Header ─── */}
       <header className="glass-nav" style={{
