@@ -193,8 +193,8 @@ export default async function HomePage() {
                     style={{
                       background: brandAccent,
                       color: "#FFFFFF",
-                      padding: "8px 18px",
-                      fontFamily: "var(--font-mono)", fontSize: 9.5,
+                      padding: "6px 14px",
+                      fontFamily: "var(--font-mono)", fontSize: 9,
                       fontWeight: 600, letterSpacing: 2,
                       textDecoration: "none",
                       display: "inline-block",
