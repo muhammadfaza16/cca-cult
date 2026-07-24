@@ -56,64 +56,45 @@ export default async function HomePage() {
         </div>
       </header>
 
-      {/* ════════════════ MAJESTIC EDITORIAL MASTHEAD ════════════════ */}
+      {/* ════════════════ COMPACT EDITORIAL MASTHEAD ════════════════ */}
       <section style={{
         background: T.white,
-        padding: "72px 0 48px 0",
+        padding: "24px 0 16px 0",
+        borderBottom: `1px solid ${T.faint}`,
         textAlign: "center",
       }}>
         <div className="cca-container">
-          {/* Masthead Platform Metadata Bar */}
-          <div className="masthead-sub-bar" style={{
+          {/* Sleek Logo */}
+          <h1 style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(32px, 5vw, 48px)",
+            fontWeight: 800,
+            letterSpacing: "-0.03em",
+            lineHeight: 1,
+            color: T.ink,
+            margin: "0 0 6px 0",
+            textTransform: "lowercase",
+          }}>
+            postulate<span style={{ color: brandAccent }}>.</span>
+          </h1>
+
+          {/* Compact Platform Meta Info */}
+          <div style={{
             fontFamily: "var(--font-mono)",
-            fontSize: 9.5,
-            letterSpacing: 2.5,
+            fontSize: 8.5,
+            letterSpacing: 2,
             color: T.muted,
-            paddingBottom: φ.xs,
-            marginBottom: φ.md,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: 14,
+            gap: 10,
           }}>
             <span>PUBLIKASI ESAI &amp; KAJIAN BEBAS</span>
             <span style={{ color: T.border }}>|</span>
             <span style={{ fontWeight: 700, color: brandAccent }}>JURNAL INDEPENDEN</span>
             <span style={{ color: T.border }}>|</span>
             <span>EDISI DIGITAL 2026</span>
-          </div>
-
-          {/* Majestic lowercased Logo */}
-          <h1 style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(52px, 9vw, 104px)",
-            fontWeight: 800,
-            letterSpacing: "-0.04em",
-            lineHeight: 0.9,
-            color: T.ink,
-            margin: "18px 0 22px 0",
-            textTransform: "lowercase",
-          }}>
-            postulate<span style={{ color: brandAccent }}>.</span>
-          </h1>
-
-          {/* Subtitle / Slogan */}
-          <div className="masthead-slogan-wrapper hidden md:block" style={{
-            paddingTop: φ.xs,
-            marginTop: φ.xs,
-          }}>
-            <p style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 17.5,
-              lineHeight: 1.65,
-              color: T.muted,
-              fontStyle: "italic",
-              maxWidth: 760,
-              margin: "0 auto",
-            }}>
-              &quot;Membongkar arsitektur perilaku, evolusi pemikiran, dan mekanisme tersembunyi kebudayaan manusia.&quot; Esai naratif &amp; analisis kritis.
-            </p>
           </div>
         </div>
       </section>
@@ -123,8 +104,7 @@ export default async function HomePage() {
         <section style={{
           background: T.white,
           position: "relative", overflow: "hidden",
-          borderTop: `1px solid ${T.border}`,
-          padding: "64px 0 72px 0",
+          padding: "28px 0 48px 0",
         }}>
           <div className="cca-container" style={{ position: "relative" }}>
             <div className={hero.og_image ? "hero-split-layout" : ""}>
