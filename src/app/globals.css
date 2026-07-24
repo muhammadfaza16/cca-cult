@@ -240,14 +240,12 @@ body::before {
   color: var(--ink);
   margin-top: 56px;
   margin-bottom: 20px;
-  padding: 0 0 12px 0;
-  border-bottom: 1px solid var(--border);
+  padding: 0;
 }
 
 @media (min-width: 1024px) {
   .prose-cca h2 {
     font-size: 44px;
-    padding-bottom: 14px;
   }
 }
 
@@ -569,8 +567,7 @@ body::before {
     font-size: 32px;
     margin-top: 44px;
     margin-bottom: 16px;
-    padding: 0 0 10px 0;
-    border-bottom: 1px solid var(--border);
+    padding: 0;
   }
   .prose-cca h3 {
     font-size: 19px;
