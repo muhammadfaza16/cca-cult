@@ -17,6 +17,11 @@ export default async function HomePage() {
   const hero = evolutionArticles.find(a => a.series_order === 1) || evolutionArticles[0];
   const seriesArticles = evolutionArticles.filter(a => a.slug !== hero.slug);
 
+  // Dedicated standalone articles (including Bunga di Atas Kuburan and other standalone essays)
+  const standaloneArticles = allArticles
+    .filter(a => a.series_slug !== "psikologi-evolusi")
+    .sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
+
   return (
     <div suppressHydrationWarning style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
 
@@ -218,6 +223,18 @@ export default async function HomePage() {
       {/* ════════════════ UNIFIED SERIES FEED ════════════════ */}
       <HomepageClient
         articles={seriesArticles.map(a => ({
+          slug: a.slug, title: a.title, subtitle: a.subtitle,
+          excerpt: a.excerpt,
+          kategori: a.kategori,
+          tipe_tulisan: a.tipe_tulisan,
+          tags: a.tags,
+          author: a.author,
+          published_at: a.published_at,
+          reading_time: a.reading_time,
+          og_image: a.og_image,
+          series_order: a.series_order,
+        }))}
+        standaloneArticles={standaloneArticles.map(a => ({
           slug: a.slug, title: a.title, subtitle: a.subtitle,
           excerpt: a.excerpt,
           kategori: a.kategori,

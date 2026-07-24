@@ -22,6 +22,7 @@ interface ArticleBrief {
 
 interface Props {
   articles: ArticleBrief[];
+  standaloneArticles?: ArticleBrief[];
 }
 
 const CATEGORIES = [
@@ -32,7 +33,7 @@ const CATEGORIES = [
   { id: "Satir", label: "SATIR" }
 ];
 
-export function HomepageClient({ articles }: Props) {
+export function HomepageClient({ articles, standaloneArticles }: Props) {
   const [activeCat, setActiveCat] = useState("all");
 
   const filteredArticles = useMemo(() => {
@@ -118,7 +119,143 @@ export function HomepageClient({ articles }: Props) {
           </div>
         </section>
       )}
+
+      {/* ════════════════ DEDICATED STANDALONE ARTICLES SECTION ════════════════ */}
+      {standaloneArticles && standaloneArticles.length > 0 && (
+        <section className="cca-container section-pb">
+          <div style={{
+            display: "flex", alignItems: "center", gap: φ.sm,
+            marginBottom: φ.lg, marginTop: φ.md,
+          }}>
+            <span style={{
+              fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700,
+              letterSpacing: 2.5, color: T.ink, textTransform: "uppercase"
+            }}>
+              ESAI MANDIRI &amp; KAJIAN TERBARU
+            </span>
+            <div style={{ flex: 1, height: 1, background: T.border }} />
+            <Link href="/artikel" className="link-hover" style={{
+              fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 600,
+              letterSpacing: 1.5, color: brandAccent, textDecoration: "none"
+            }}>
+              SEMUA KAJIAN →
+            </Link>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: φ.md }}>
+            {standaloneArticles.map((article, i) => (
+              <Reveal key={article.slug} delay={i * 0.06}>
+                <HomepageStandaloneCard article={article} />
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
+  );
+}
+
+/* ─── Homepage Standalone Article Card ─── */
+function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
+  const [hov, setHov] = useState(false);
+
+  return (
+    <Link
+      href={`/artikel/${article.slug}`}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        textDecoration: "none",
+        color: "inherit",
+        background: T.white,
+        border: `1px solid ${hov ? brandAccent : T.border}`,
+        borderLeft: `5px solid ${brandAccent}`,
+        borderRadius: "3px",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "stretch",
+        boxShadow: hov ? "0 8px 24px rgba(0,0,0,0.06)" : "0 2px 10px rgba(0,0,0,0.02)",
+        transition: "all 0.25s ease",
+      }}
+    >
+      {article.og_image && (
+        <div style={{
+          width: "28%",
+          minWidth: 160,
+          maxWidth: 260,
+          overflow: "hidden",
+          position: "relative",
+          flexShrink: 0,
+        }}>
+          <img
+            src={article.og_image}
+            alt={article.title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: hov ? "scale(1.04)" : "scale(1)",
+              transition: "transform 0.3s ease",
+            }}
+          />
+        </div>
+      )}
+
+      <div style={{
+        padding: `${φ.md}px ${φ.lg}px`,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        flex: 1,
+        minWidth: 0,
+      }}>
+        <div>
+          <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
+            <span style={{
+              fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
+              letterSpacing: 1.5, color: "#FFFFFF", background: brandAccent,
+              padding: "3px 8px", borderRadius: 2, textTransform: "uppercase",
+            }}>
+              ESAI MANDIRI
+            </span>
+            <span style={{
+              fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5, color: T.subtle,
+            }}>
+              · {article.reading_time.toUpperCase()}
+            </span>
+          </div>
+
+          <h3 style={{
+            fontFamily: "var(--font-display)", fontWeight: 800,
+            fontSize: "clamp(18px, 2.4vw, 24px)", lineHeight: 1.2,
+            letterSpacing: "-0.02em", color: hov ? brandAccent : T.ink,
+            marginBottom: 6, transition: "color 0.25s ease",
+          }}>
+            {article.title}
+          </h3>
+
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: 14.5, lineHeight: 1.55,
+            color: T.muted, fontStyle: "italic", margin: 0,
+          }}>
+            {article.subtitle || article.excerpt}
+          </p>
+        </div>
+
+        <div style={{
+          display: "flex", alignItems: "center", gap: 6,
+          marginTop: φ.md, color: brandAccent,
+          fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 700, letterSpacing: 1.5,
+        }}>
+          <span>BACA ESAI SELENGKAPNYA</span>
+          <span style={{
+            transform: hov ? "translateX(4px)" : "translateX(0)",
+            transition: "transform 0.2s ease",
+          }}>→</span>
+        </div>
+      </div>
+    </Link>
   );
 }
 
