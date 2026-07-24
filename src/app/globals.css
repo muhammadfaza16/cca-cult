@@ -517,6 +517,7 @@ hr, .prose-cca hr, article hr {
 /* ─── Mobile Responsiveness Polish ─── */
 @media (max-width: 768px) {
   .cca-container { padding: 0 18px; }
+  .masthead-slogan-wrapper { display: none !important; }
   
   .hero-pt { padding-top: 34px; padding-bottom: 28px; }
   .section-pt { padding-top: 34px; }
