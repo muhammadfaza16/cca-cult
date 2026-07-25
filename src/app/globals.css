@@ -209,10 +209,6 @@ body::before {
   .desktop-sidebar-container {
     display: flex !important;
   }
-
-  .mobile-toc-container {
-    display: none !important;
-  }
 }
 
 .prose-cca {
