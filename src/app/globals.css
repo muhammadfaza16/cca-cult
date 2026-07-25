@@ -302,9 +302,9 @@ body::before {
   font-style: italic;
 }
 
-.prose-cca ul { padding-left: 1.25rem; margin-bottom: 22px; }
-.prose-cca ol { padding-left: 0; margin-left: 0; list-style-position: inside; margin-bottom: 22px; }
-.prose-cca li { margin-bottom: 8px; }
+.prose-cca ul { padding-left: 0; margin-left: 0; list-style-position: inside; margin-bottom: 22px; }
+.prose-cca ol { padding-left: 0 !important; margin-left: 0 !important; list-style-position: inside !important; margin-bottom: 22px; }
+.prose-cca li { margin-bottom: 8px; padding-left: 0; margin-left: 0; }
 
 .prose-cca code {
   font-family: var(--font-mono);
