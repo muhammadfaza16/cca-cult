@@ -65,7 +65,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     reading_time_minutes: Math.ceil(stats.minutes),
     og_image: data.og_image,
     seo_description: data.seo_description,
-    excerpt: getExcerpt(content),
+    excerpt: data.excerpt || getExcerpt(content),
   };
 
   return { meta, content };
