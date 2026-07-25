@@ -191,7 +191,7 @@ export default async function HomePage() {
                   >
                     <div style={{ height: 2, width: 24, background: brandAccent }} />
                     <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: brandAccent, letterSpacing: 1.5, fontWeight: 700 }}>
-                      BACA BAB 01 · {hero.reading_time.toUpperCase()}
+                      BACA BAB 01 · {hero.reading_time.toUpperCase()} · <span style={{ color: T.muted, fontWeight: 500 }}>{formatIndonesianDate(hero.published_at)}</span>
                     </span>
                   </Link>
                 </div>

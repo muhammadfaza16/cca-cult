@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useMemo } from "react";
-import { T, φ, brandAccent } from "@/lib/tokens";
+import { T, φ, brandAccent, formatIndonesianDate } from "@/lib/tokens";
 import { Reveal } from "@/components/Reveal";
 
 interface ArticleBrief {
@@ -225,11 +225,18 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
             }}>
               ESAI MANDIRI
             </span>
-            <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5, color: T.subtle, fontWeight: 600,
-            }}>
-              {article.kategori.toUpperCase()}
-            </span>
+            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+              <span style={{
+                fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1, color: T.subtle, fontWeight: 500,
+              }}>
+                {formatIndonesianDate(article.published_at)}
+              </span>
+              <span style={{
+                fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5, color: T.muted, fontWeight: 600,
+              }}>
+                {article.kategori.toUpperCase()}
+              </span>
+            </div>
           </div>
 
           {/* Title & Excerpt */}
@@ -355,10 +362,15 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
           }}>{article.subtitle || article.excerpt}</p>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: φ.xs, marginTop: φ.md }}>
-          <div style={{ height: 2, width: hov ? φ.lg + 10 : φ.lg, background: brandAccent, transition: "width 0.3s ease" }} />
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
-            BACA · {article.reading_time.toUpperCase()}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: φ.md }}>
+          <div style={{ display: "flex", alignItems: "center", gap: φ.xs }}>
+            <div style={{ height: 2, width: hov ? φ.lg + 10 : φ.lg, background: brandAccent, transition: "width 0.3s ease" }} />
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
+              BACA · {article.reading_time.toUpperCase()}
+            </span>
+          </div>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: T.subtle, letterSpacing: 1, fontWeight: 500 }}>
+            {formatIndonesianDate(article.published_at)}
           </span>
         </div>
       </div>

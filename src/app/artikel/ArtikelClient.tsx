@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useMemo, useEffect } from "react";
-import { φ, T, brandAccent } from "@/lib/tokens";
+import { φ, T, brandAccent, formatIndonesianDate } from "@/lib/tokens";
 import { Reveal } from "@/components/Reveal";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -505,7 +505,7 @@ function ChapterRow({ chapter, index }: { chapter: Article; index: number }) {
           fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5,
           color: T.subtle, fontWeight: 500,
         }}>
-          {chapter.reading_time.toUpperCase()}
+          {chapter.reading_time.toUpperCase()} · {formatIndonesianDate(chapter.published_at)}
         </span>
         <span style={{
           fontFamily: "var(--font-mono)", fontSize: 12, color: hov ? brandAccent : T.subtle,
@@ -568,7 +568,7 @@ function StandaloneArticleRow({ article, index }: { article: Article; index: num
         fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1.5,
         color: T.subtle, flexShrink: 0,
       }}>
-        {article.reading_time.toUpperCase()}
+        {article.reading_time.toUpperCase()} · {formatIndonesianDate(article.published_at)}
       </span>
     </Link>
   );
