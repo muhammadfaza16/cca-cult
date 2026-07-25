@@ -275,7 +275,7 @@ body::before {
   font-size: 4.8rem;
   float: left;
   line-height: 0.85;
-  margin-top: 0.12em;
+  margin-top: -0.02em;
   margin-right: 0.1em;
   font-weight: 700;
   color: #B32D2D; /* brandAccent */
