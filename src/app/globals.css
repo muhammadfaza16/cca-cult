@@ -238,15 +238,15 @@ body::before {
   line-height: 1.1;
   letter-spacing: -0.035em;
   color: var(--ink);
-  margin-top: 84px;
-  margin-bottom: 28px;
+  margin-top: 52px;
+  margin-bottom: 24px;
   padding: 0;
 }
 
 @media (min-width: 1024px) {
   .prose-cca h2 {
     font-size: 44px;
-    margin-top: 104px;
+    margin-top: 64px;
   }
 }
 
@@ -575,8 +575,8 @@ hr, .prose-cca hr, article hr {
   }
   .prose-cca h2 {
     font-size: 32px;
-    margin-top: 72px;
-    margin-bottom: 22px;
+    margin-top: 44px;
+    margin-bottom: 20px;
     padding: 0;
   }
   .prose-cca h3 {
