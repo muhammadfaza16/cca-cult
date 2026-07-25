@@ -306,7 +306,8 @@ body::before {
   font-style: italic;
 }
 
-.prose-cca ul, .prose-cca ol { padding-left: 1.5em; margin-bottom: 22px; }
+.prose-cca ul { padding-left: 1.25rem; margin-bottom: 22px; }
+.prose-cca ol { padding-left: 0; margin-left: 0; list-style-position: inside; margin-bottom: 22px; }
 .prose-cca li { margin-bottom: 8px; }
 
 .prose-cca code {
