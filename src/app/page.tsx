@@ -145,15 +145,23 @@ export default async function HomePage() {
                 <div>
                   {/* Top Kicker Bar */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                    <span style={{
-                      fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
-                      letterSpacing: 1.5, color: "#FFFFFF",
-                      background: brandAccent,
-                      padding: "4px 9px", borderRadius: 2,
-                      textTransform: "uppercase",
-                    }}>
-                      {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
-                    </span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <span style={{
+                        fontFamily: "var(--font-mono)", fontSize: 8.5, fontWeight: 700,
+                        letterSpacing: 1.5, color: "#FFFFFF",
+                        background: brandAccent,
+                        padding: "4px 9px", borderRadius: 2,
+                        textTransform: "uppercase",
+                      }}>
+                        {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
+                      </span>
+                      <span style={{
+                        fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1,
+                        color: T.subtle, fontWeight: 500,
+                      }}>
+                        {formatIndonesianDate(hero.published_at)}
+                      </span>
+                    </div>
 
                     <span style={{
                       fontFamily: "var(--font-display)", fontSize: 28,
@@ -191,7 +199,7 @@ export default async function HomePage() {
                   >
                     <div style={{ height: 2, width: 24, background: brandAccent }} />
                     <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: brandAccent, letterSpacing: 1.5, fontWeight: 700 }}>
-                      BACA BAB 01 · {hero.reading_time.toUpperCase()} · <span style={{ color: T.muted, fontWeight: 500 }}>{formatIndonesianDate(hero.published_at)}</span>
+                      BACA BAB 01 · {hero.reading_time.toUpperCase()}
                     </span>
                   </Link>
                 </div>
