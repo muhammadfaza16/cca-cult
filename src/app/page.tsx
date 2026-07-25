@@ -189,9 +189,9 @@ export default async function HomePage() {
                       gap: 10,
                     }}
                   >
-                    <div style={{ height: 2, width: 28, background: brandAccent }} />
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, color: brandAccent, letterSpacing: 2, fontWeight: 700 }}>
-                      BACA BAB 01 · {hero.reading_time.toUpperCase()} WAKTU BACA →
+                    <div style={{ height: 2, width: 24, background: brandAccent }} />
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: brandAccent, letterSpacing: 1.5, fontWeight: 700 }}>
+                      BACA BAB 01 · {hero.reading_time.toUpperCase()}
                     </span>
                   </Link>
                 </div>
