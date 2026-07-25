@@ -56,23 +56,23 @@ export default async function HomePage() {
         </div>
       </header>
 
-      {/* ════════════════ COMPACT EDITORIAL MASTHEAD ════════════════ */}
+      {/* ════════════════ EDITORIAL MASTHEAD ════════════════ */}
       <section style={{
         background: T.white,
-        padding: "24px 0 16px 0",
-        borderBottom: `1px solid ${T.faint}`,
+        padding: "36px 0 28px 0",
+        borderBottom: `1px solid ${T.border}`,
         textAlign: "center",
       }}>
         <div className="cca-container">
           {/* Sleek Logo */}
           <h1 style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(32px, 5vw, 48px)",
+            fontSize: "clamp(36px, 5.5vw, 56px)",
             fontWeight: 800,
-            letterSpacing: "-0.03em",
-            lineHeight: 1,
+            letterSpacing: "-0.02em",
+            lineHeight: 1.1,
             color: T.ink,
-            margin: "0 0 6px 0",
+            margin: "0 0 14px 0",
             textTransform: "lowercase",
           }}>
             postulate<span style={{ color: brandAccent }}>.</span>
@@ -81,14 +81,14 @@ export default async function HomePage() {
           {/* Compact Platform Meta Info */}
           <div style={{
             fontFamily: "var(--font-mono)",
-            fontSize: 8.5,
-            letterSpacing: 2,
+            fontSize: 9,
+            letterSpacing: 2.5,
             color: T.muted,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: 10,
+            gap: 14,
           }}>
             <span>PUBLIKASI ESAI &amp; KAJIAN BEBAS</span>
             <span style={{ color: T.border }}>|</span>
