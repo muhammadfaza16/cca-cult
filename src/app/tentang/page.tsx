@@ -68,7 +68,7 @@ export default function TentangPage() {
               color: T.invMuted, fontStyle: "normal",
               maxWidth: 660,
             }}>
-              Ada jarak yang aneh antara apa yang telah diketahui manusia dan apa yang benar-benar dipahami manusia.
+              Manifesto & Peta Diskursus Platform
             </p>
           </div>
         </div>
@@ -77,6 +77,9 @@ export default function TentangPage() {
       {/* ─── Eagle View Story ─── */}
       <section className="cca-container" style={{ padding: `${φ.xl}px 34px` }}>
         <div style={{ maxWidth: 780 }} className="prose-cca">
+          <p>
+            Ada jarak yang aneh antara apa yang telah diketahui manusia dan apa yang benar-benar dipahami manusia.
+          </p>
           <p>
             Empat abad terakhir adalah masa paling luar biasa dalam sejarah kesadaran manusia. Kita telah menghitung usia semesta, membaca kode kehidupan dalam sel, dan menelusuri jejak nenek moyang kita hingga ke savana Afrika jutaan tahun silam. Rahasia yang dulu hanya bisa dijawab oleh mitos dan dogma, kini punya jawaban yang bisa diuji, diperiksa ulang, dan dipertanggungjawabkan. Ini bukan pencapaian kecil. Ini adalah salah satu keajaiban terbesar spesies kita.
           </p>
