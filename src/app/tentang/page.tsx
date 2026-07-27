@@ -78,25 +78,28 @@ export default function TentangPage() {
       <section className="cca-container" style={{ padding: `${φ.xl}px 34px` }}>
         <div style={{ maxWidth: 780 }} className="prose-cca">
           <p>
-            Ada jarak yang aneh antara apa yang telah diketahui manusia dan apa yang benar-benar dipahami manusia.
-          </p>
-          <p>
             Empat abad terakhir adalah masa paling luar biasa dalam sejarah kesadaran manusia. Kita telah menghitung usia semesta, membaca kode kehidupan dalam sel, dan menelusuri jejak nenek moyang kita hingga ke savana Afrika jutaan tahun silam. Rahasia yang dulu hanya bisa dijawab oleh mitos dan dogma, kini punya jawaban yang bisa diuji, diperiksa ulang, dan dipertanggungjawabkan. Ini bukan pencapaian kecil. Ini adalah salah satu keajaiban terbesar spesies kita.
           </p>
           <p>
-            Namun sebagian besar dari kita hidup seolah keajaiban itu tidak pernah terjadi. Kita mewarisi asumsi-asumsi lama tentang diri sendiri, tentang sejarah, tentang bagaimana dunia bekerja, lalu mengulanginya tanpa pernah memeriksanya kembali. Realitas yang sebenarnya sudah tersedia bagi siapa saja yang mau menempuhnya, tetapi kebanyakan orang berhenti di permukaan, puas dengan gambaran dunia yang jauh lebih sempit dan lebih keliru dari yang seharusnya.
+            Tapi keajaiban ini punya nasib yang aneh. Ia lahir di ruang-ruang laboratorium dan universitas, lalu berhenti di sana. Ia tidak pernah benar-benar sampai ke ruang tamu, ke obrolan warung kopi, ke cara orang biasa memahami dirinya sendiri. Kita hidup di zaman ketika jawaban-jawaban paling mendasar tentang alam semesta dan manusia sudah tersedia secara terbuka, dan hampir semua orang tetap menjalani hidup seolah jawaban itu tidak pernah ada.
           </p>
           <p>
-            Ada alasan untuk itu, dan alasan itu bukan kemalasan semata. Ini zaman ketika perhatian dibombardir setiap detik, ketika informasi datang dalam potongan-potongan yang dirancang untuk dikonsumsi cepat lalu dilupakan. Kita membaca lebih banyak dari generasi mana pun sebelumnya, tetapi merenungkan lebih sedikit. Kita mengumpulkan fakta seperti remah-remah, tanpa pernah menyusunnya menjadi pemahaman yang utuh. Kedalaman, yaitu kemampuan untuk duduk diam bersama sebuah gagasan sampai ia benar-benar dimengerti, perlahan menjadi barang langka.
+            Ada alasan untuk itu, dan alasannya bukan kebodohan. Belum pernah ada generasi yang dibanjiri informasi sederas ini, dan belum pernah ada generasi yang kehilangan kesabaran secepat ini. Kita menggulir lebih banyak daripada membaca. Kita mengoleksi potongan-potongan fakta seperti pecahan kaca, berkilau sesaat, lalu terlupakan. Kedalaman, yaitu kemampuan untuk duduk bersama satu gagasan sampai ia benar-benar dipahami, perlahan menjadi kemewahan yang sedikit orang mampu beli.
           </p>
           <p>
-            Platform ini lahir dari keyakinan bahwa dua persoalan itu saling terkait, dan bahwa keduanya bukan sekadar urusan intelektual. Ketika seseorang benar-benar memahami dari mana ia berasal, bagaimana bintang-bintang menyusun unsur dalam tubuhnya, bagaimana kehidupan menyusun dirinya sendiri dari ketiadaan, hingga bagaimana peradaban dibangun di atas jutaan keputusan kecil manusia biasa, sesuatu yang mendasar berubah dalam cara ia memandang dunia dan dirinya sendiri. Ia menjadi lebih sulit dibodohi, lebih tahan terhadap kepanikan, lebih mampu membedakan yang penting dari yang sekadar ramai.
+            Dua hal ini, kesenjangan pengetahuan dan hilangnya kedalaman, bukan dua persoalan yang kebetulan terjadi bersamaan. Mereka adalah satu penyakit yang sama, dilihat dari dua sisi berbeda: pikiran yang kehilangan kesempatan untuk benar-benar mengerti dunia tempat ia hidup.
           </p>
           <p>
-            Kami percaya bahwa kekacauan yang kita saksikan di ruang publik seperti kegaduhan, kebencian, dan kedangkalan yang berulang-ulang jarang selesai dengan seruan moral atau slogan politik. Ia berakar pada sesuatu yang lebih dalam: pikiran yang tidak pernah diberi kesempatan untuk benar-benar memahami dunia tempat ia hidup. Membebaskan pikiran itu, memberinya bahan untuk berpikir panjang dan mendalam, adalah langkah pertama yang sering dilewatkan.
+            Dan dari pikiran semacam itulah, sebagian besar kekacauan sosial berasal. Bukan dari kurangnya orasi politik. Bukan dari kurangnya seruan moral. Sejarah berulang kali menunjukkan bahwa kekerasan, prasangka, dan kepanikan massal tumbuh paling subur di tanah yang gersang dari pemahaman, di kepala-kepala yang tidak pernah diajak menelusuri secara jujur dan sabar dari mana manusia berasal dan bagaimana dunia ini sesungguhnya bekerja.
           </p>
           <p>
-            Di sinilah kami berdiri: mengajak Anda menempuh kembali kisah alam semesta, kehidupan, dan manusia bukan sebagai kumpulan fakta, melainkan satu narasi besar yang layak direnungkan sepenuhnya.
+            Kami percaya sebaliknya bisa terjadi. Bahwa seseorang yang memahami dirinya sebagai hasil dari 13,8 miliar tahun evolusi kosmos, sebagai keturunan dari kehidupan yang nyaris mustahil, dan sebagai bagian dari eksperimen panjang peradaban yang dibangun oleh manusia-manusia biasa, akan berdiri berbeda di dunia ini. Lebih tenang menghadapi kegaduhan. Lebih sulit dibakar amarahnya oleh cerita murahan. Lebih mampu membedakan yang penting dari yang sekadar ramai.
+          </p>
+          <p>
+            Karena itulah platform ini ada. Bukan untuk menambah tumpukan informasi yang sudah terlalu tinggi, tetapi untuk mengembalikan sesuatu yang lebih langka: kesempatan untuk benar-benar memahami cerita besar tentang semesta, kehidupan, dan manusia dari awal, secara utuh, dan dengan kesabaran yang layak ia dapatkan.
+          </p>
+          <p>
+            Sebab pembebasan yang sesungguhnya selalu dimulai dari sini: dari pikiran yang akhirnya, untuk pertama kalinya, benar-benar sadar sepenuhnya.
           </p>
         </div>
       </section>
