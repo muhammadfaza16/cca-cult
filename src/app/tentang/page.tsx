@@ -78,7 +78,7 @@ export default function TentangPage() {
       <section className="cca-container" style={{ padding: `${φ.xl}px 34px` }}>
         <div style={{ maxWidth: 780 }} className="prose-cca">
           <p>
-            Empat abad terakhir adalah masa paling luar biasa dalam sejarah kesadaran manusia. Kita telah menghitung usia semesta, membaca kode kehidupan dalam sel, dan menelusuri jejak nenek moyang kita hingga ke savana Afrika jutaan tahun silam. Rahasia yang dulu hanya bisa dijawab oleh mitos dan dogma, kini punya jawaban yang bisa diuji, diperiksa ulang, dan dipertanggungjawabkan. Ini bukan pencapaian kecil. Ini adalah salah satu keajaiban terbesar spesies kita.
+            Empat abad terakhir adalah masa paling luar biasa dalam sejarah kesadaran manusia. Kita telah menghitung usia semesta, membaca kode kehidupan dalam sel, dan menelusuri jejak nenek moyang kita hingga ke savana Afrika jutaan tahun silam. Rahasia yang dulu hanya bisa dijawab oleh mitos dan dogma, kini punya jawaban yang bisa diuji, diperiksa ulang, dan dipertanggungjawabkan. Sebuah pencapaian yang layak disebut keajaiban, salah satu yang terbesar yang pernah diraih spesies kita.
           </p>
           <p>
             Tapi keajaiban ini punya nasib yang aneh. Ia lahir di ruang-ruang laboratorium dan universitas, lalu berhenti di sana. Ia tidak pernah benar-benar sampai ke ruang tamu, ke obrolan warung kopi, ke cara orang biasa memahami dirinya sendiri. Kita hidup di zaman ketika jawaban-jawaban paling mendasar tentang alam semesta dan manusia sudah tersedia secara terbuka, dan hampir semua orang tetap menjalani hidup seolah jawaban itu tidak pernah ada.
@@ -96,7 +96,7 @@ export default function TentangPage() {
             Kami percaya sebaliknya bisa terjadi. Bahwa seseorang yang memahami dirinya sebagai hasil dari 13,8 miliar tahun evolusi kosmos, sebagai keturunan dari kehidupan yang nyaris mustahil, dan sebagai bagian dari eksperimen panjang peradaban yang dibangun oleh manusia-manusia biasa, akan berdiri berbeda di dunia ini. Lebih tenang menghadapi kegaduhan. Lebih sulit dibakar amarahnya oleh cerita murahan. Lebih mampu membedakan yang penting dari yang sekadar ramai.
           </p>
           <p>
-            Karena itulah platform ini ada. Bukan untuk menambah tumpukan informasi yang sudah terlalu tinggi, tetapi untuk mengembalikan sesuatu yang lebih langka: kesempatan untuk benar-benar memahami cerita besar tentang semesta, kehidupan, dan manusia dari awal, secara utuh, dan dengan kesabaran yang layak ia dapatkan.
+            Karena itulah platform ini ada: untuk mengembalikan sesuatu yang lebih langka daripada informasi, yaitu kesempatan untuk benar-benar memahami cerita besar tentang semesta, kehidupan, dan manusia, dari awal, secara utuh, dengan kesabaran yang layak ia dapatkan.
           </p>
           <p>
             Sebab pembebasan yang sesungguhnya selalu dimulai dari sini: dari pikiran yang akhirnya, untuk pertama kalinya, benar-benar sadar sepenuhnya.
