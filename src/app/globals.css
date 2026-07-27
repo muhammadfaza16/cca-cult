@@ -302,105 +302,72 @@ body::before {
   font-style: italic;
 }
 
-/* Dedicated Editorial List Styling for .prose-cca */
-.prose-cca ul {
+/* Clean Parent-Level Editorial List Container Styling for .prose-cca */
+.prose-cca ul,
+.prose-cca ol {
   list-style: none !important;
-  padding-left: 0 !important;
-  margin-left: 0 !important;
-  margin: 28px 0 !important;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.prose-cca ul > li {
-  position: relative;
-  padding: 16px 20px 16px 44px;
   background: var(--faint);
   border: 1px solid var(--border);
   border-left: 3px solid #B32D2D;
-  border-radius: 6px;
-  margin-bottom: 0 !important;
-  line-height: 1.7;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-}
-
-.prose-cca ul > li:hover {
-  border-color: var(--accent);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-}
-
-.prose-cca ul > li::before {
-  content: "";
-  position: absolute;
-  left: 18px;
-  top: 24px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #B32D2D;
-  box-shadow: 0 0 8px rgba(179, 45, 45, 0.5);
-}
-
-.prose-cca ol {
-  list-style: none !important;
-  padding-left: 0 !important;
-  margin-left: 0 !important;
+  border-radius: 8px;
+  padding: 22px 24px 22px 48px !important;
   margin: 32px 0 !important;
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.prose-cca ul > li,
+.prose-cca ol > li {
+  position: relative;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  line-height: 1.7;
+}
+
+/* Bullet Dots for Parent UL Container */
+.prose-cca ul > li::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 11px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #B32D2D;
+}
+
+/* Number Counters for Parent OL Container */
+.prose-cca ol {
   counter-reset: cca-ol-counter;
 }
 
 .prose-cca ol > li {
-  position: relative;
-  padding: 16px 20px 16px 64px;
-  background: var(--faint);
-  border: 1px solid var(--border);
-  border-left: 3px solid #B32D2D;
-  border-radius: 6px;
-  margin-bottom: 0 !important;
-  line-height: 1.7;
   counter-increment: cca-ol-counter;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-}
-
-.prose-cca ol > li:hover {
-  border-color: var(--accent);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
 .prose-cca ol > li::before {
-  content: counter(cca-ol-counter, decimal-leading-zero);
+  content: counter(cca-ol-counter) ".";
   position: absolute;
-  left: 16px;
-  top: 18px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(179, 45, 45, 0.08);
+  left: -24px;
+  top: 0;
   color: #B32D2D;
-  border: 1px solid rgba(179, 45, 45, 0.2);
   font-family: var(--font-mono, monospace);
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
+  font-size: 14px;
 }
 
 .prose-cca li > p {
   margin-bottom: 0 !important;
 }
 
-/* Distinct Term Highlight for List Key-Value Pairs */
 .prose-cca li > strong:first-child,
 .prose-cca li > p > strong:first-child {
-  color: #B32D2D;
+  color: var(--ink);
   font-weight: 700;
-  letter-spacing: -0.01em;
-  margin-right: 2px;
 }
 
 .prose-cca code {
