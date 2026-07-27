@@ -87,7 +87,7 @@ export default function TentangPage() {
             Ada alasan untuk itu, dan alasannya bukan kebodohan. Belum pernah ada generasi yang dibanjiri informasi sederas ini, dan belum pernah ada generasi yang kehilangan kesabaran secepat ini. Kita menggulir lebih banyak daripada membaca. Kita mengoleksi potongan-potongan fakta seperti pecahan kaca, berkilau sesaat, lalu terlupakan. Kedalaman, yaitu kemampuan untuk duduk bersama satu gagasan sampai ia benar-benar dipahami, perlahan menjadi kemewahan yang sedikit orang mampu beli.
           </p>
           <p>
-            Dua hal ini, kesenjangan pengetahuan dan hilangnya kedalaman, bukan dua persoalan yang kebetulan terjadi bersamaan. Mereka adalah satu penyakit yang sama, dilihat dari dua sisi berbeda: pikiran yang kehilangan kesempatan untuk benar-benar mengerti dunia tempat ia hidup.
+            Dua hal ini, kesenjangan pengetahuan dan hilangnya kedalaman, bukan dua persoalan yang kebetulan terjadi bersamaan. Mereka adalah satu penyakit yang sama, dilihat dari dua sisi berbeda, ketika pikiran kehilangan kesempatan untuk benar-benar mengerti dunia tempat ia hidup.
           </p>
           <p>
             Dan dari pikiran semacam itulah, sebagian besar kekacauan sosial berasal. Bukan dari kurangnya orasi politik. Bukan dari kurangnya seruan moral. Sejarah berulang kali menunjukkan bahwa kekerasan, prasangka, dan kepanikan massal tumbuh paling subur di tanah yang gersang dari pemahaman, di kepala-kepala yang tidak pernah diajak menelusuri secara jujur dan sabar dari mana manusia berasal dan bagaimana dunia ini sesungguhnya bekerja.
@@ -96,10 +96,10 @@ export default function TentangPage() {
             Kami percaya sebaliknya bisa terjadi. Bahwa seseorang yang memahami dirinya sebagai hasil dari 13,8 miliar tahun evolusi kosmos, sebagai keturunan dari kehidupan yang nyaris mustahil, dan sebagai bagian dari eksperimen panjang peradaban yang dibangun oleh manusia-manusia biasa, akan berdiri berbeda di dunia ini. Lebih tenang menghadapi kegaduhan. Lebih sulit dibakar amarahnya oleh cerita murahan. Lebih mampu membedakan yang penting dari yang sekadar ramai.
           </p>
           <p>
-            Karena itulah platform ini ada: untuk mengembalikan sesuatu yang lebih langka daripada informasi, yaitu kesempatan untuk benar-benar memahami cerita besar tentang semesta, kehidupan, dan manusia, dari awal, secara utuh, dengan kesabaran yang layak ia dapatkan.
+            Karena itulah platform ini ada, untuk mengembalikan sesuatu yang lebih langka daripada informasi, yaitu kesempatan untuk benar-benar memahami cerita besar tentang semesta, kehidupan, dan manusia, dari awal, secara utuh, dengan kesabaran yang layak ia dapatkan.
           </p>
           <p>
-            Sebab pembebasan yang sesungguhnya selalu dimulai dari sini: dari pikiran yang akhirnya, untuk pertama kalinya, benar-benar sadar sepenuhnya.
+            Sebab pembebasan yang sesungguhnya selalu dimulai dari sini, ketika pikiran akhirnya, untuk pertama kalinya, benar-benar sadar sepenuhnya.
           </p>
         </div>
       </section>
