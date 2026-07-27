@@ -302,7 +302,7 @@ body::before {
   font-style: italic;
 }
 
-/* Clean Parent-Level Editorial List Container Styling for .prose-cca */
+/* Ultra-Clean Editorial List Container for .prose-cca (No bullets, No numbers) */
 .prose-cca ul,
 .prose-cca ol {
   list-style: none !important;
@@ -310,54 +310,36 @@ body::before {
   border: 1px solid var(--border);
   border-left: 3px solid #B32D2D;
   border-radius: 8px;
-  padding: 22px 24px 22px 48px !important;
+  padding: 20px 24px !important;
   margin: 32px 0 !important;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .prose-cca ul > li,
 .prose-cca ol > li {
   position: relative;
-  padding: 0 !important;
+  padding: 0 0 14px 0 !important;
   margin: 0 !important;
   background: transparent !important;
   border: none !important;
+  border-bottom: 1px solid var(--border) !important;
   box-shadow: none !important;
   line-height: 1.7;
 }
 
-/* Bullet Dots for Parent UL Container */
-.prose-cca ul > li::before {
-  content: "";
-  position: absolute;
-  left: -20px;
-  top: 11px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #B32D2D;
+.prose-cca ul > li:last-child,
+.prose-cca ol > li:last-child {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
 }
 
-/* Number Counters for Parent OL Container */
-.prose-cca ol {
-  counter-reset: cca-ol-counter;
-}
-
-.prose-cca ol > li {
-  counter-increment: cca-ol-counter;
-}
-
+/* Remove bullets and numbers completely */
+.prose-cca ul > li::before,
 .prose-cca ol > li::before {
-  content: counter(cca-ol-counter) ".";
-  position: absolute;
-  left: -24px;
-  top: 0;
-  color: #B32D2D;
-  font-family: var(--font-mono, monospace);
-  font-weight: 700;
-  font-size: 14px;
+  display: none !important;
+  content: none !important;
 }
 
 .prose-cca li > p {
