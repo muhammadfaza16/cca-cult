@@ -310,34 +310,37 @@ body::before {
   margin: 28px 0 !important;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .prose-cca ul > li {
   position: relative;
-  padding: 14px 18px 14px 44px;
+  padding: 16px 20px 16px 44px;
   background: var(--faint);
   border: 1px solid var(--border);
+  border-left: 3px solid #B32D2D;
   border-radius: 6px;
   margin-bottom: 0 !important;
-  line-height: 1.65;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  line-height: 1.7;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
 .prose-cca ul > li:hover {
   border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
 .prose-cca ul > li::before {
   content: "";
   position: absolute;
   left: 18px;
-  top: 22px;
+  top: 24px;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #B32D2D;
-  box-shadow: 0 0 8px rgba(179, 45, 45, 0.4);
+  box-shadow: 0 0 8px rgba(179, 45, 45, 0.5);
 }
 
 .prose-cca ol {
@@ -353,37 +356,51 @@ body::before {
 
 .prose-cca ol > li {
   position: relative;
-  padding: 16px 20px 16px 60px;
+  padding: 16px 20px 16px 64px;
   background: var(--faint);
+  border: 1px solid var(--border);
   border-left: 3px solid #B32D2D;
-  border-radius: 0 6px 6px 0;
+  border-radius: 6px;
   margin-bottom: 0 !important;
-  line-height: 1.65;
+  line-height: 1.7;
   counter-increment: cca-ol-counter;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.prose-cca ol > li:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
 .prose-cca ol > li::before {
-  content: counter(cca-ol-counter);
+  content: counter(cca-ol-counter, decimal-leading-zero);
   position: absolute;
   left: 16px;
-  top: 16px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #B32D2D;
-  color: #FFFFFF;
-  font-family: var(--font-sans);
+  top: 18px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(179, 45, 45, 0.08);
+  color: #B32D2D;
+  border: 1px solid rgba(179, 45, 45, 0.2);
+  font-family: var(--font-mono, monospace);
   font-weight: 700;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(179, 45, 45, 0.3);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
 }
 
 .prose-cca li > p {
   margin-bottom: 0 !important;
+}
+
+/* Distinct Term Highlight for List Key-Value Pairs */
+.prose-cca li > strong:first-child,
+.prose-cca li > p > strong:first-child {
+  color: #B32D2D;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-right: 2px;
 }
 
 .prose-cca code {
