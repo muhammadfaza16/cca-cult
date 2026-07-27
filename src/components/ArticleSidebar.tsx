@@ -232,8 +232,9 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
             left: 24,
             padding: "10px 18px",
             borderRadius: "24px",
-            display: "flex",
+            display: "inline-flex",
             alignItems: "center",
+            justifyContent: "center",
             gap: 8,
             background: brandAccent,
             color: "#FFFFFF",
@@ -245,25 +246,26 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
             fontSize: 10.5,
             fontWeight: 700,
             letterSpacing: 1.5,
+            lineHeight: 1,
             transition: "all 0.2s ease",
           }}
         >
           {isMobileOpen ? (
             <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: "block", flexShrink: 0 }}>
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
-              <span>TUTUP</span>
+              <span style={{ display: "inline-block", lineHeight: 1, paddingTop: 1 }}>TUTUP</span>
             </>
           ) : (
             <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: "block", flexShrink: 0 }}>
                 <line x1="3" y1="6" x2="21" y2="6"></line>
                 <line x1="3" y1="12" x2="21" y2="12"></line>
                 <line x1="3" y1="18" x2="21" y2="18"></line>
               </svg>
-              <span>DAFTAR ISI</span>
+              <span style={{ display: "inline-block", lineHeight: 1, paddingTop: 1 }}>DAFTAR ISI</span>
             </>
           )}
         </button>
