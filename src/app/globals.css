@@ -213,10 +213,13 @@ body::before {
 
 .prose-cca {
   font-family: var(--font-body);
-  font-size: 18px;
-  line-height: var(--reading-lh);
+  font-size: 17.5px;
+  line-height: 1.8;
   color: var(--ink);
   max-width: var(--content-max);
+  text-wrap: pretty;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @media (min-width: 1024px) {
@@ -230,12 +233,12 @@ body::before {
 .prose-cca h2 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 36px;
-  line-height: 1.1;
-  letter-spacing: -0.035em;
+  font-size: clamp(26px, 5.5vw, 42px);
+  line-height: 1.18;
+  letter-spacing: -0.03em;
   color: var(--ink);
-  margin-top: 52px;
-  margin-bottom: 24px;
+  margin-top: 44px;
+  margin-bottom: 20px;
   padding: 0;
 }
 
@@ -243,36 +246,41 @@ body::before {
   .prose-cca h2 {
     font-size: 44px;
     margin-top: 64px;
+    margin-bottom: 24px;
   }
 }
 
 .prose-cca h3 {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 22px;
+  font-size: clamp(20px, 4.5vw, 24px);
   line-height: 1.28;
   color: var(--ink);
-  margin-top: 60px;
-  margin-bottom: 20px;
+  margin-top: 36px;
+  margin-bottom: 16px;
 }
 
 @media (min-width: 1024px) {
   .prose-cca h3 {
     font-size: 24px;
-    margin-top: 72px;
+    margin-top: 56px;
+    margin-bottom: 20px;
   }
 }
 
-.prose-cca p { margin-bottom: 24px; }
+.prose-cca p {
+  margin-bottom: 22px;
+  line-height: 1.8;
+}
 
 /* Premium Drop Cap for literary editorial style */
 .prose-cca > p:first-of-type::first-letter {
   font-family: var(--font-display);
-  font-size: 4.8rem;
+  font-size: clamp(3.4rem, 11vw, 4.8rem);
   float: left;
   line-height: 0.85;
-  margin-top: -0.02em;
-  margin-right: 0.1em;
+  margin-top: -0.01em;
+  margin-right: 0.12em;
   font-weight: 700;
   color: #B32D2D; /* brandAccent */
 }
@@ -292,12 +300,12 @@ body::before {
 
 .prose-cca blockquote {
   border-left: 3px solid #B32D2D; /* brandAccent crimson */
-  padding-left: 24px;
-  margin: 40px 0;
+  padding-left: 20px;
+  margin: 32px 0;
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: clamp(19px, 4.5vw, 24px);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.45;
   color: var(--ink);
   font-style: italic;
 }

@@ -107,7 +107,7 @@ export default async function ArticlePage({ params }: Props) {
 
             <h1 style={{
               fontFamily: "var(--font-display)", fontWeight: 700,
-              fontSize: "clamp(34px, 5vw, 54px)", lineHeight: 1.08,
+              fontSize: "clamp(28px, 5.5vw, 52px)", lineHeight: 1.15,
               letterSpacing: "-0.03em", color: T.ink, marginBottom: φ.md,
             }}>{meta.title}</h1>
 
