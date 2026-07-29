@@ -109,12 +109,9 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
     } as ArticleMeta;
   });
 
-  // Sort chronologically by series_order (or published_at ascending)
+  // Sort LIFO (newest published_at first)
   return articles.sort((a, b) => {
-    if (a.series_order !== undefined && b.series_order !== undefined) {
-      return a.series_order - b.series_order;
-    }
-    return new Date(a.published_at).getTime() - new Date(b.published_at).getTime();
+    return new Date(b.published_at).getTime() - new Date(a.published_at).getTime();
   });
 }
 
