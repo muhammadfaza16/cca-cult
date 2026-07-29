@@ -46,37 +46,42 @@ export default async function HomePage() {
         </div>
       </header>
 
-      {/* ════════════════ EDITORIAL MASTHEAD ════════════════ */}
+      {/* ════════════════ CLEAN EDITORIAL MASTHEAD ════════════════ */}
       <section style={{
-        paddingTop: φ.xxl,
-        paddingBottom: φ.xl,
-        borderBottom: "1px solid var(--border)",
+        background: T.white,
+        padding: "42px 0 32px 0",
+        borderBottom: `1px solid ${T.border}`,
+        textAlign: "center",
       }}>
         <div className="cca-container">
-          <div style={{ maxWidth: 840 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: φ.sm }}>
-              <span className="live-dot" />
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, letterSpacing: 3, color: brandAccent, textTransform: "uppercase", fontWeight: 700 }}>
-                JURNAL ESAI INDEPENDEN
-              </span>
-            </div>
+          <h1 style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(42px, 6.5vw, 64px)",
+            fontWeight: 800,
+            letterSpacing: "-0.03em",
+            lineHeight: 1,
+            color: T.ink,
+            margin: "0 0 14px 0",
+            textTransform: "lowercase",
+          }}>
+            postulate<span style={{ color: brandAccent }}>.</span>
+          </h1>
 
-            <h1 style={{
-              fontFamily: "var(--font-display)", fontWeight: 800,
-              fontSize: "clamp(38px, 6.2vw, 68px)", lineHeight: 1.05,
-              letterSpacing: "-0.035em", color: T.ink,
-              marginBottom: φ.md,
-            }}>
-              Memetakan Sains, Kebudayaan &amp; Kesadaran Manusia.
-            </h1>
-
-            <p style={{
-              fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65,
-              color: T.muted, fontStyle: "normal",
-              maxWidth: 720, margin: 0,
-            }}>
-              Ruang pemikiran kritis tentang evolusi biologi, kognisi, teknologi, dan arsitektur peradaban—disajikan secara mendalam tanpa jargon berlebih.
-            </p>
+          <div style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 9.5,
+            fontWeight: 600,
+            letterSpacing: 2.5,
+            color: T.muted,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 12,
+          }}>
+            <span>JURNAL ESAI INDEPENDEN</span>
+            <span style={{ color: T.border }}>·</span>
+            <span>SAINS, FILSAFAT &amp; ARSITEKTUR KEBUDAYAAN</span>
           </div>
         </div>
       </section>
