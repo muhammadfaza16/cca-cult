@@ -92,12 +92,12 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
         </div>
       </section>
 
-      {/* ════════════════ UNIFIED SERIES GRID ════════════════ */}
+      {/* ════════════════ UNIFIED ARTICLES GRID ════════════════ */}
       {filteredArticles.length > 0 && (
         <section className="cca-container section-pt section-pb">
           <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: 32 }}>
             <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 700, letterSpacing: 2.5, color: T.muted }}>
-              KELANJUTAN SERI · BAGIAN 2 - 5
+              ARSIP TULISAN &amp; KAJIAN
             </span>
             <div style={{ flex: 1, height: 1, background: T.border }} />
             <Link href="/artikel" className="link-hover" style={{
@@ -114,42 +114,6 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
             {filteredArticles.map((article, i) => (
               <Reveal key={article.slug} delay={i * 0.06}>
                 <CardWrapper article={article} index={i} />
-              </Reveal>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ════════════════ DEDICATED STANDALONE ARTICLES SECTION ════════════════ */}
-      {standaloneArticles && standaloneArticles.length > 0 && (
-        <section className="cca-container section-pb">
-          <div style={{
-            display: "flex", alignItems: "center", gap: φ.sm,
-            marginBottom: 20, marginTop: 36,
-          }}>
-            <span style={{
-              fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700,
-              letterSpacing: 2.5, color: T.ink, textTransform: "uppercase"
-            }}>
-              ESAI MANDIRI &amp; KAJIAN TERBARU
-            </span>
-            <div style={{ flex: 1, height: 1, background: T.border }} />
-            <Link href="/artikel" className="link-hover" style={{
-              fontFamily: "var(--font-mono)", fontSize: 9.5, fontWeight: 600,
-              letterSpacing: 1.5, color: brandAccent, textDecoration: "none"
-            }}>
-              SEMUA KAJIAN →
-            </Link>
-          </div>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-            gap: 28,
-          }}>
-            {standaloneArticles.map((article, i) => (
-              <Reveal key={article.slug} delay={i * 0.06}>
-                <HomepageStandaloneCard article={article} />
               </Reveal>
             ))}
           </div>
@@ -328,7 +292,7 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
                 padding: "3px 8px", borderRadius: 2,
                 textTransform: "uppercase",
               }}>
-                {article.series_order ? `BAGIAN ${article.series_order} DARI 5` : article.tipe_tulisan}
+                {article.tipe_tulisan || "ESAI"}
               </span>
               {article.tags.slice(0, 2).map(tag => (
                 <span key={tag} style={{

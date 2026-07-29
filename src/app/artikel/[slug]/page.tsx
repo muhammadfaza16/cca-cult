@@ -149,7 +149,7 @@ export default async function ArticlePage({ params }: Props) {
                   borderRadius: 2,
                 }}>
                   <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: T.subtle, letterSpacing: 1.5, marginBottom: 4, fontWeight: 600 }}>
-                    ← SEBELUMNYA (BAGIAN {prevArticle.series_order})
+                    ← TULISAN SEBELUMNYA
                   </div>
                   <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 15, color: T.ink, lineHeight: 1.25 }}>
                     {prevArticle.title}
@@ -163,7 +163,7 @@ export default async function ArticlePage({ params }: Props) {
                   borderRadius: 2, textAlign: prevArticle ? "right" : "left",
                 }}>
                   <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: brandAccent, fontWeight: 700, letterSpacing: 1.5, marginBottom: 4 }}>
-                    SELANJUTNYA (BAGIAN {nextArticle.series_order}) →
+                    TULISAN SELANJUTNYA →
                   </div>
                   <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 15, color: T.ink, lineHeight: 1.25 }}>
                     {nextArticle.title}

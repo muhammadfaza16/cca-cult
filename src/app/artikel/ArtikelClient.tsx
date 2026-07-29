@@ -153,7 +153,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
               fontFamily: "var(--font-display)", fontWeight: 800,
               fontSize: "clamp(36px, 5.5vw, 60px)", lineHeight: 1.05,
               letterSpacing: "-0.03em", marginTop: 4,
-            }}>Seri Kajian &amp; Esai</h1>
+            }}>Seluruh Tulisan</h1>
           </div>
 
           <div style={{ position: "relative", width: "100%", maxWidth: 320 }}>
@@ -189,7 +189,7 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6,
           color: T.muted, fontStyle: "italic", maxWidth: 640, marginBottom: φ.lg,
         }}>
-          Kumpulan esai naratif yang dikemas sebagai paket seri kajian tematis serta katalog esai mandiri.
+          Kumpulan esai naratif yang memetakan perpotongan sains kognitif, filsafat, dan peradaban manusia.
         </p>
 
         {/* ─── Category Tab Chips ─── */}
@@ -198,9 +198,9 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
           gap: 6,
           overflowX: "auto",
           WebkitOverflowScrolling: "touch",
-          paddingBottom: φ.sm,
-          marginBottom: φ.md,
+          paddingBottom: φ.xs,
           scrollbarWidth: "none",
+          marginBottom: φ.lg,
         }}>
           {CATEGORIES.map(c => {
             const active = activeCat === c.id;
@@ -213,10 +213,10 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
                   border: `1px solid ${active ? T.ink : "var(--border)"}`,
                   color: active ? T.white : T.muted,
                   fontFamily: "var(--font-mono)",
-                  fontSize: 9,
+                  fontSize: 9.5,
                   fontWeight: 600,
                   letterSpacing: 2,
-                  padding: "6px 14px",
+                  padding: "8px 16px",
                   cursor: "pointer",
                   borderRadius: "2px",
                   transition: "all .18s ease",
@@ -241,60 +241,12 @@ export function ArtikelClient({ articles }: { articles: Article[] }) {
             TIDAK ADA TULISAN YANG COCOK
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: φ.xxl }}>
-
-            {/* ════════════════ SERIES PACKAGES SECTION ════════════════ */}
-            {Object.keys(seriesMap.seriesPackages).length > 0 && (
-              <div>
-                <div style={{
-                  display: "flex", alignItems: "center", gap: φ.sm,
-                  marginBottom: φ.lg,
-                }}>
-                  <span style={{
-                    fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700,
-                    letterSpacing: 2.5, color: T.ink, textTransform: "uppercase"
-                  }}>
-                    PAKET SERI KAJIAN UTAMA
-                  </span>
-                  <div style={{ flex: 1, height: 1, background: T.border }} />
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: φ.xl }}>
-                  {Object.entries(seriesMap.seriesPackages).map(([seriesSlug, seriesArticles]) => (
-                    <Reveal key={seriesSlug}>
-                      <SeriesPackageCard seriesSlug={seriesSlug} chapters={seriesArticles} />
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* ════════════════ STANDALONE ESSAYS SECTION ════════════════ */}
-            {seriesMap.standalone.length > 0 && (
-              <div>
-                <div style={{
-                  display: "flex", alignItems: "center", gap: φ.sm,
-                  marginBottom: φ.lg,
-                }}>
-                  <span style={{
-                    fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700,
-                    letterSpacing: 2.5, color: T.muted, textTransform: "uppercase"
-                  }}>
-                    ESAI MANDIRI &amp; KATALOG TULISAN
-                  </span>
-                  <div style={{ flex: 1, height: 1, background: T.border }} />
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {seriesMap.standalone.map((article, i) => (
-                    <Reveal key={article.slug} delay={i * 0.04}>
-                      <StandaloneArticleRow article={article} index={i} />
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            )}
-
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {filtered.map((article, i) => (
+              <Reveal key={article.slug} delay={i * 0.04}>
+                <StandaloneArticleRow article={article} index={i} />
+              </Reveal>
+            ))}
           </div>
         )}
       </main>

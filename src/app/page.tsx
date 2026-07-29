@@ -9,18 +9,8 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 export default async function HomePage() {
   const allArticles = await getAllArticles();
 
-  // Always showcase the flagship Evolution Series as the starter etalase
-  const evolutionArticles = allArticles
-    .filter(a => a.series_slug === "psikologi-evolusi" || !a.series_slug)
-    .sort((a, b) => (a.series_order || 99) - (b.series_order || 99));
-
-  const hero = evolutionArticles.find(a => a.series_order === 1) || evolutionArticles[0];
-  const seriesArticles = evolutionArticles.filter(a => a.slug !== hero.slug);
-
-  // Dedicated standalone articles (including Bunga di Atas Kuburan and other standalone essays)
-  const standaloneArticles = allArticles
-    .filter(a => a.series_slug !== "psikologi-evolusi")
-    .sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
+  const hero = allArticles[0];
+  const remainingArticles = allArticles.slice(1);
 
   return (
     <div suppressHydrationWarning style={{ minHeight: "100svh", background: T.bg, color: T.ink }}>
@@ -58,88 +48,70 @@ export default async function HomePage() {
 
       {/* ════════════════ EDITORIAL MASTHEAD ════════════════ */}
       <section style={{
-        background: T.white,
-        padding: "36px 0 28px 0",
-        borderBottom: `1px solid ${T.border}`,
-        textAlign: "center",
+        paddingTop: φ.xxl,
+        paddingBottom: φ.xl,
+        borderBottom: "1px solid var(--border)",
       }}>
         <div className="cca-container">
-          {/* Sleek Logo */}
-          <h1 style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(36px, 5.5vw, 56px)",
-            fontWeight: 800,
-            letterSpacing: "-0.02em",
-            lineHeight: 1.1,
-            color: T.ink,
-            margin: "0 0 14px 0",
-            textTransform: "lowercase",
-          }}>
-            postulate<span style={{ color: brandAccent }}>.</span>
-          </h1>
+          <div style={{ maxWidth: 840 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: φ.sm, marginBottom: φ.sm }}>
+              <span className="live-dot" />
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9.5, letterSpacing: 3, color: brandAccent, textTransform: "uppercase", fontWeight: 700 }}>
+                JURNAL ESAI INDEPENDEN
+              </span>
+            </div>
 
-          {/* Compact Platform Meta Info */}
-          <div style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 9,
-            letterSpacing: 2.5,
-            color: T.muted,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 14,
-          }}>
-            <span>PUBLIKASI ESAI &amp; KAJIAN BEBAS</span>
-            <span style={{ color: T.border }}>|</span>
-            <span style={{ fontWeight: 700, color: brandAccent }}>JURNAL INDEPENDEN</span>
-            <span style={{ color: T.border }}>|</span>
-            <span>EDISI DIGITAL 2026</span>
+            <h1 style={{
+              fontFamily: "var(--font-display)", fontWeight: 800,
+              fontSize: "clamp(38px, 6.2vw, 68px)", lineHeight: 1.05,
+              letterSpacing: "-0.035em", color: T.ink,
+              marginBottom: φ.md,
+            }}>
+              Memetakan Sains, Kebudayaan &amp; Kesadaran Manusia.
+            </h1>
+
+            <p style={{
+              fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65,
+              color: T.muted, fontStyle: "normal",
+              maxWidth: 720, margin: 0,
+            }}>
+              Ruang pemikiran kritis tentang evolusi biologi, kognisi, teknologi, dan arsitektur peradaban—disajikan secara mendalam tanpa jargon berlebih.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ════════════════ HERO FEATURED ARTICLE (BAGIAN 1) ════════════════ */}
+      {/* ════════════════ FLAGSHIP ESSAY ════════════════ */}
       {hero && (
         <section style={{
+          borderBottom: "1px solid var(--border)",
           background: T.white,
-          position: "relative", overflow: "hidden",
-          padding: "24px 0 32px 0",
+          padding: `${φ.xl}px 0`,
         }}>
-          <div className="cca-container" style={{ position: "relative" }}>
-            <div className={hero.og_image ? "hero-split-layout" : ""}>
-
-              {/* Image Column (Left on Desktop / Top on Mobile) */}
+          <div className="cca-container">
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: hero.og_image ? "repeat(auto-fit, minmax(320px, 1fr))" : "1fr",
+              gap: 32,
+              alignItems: "center",
+            }}>
+              {/* Optional Hero Image */}
               {hero.og_image && (
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <div>
-                    <span style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 9,
-                      fontWeight: 700,
-                      letterSpacing: 2,
-                      color: brandAccent,
-                      textTransform: "uppercase",
-                      display: "inline-block",
-                    }}>
-                      SERI #01 · PSIKOLOGI EVOLUSI
-                    </span>
-                  </div>
-
-                  <Link href={`/artikel/${hero.slug}`} className="hero-image-wrapper" style={{ display: "block" }}>
-                    <img
-                      src={hero.og_image}
-                      alt={hero.title}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                  </Link>
+                <div style={{ position: "relative", overflow: "hidden", borderRadius: 4 }}>
+                  <img
+                    src={hero.og_image}
+                    alt={hero.title}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      maxHeight: 420,
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
                 </div>
               )}
-              
+
               {/* Content Column */}
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", padding: "4px 0" }}>
                 <div>
@@ -153,7 +125,7 @@ export default async function HomePage() {
                         padding: "4px 9px", borderRadius: 2,
                         textTransform: "uppercase",
                       }}>
-                        {hero.series_order ? `BAGIAN ${hero.series_order} DARI 5` : hero.tipe_tulisan}
+                        {hero.tipe_tulisan || "UTAMA"}
                       </span>
                       <span style={{
                         fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: 1,
@@ -162,11 +134,6 @@ export default async function HomePage() {
                         {formatIndonesianDate(hero.published_at)}
                       </span>
                     </div>
-
-                    <span style={{
-                      fontFamily: "var(--font-display)", fontSize: 28,
-                      fontWeight: 800, lineHeight: 1, color: T.border,
-                    }}>01</span>
                   </div>
 
                   {/* Title & Subtitle/Excerpt */}
@@ -199,7 +166,7 @@ export default async function HomePage() {
                   >
                     <div style={{ height: 2, width: 24, background: brandAccent }} />
                     <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: brandAccent, letterSpacing: 1.5, fontWeight: 700 }}>
-                      BACA BAB 01 · {hero.reading_time.toUpperCase()}
+                      BACA BACAAN UTAMA · {hero.reading_time.toUpperCase()}
                     </span>
                   </Link>
                 </div>
@@ -210,9 +177,9 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ════════════════ UNIFIED SERIES FEED ════════════════ */}
+      {/* ════════════════ UNIFIED ARTICLES FEED ════════════════ */}
       <HomepageClient
-        articles={seriesArticles.map(a => ({
+        articles={remainingArticles.map(a => ({
           slug: a.slug, title: a.title, subtitle: a.subtitle,
           excerpt: a.excerpt,
           kategori: a.kategori,
@@ -222,19 +189,6 @@ export default async function HomePage() {
           published_at: a.published_at,
           reading_time: a.reading_time,
           og_image: a.og_image,
-          series_order: a.series_order,
-        }))}
-        standaloneArticles={standaloneArticles.map(a => ({
-          slug: a.slug, title: a.title, subtitle: a.subtitle,
-          excerpt: a.excerpt,
-          kategori: a.kategori,
-          tipe_tulisan: a.tipe_tulisan,
-          tags: a.tags,
-          author: a.author,
-          published_at: a.published_at,
-          reading_time: a.reading_time,
-          og_image: a.og_image,
-          series_order: a.series_order,
         }))}
       />
 

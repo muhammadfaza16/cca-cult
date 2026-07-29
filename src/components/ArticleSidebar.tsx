@@ -129,7 +129,7 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
           </div>
         )}
 
-        {/* Chronological Series Index Section */}
+        {/* Chronological Articles Index Section */}
         <div>
           <div
             style={{
@@ -145,7 +145,7 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
               gap: 8,
             }}
           >
-            <span>SERI PSIKOLOGI EVOLUSI</span>
+            <span>DAFTAR TULISAN</span>
             <div style={{ flex: 1, height: 1, background: T.border }} />
           </div>
 
@@ -187,7 +187,7 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
                         borderRadius: 2,
                       }}
                     >
-                      BAGIAN {art.series_order || "?"}
+                      ESAI
                     </span>
                     {isCurrent && (
                       <span
@@ -199,7 +199,7 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
                           letterSpacing: 1,
                         }}
                       >
-                        (SEDANG DIBACA)
+                        (DIBACA SEKARANG)
                       </span>
                     )}
                   </div>
@@ -208,8 +208,8 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
                       fontFamily: "var(--font-display)",
                       fontSize: 13,
                       fontWeight: isCurrent ? 700 : 600,
+                      color: isCurrent ? T.ink : T.ink,
                       lineHeight: 1.3,
-                      color: isCurrent ? brandAccent : T.ink,
                     }}
                   >
                     {art.title}
@@ -219,160 +219,137 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
             })}
           </div>
         </div>
+
+        {/* ─── End Desktop Sidebar Content ─── */}
       </div>
 
-      {/* ─── FLOATING TOC BUTTON WITH TEXT & ICON ─── */}
-      <div className="mobile-toc-container">
+      {/* ─── Mobile Drawer Floating Toggle Button ─── */}
+      <div className="md:hidden">
         <button
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
-          aria-label="Daftar Isi"
+          onClick={() => setIsMobileOpen(true)}
           style={{
             position: "fixed",
             bottom: 24,
-            left: 24,
-            padding: "10px 18px",
-            borderRadius: "24px",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
+            right: 24,
+            zIndex: 999,
             background: brandAccent,
-            color: "#FFFFFF",
+            color: T.white,
             border: "none",
-            cursor: "pointer",
-            zIndex: 90,
-            boxShadow: "0 4px 20px rgba(179,45,45,0.35)",
+            borderRadius: 28,
+            padding: "10px 18px",
             fontFamily: "var(--font-mono)",
-            fontSize: 10.5,
+            fontSize: 10,
             fontWeight: 700,
-            letterSpacing: 1.5,
-            lineHeight: 1,
-            transition: "all 0.2s ease",
+            letterSpacing: 2,
+            boxShadow: "0 8px 24px rgba(179, 45, 45, 0.4)",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
           }}
         >
-          {isMobileOpen ? (
-            <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: "block", flexShrink: 0 }}>
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-              <span style={{ display: "inline-block", lineHeight: 1, paddingTop: 1 }}>TUTUP</span>
-            </>
-          ) : (
-            <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: "block", flexShrink: 0 }}>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-              </svg>
-              <span style={{ display: "inline-block", lineHeight: 1, paddingTop: 1 }}>DAFTAR ISI</span>
-            </>
-          )}
+          <span>☰</span> NAVIGASI BACAAN
         </button>
 
         {isMobileOpen && (
           <>
-            {/* Full-screen click-away overlay to close drawer when clicking anywhere */}
             <div
               onClick={() => setIsMobileOpen(false)}
               style={{
                 position: "fixed",
                 inset: 0,
-                background: "rgba(0, 0, 0, 0.35)",
-                backdropFilter: "blur(2px)",
-                zIndex: 85,
-                animation: "fadeIn .15s ease",
+                background: "rgba(0,0,0,0.6)",
+                backdropFilter: "blur(4px)",
+                zIndex: 1000,
               }}
             />
-
             <nav
               style={{
                 position: "fixed",
-                bottom: 80,
-                right: 20,
-                left: 20,
-                maxHeight: "65vh",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                maxHeight: "80vh",
                 overflowY: "auto",
                 background: T.white,
-                border: `2px solid ${brandAccent}`,
-                boxShadow: "0 12px 48px rgba(0,0,0,.35)",
-                zIndex: 90,
-                padding: "20px",
-                borderRadius: "4px",
-                animation: "fadeUp .2s ease",
+                borderTop: `3px solid ${brandAccent}`,
+                borderRadius: "16px 16px 0 0",
+                padding: "24px 20px 36px 20px",
+                zIndex: 1001,
+                display: "flex",
+                flexDirection: "column",
+                gap: 20,
               }}
             >
-            {headings.length > 0 && (
-              <div style={{ marginBottom: 20 }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  borderBottom: `1px solid ${T.border}`,
+                  paddingBottom: 12,
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 9,
+                    fontWeight: 700,
+                    letterSpacing: 2.5,
+                    color: brandAccent,
+                  }}
+                >
+                  NAVIGASI ARSIP
+                </span>
+                <button
+                  onClick={() => setIsMobileOpen(false)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    fontSize: 20,
+                    color: T.muted,
+                    cursor: "pointer",
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div>
                 <div
                   style={{
                     fontFamily: "var(--font-mono)",
                     fontSize: 9,
                     fontWeight: 700,
                     letterSpacing: 2,
-                    color: brandAccent,
+                    color: T.muted,
                     marginBottom: 10,
                   }}
                 >
-                  DAFTAR ISI ARTIKEL
+                  DAFTAR ARSIP TULISAN
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                  {headings.map((h) => (
-                    <a
-                      key={h.id}
-                      href={`#${h.id}`}
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  {seriesArticles.map((art) => (
+                    <Link
+                      key={art.slug}
+                      href={`/artikel/${art.slug}`}
                       onClick={() => setIsMobileOpen(false)}
                       style={{
                         fontFamily: "var(--font-display)",
-                        fontSize: h.level === 2 ? 14 : 12.5,
-                        fontWeight: activeId === h.id ? 700 : 500,
-                        color: activeId === h.id ? brandAccent : T.ink,
+                        fontSize: 13,
+                        fontWeight: art.slug === currentSlug ? 700 : 500,
+                        color: art.slug === currentSlug ? brandAccent : T.ink,
                         textDecoration: "none",
-                        paddingLeft: h.level === 3 ? 12 : 0,
                       }}
                     >
-                      {h.text}
-                    </a>
+                      {art.title}
+                    </Link>
                   ))}
                 </div>
               </div>
-            )}
-
-            <div>
-              <div
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 9,
-                  fontWeight: 700,
-                  letterSpacing: 2,
-                  color: T.muted,
-                  marginBottom: 10,
-                }}
-              >
-                INDEKS SERI 5 BAGIAN
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                {seriesArticles.map((art) => (
-                  <Link
-                    key={art.slug}
-                    href={`/artikel/${art.slug}`}
-                    onClick={() => setIsMobileOpen(false)}
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: 13,
-                      fontWeight: art.slug === currentSlug ? 700 : 500,
-                      color: art.slug === currentSlug ? brandAccent : T.ink,
-                      textDecoration: "none",
-                    }}
-                  >
-                    BAGIAN {art.series_order}: {art.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </nav>
-        </>
-      )}
+            </nav>
+          </>
+        )}
       </div>
     </>
   );
