@@ -11,7 +11,7 @@ export default async function HomePage() {
 
   // Always showcase the flagship Evolution Series as the starter etalase
   const evolutionArticles = allArticles
-    .filter(a => a.series_slug === "psikologi-evolusi")
+    .filter(a => a.series_slug === "psikologi-evolusi" || !a.series_slug)
     .sort((a, b) => (a.series_order || 99) - (b.series_order || 99));
 
   const hero = evolutionArticles.find(a => a.series_order === 1) || evolutionArticles[0];
