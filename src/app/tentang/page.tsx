@@ -68,7 +68,7 @@ export default function TentangPage() {
               color: T.invMuted, fontStyle: "normal",
               maxWidth: 660,
             }}>
-              Manifesto & Peta Diskursus Platform
+              Manifesto Platform
             </p>
           </div>
         </div>
@@ -96,7 +96,7 @@ export default function TentangPage() {
             Kami percaya sebaliknya bisa terjadi. Bahwa seseorang yang memahami dirinya sebagai hasil dari 13,8 miliar tahun evolusi kosmos, sebagai keturunan dari kehidupan yang nyaris mustahil, dan sebagai bagian dari eksperimen panjang peradaban yang dibangun oleh manusia-manusia biasa, akan berdiri berbeda di dunia ini. Lebih tenang menghadapi kegaduhan. Lebih sulit dibakar amarahnya oleh cerita murahan. Lebih mampu membedakan yang penting dari yang sekadar ramai.
           </p>
           <p>
-            Karena itulah platform ini ada, untuk mengembalikan sesuatu yang lebih langka daripada informasi, yaitu kesempatan untuk benar-benar memahami cerita besar tentang semesta, kehidupan, dan manusia, dari awal, secara utuh, dengan kesabaran yang layak ia dapatkan.
+            Karena itulah platform ini ada, untuk mengembalikan sesuatu yang lebih langka daripada informasi, yaitu kesempatan untuk benar-benar memahami gagasan-gagasan besar tentang semesta, kehidupan, dan manusia, dengan kedalaman dan kesabaran yang layak mereka dapatkan.
           </p>
           <p>
             Sebab pembebasan yang sesungguhnya selalu dimulai dari sini, ketika pikiran akhirnya, untuk pertama kalinya, benar-benar sadar sepenuhnya.
@@ -110,7 +110,7 @@ export default function TentangPage() {
           <div style={{ display: "flex", alignItems: "center", gap: φ.sm }}>
             <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: T.muted }}>HORIZON</span>
             <div style={{ flex: 1, height: 1, background: T.border }} />
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: T.subtle }}>LANSKAP EKSPLORASI</span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: 2.5, color: T.subtle }}>WILAYAH EKSPLORASI</span>
           </div>
         </div>
       </div>
@@ -133,17 +133,17 @@ export default function TentangPage() {
               <div style={{
                 fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: 2.5,
                 color: brandAccent, marginBottom: φ.sm, fontWeight: 700,
-              }}>01 · KOGNISI & MANUSIA</div>
+              }}>KOGNISI & MANUSIA</div>
               <h3 style={{
                 fontFamily: "var(--font-display)", fontWeight: 700,
                 fontSize: 20, lineHeight: 1.3, letterSpacing: "-0.015em",
                 marginBottom: φ.xs,
-              }}>Pola Pikir & Alam Bawah Sadar</h3>
+              }}>Pikiran, Persepsi, Evolusi</h3>
               <p style={{
                 fontFamily: "var(--font-body)", fontSize: 14.5, lineHeight: 1.6,
                 color: T.muted, margin: 0,
               }}>
-                Membedah fondasi biologis kognisi, bias persepsi, psikologi evolusioner, dan bagaimana struktur mental memproses realitas.
+                Fondasi biologis kognisi, bias persepsi, psikologi evolusioner, dan bagaimana struktur mental membentuk cara kita memahami realitas.
               </p>
             </div>
 
@@ -156,17 +156,17 @@ export default function TentangPage() {
               <div style={{
                 fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: 2.5,
                 color: "#2B5876", marginBottom: φ.sm, fontWeight: 700,
-              }}>02 · SISTEM & KEBUDAYAAN</div>
+              }}>SEJARAH & KEBUDAYAAN</div>
               <h3 style={{
                 fontFamily: "var(--font-display)", fontWeight: 700,
                 fontSize: 20, lineHeight: 1.3, letterSpacing: "-0.015em",
                 marginBottom: φ.xs,
-              }}>Institusi, Moralitas & Ideologi</h3>
+              }}>Peradaban, Ideologi, Kekuasaan</h3>
               <p style={{
                 fontFamily: "var(--font-body)", fontSize: 14.5, lineHeight: 1.6,
                 color: T.muted, margin: 0,
               }}>
-                Menganalisis bagaimana kepercayaan, sistem nilai, norma sosial, dan hierarki kekuasaan tumbuh serta menggerakkan peradaban.
+                Bagaimana kepercayaan, sistem nilai, dan hierarki kekuasaan tumbuh, bertransformasi, dan menggerakkan sejarah manusia.
               </p>
             </div>
 
@@ -179,17 +179,17 @@ export default function TentangPage() {
               <div style={{
                 fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: 2.5,
                 color: "#D4AF37", marginBottom: φ.sm, fontWeight: 700,
-              }}>03 · TEKNOLOGI & MASA DEPAN</div>
+              }}>TEKNOLOGI & MASA DEPAN</div>
               <h3 style={{
                 fontFamily: "var(--font-display)", fontWeight: 700,
                 fontSize: 20, lineHeight: 1.3, letterSpacing: "-0.015em",
                 marginBottom: φ.xs,
-              }}>Era Digital & Kompleksitas</h3>
+              }}>Kompleksitas, AI, Disrupsi</h3>
               <p style={{
                 fontFamily: "var(--font-body)", fontSize: 14.5, lineHeight: 1.6,
                 color: T.muted, margin: 0,
               }}>
-                Mengeksplorasi pergeseran lanskap akibat kecerdasan buatan, media sosial, dan dinamika kebudayaan di era pasca-modern.
+                Pergeseran lanskap akibat kecerdasan buatan, algoritma, dan dinamika kebudayaan di era yang belum pernah ada presedennya.
               </p>
             </div>
 
