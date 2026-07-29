@@ -227,28 +227,27 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
       <div className="md:hidden">
         <button
           onClick={() => setIsMobileOpen(true)}
+          aria-label="Daftar Isi & Navigasi Bacaan"
           style={{
             position: "fixed",
             bottom: 24,
-            right: 24,
+            left: 24,
             zIndex: 999,
             background: brandAccent,
             color: T.white,
             border: "none",
-            borderRadius: 28,
-            padding: "10px 18px",
-            fontFamily: "var(--font-mono)",
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: 2,
+            borderRadius: "50%",
+            width: 46,
+            height: 46,
             boxShadow: "0 8px 24px rgba(179, 45, 45, 0.4)",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
-            gap: 8,
+            justifyContent: "center",
+            fontSize: 18,
           }}
         >
-          <span>☰</span> NAVIGASI BACAAN
+          ☰
         </button>
 
         {isMobileOpen && (
@@ -299,7 +298,7 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
                     color: brandAccent,
                   }}
                 >
-                  NAVIGASI ARSIP
+                  NAVIGASI BACAAN
                 </span>
                 <button
                   onClick={() => setIsMobileOpen(false)}
@@ -315,6 +314,51 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
                 </button>
               </div>
 
+              {/* Table of Contents Section in Mobile Drawer */}
+              {headings.length > 0 && (
+                <div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 9,
+                      fontWeight: 700,
+                      letterSpacing: 2,
+                      color: brandAccent,
+                      marginBottom: 10,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    DAFTAR ISI ARTIKEL
+                  </div>
+                  <nav style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {headings.map((h) => {
+                      const isActive = activeId === h.id;
+                      return (
+                        <a
+                          key={h.id}
+                          href={`#${h.id}`}
+                          onClick={() => setIsMobileOpen(false)}
+                          style={{
+                            fontFamily: h.level === 2 ? "var(--font-display)" : "var(--font-body)",
+                            fontSize: h.level === 2 ? 14 : 13,
+                            fontWeight: isActive ? 700 : 500,
+                            color: isActive ? brandAccent : T.ink,
+                            textDecoration: "none",
+                            paddingLeft: h.level === 3 ? 14 : 4,
+                            paddingTop: 3,
+                            paddingBottom: 3,
+                            borderLeft: isActive ? `3px solid ${brandAccent}` : "none",
+                            lineHeight: 1.35,
+                          }}
+                        >
+                          {h.text}
+                        </a>
+                      );
+                    })}
+                  </nav>
+                </div>
+              )}
+
               <div>
                 <div
                   style={{
@@ -326,7 +370,7 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
                     marginBottom: 10,
                   }}
                 >
-                  DAFTAR ARSIP TULISAN
+                  DAFTAR TULISAN LAINNYA
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   {seriesArticles.map((art) => (
