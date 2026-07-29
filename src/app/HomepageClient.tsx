@@ -257,7 +257,8 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
       {article.og_image && (
         <div style={{
           width: "100%",
-          aspectRatio: "16 / 10",
+          aspectRatio: "21 / 9",
+          maxHeight: 180,
           overflow: "hidden",
           borderBottom: `1px solid ${T.border}`,
           position: "relative",

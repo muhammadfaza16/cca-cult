@@ -91,20 +91,26 @@ export default async function HomePage() {
           <div className="cca-container">
             <div style={{
               display: "grid",
-              gridTemplateColumns: hero.og_image ? "repeat(auto-fit, minmax(320px, 1fr))" : "1fr",
+              gridTemplateColumns: hero.og_image ? "repeat(auto-fit, minmax(280px, 1fr))" : "1fr",
               gap: 32,
               alignItems: "center",
             }}>
               {/* Optional Hero Image */}
               {hero.og_image && (
-                <div style={{ position: "relative", overflow: "hidden", borderRadius: 4 }}>
+                <div style={{
+                  position: "relative",
+                  overflow: "hidden",
+                  borderRadius: 3,
+                  maxHeight: 280,
+                  aspectRatio: "16 / 10",
+                  border: `1px solid ${T.border}`,
+                }}>
                   <img
                     src={hero.og_image}
                     alt={hero.title}
                     style={{
                       width: "100%",
-                      height: "auto",
-                      maxHeight: 420,
+                      height: "100%",
                       objectFit: "cover",
                       display: "block",
                     }}
