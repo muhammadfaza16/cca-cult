@@ -106,11 +106,7 @@ export function HomepageClient({ articles, standaloneArticles }: Props) {
             }}>LIHAT SELURUH ARSIP →</Link>
           </div>
 
-          <div className="hero-grid" style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-            gap: 36,
-          }}>
+          <div className="two-column-card-grid">
             {filteredArticles.map((article, i) => (
               <Reveal key={article.slug} delay={i * 0.06}>
                 <CardWrapper article={article} index={i} />
@@ -153,7 +149,7 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
       {article.og_image && (
         <div style={{
           width: "100%",
-          aspectRatio: "16 / 10",
+          aspectRatio: "16 / 9",
           overflow: "hidden",
           borderBottom: `1px solid ${T.border}`,
           position: "relative",
@@ -257,8 +253,8 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
       {article.og_image && (
         <div style={{
           width: "100%",
-          aspectRatio: "21 / 9",
-          maxHeight: 180,
+          aspectRatio: "16 / 9",
+          maxHeight: 220,
           overflow: "hidden",
           borderBottom: `1px solid ${T.border}`,
           position: "relative",

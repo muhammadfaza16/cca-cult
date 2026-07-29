@@ -536,6 +536,19 @@ hr, .prose-cca hr, article hr {
 .card-hero-title { max-width: 100%; }
 
 /* Grid systems */
+.two-column-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .two-column-card-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 8fr 5fr;
