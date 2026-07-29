@@ -224,7 +224,7 @@ export function ArticleSidebar({ currentSlug, seriesArticles }: ArticleSidebarPr
       </div>
 
       {/* ─── Mobile Drawer Floating Toggle Button ─── */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <button
           onClick={() => setIsMobileOpen(true)}
           aria-label="Daftar Isi & Navigasi Bacaan"

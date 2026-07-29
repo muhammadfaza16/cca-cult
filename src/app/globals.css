@@ -191,11 +191,7 @@ body::before {
 }
 
 .desktop-sidebar-container {
-  display: none;
-}
-
-.mobile-toc-container {
-  display: block;
+  display: none !important;
 }
 
 @media (min-width: 1024px) {
