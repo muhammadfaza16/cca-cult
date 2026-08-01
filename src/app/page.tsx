@@ -94,21 +94,16 @@ export default async function HomePage() {
           padding: `${φ.xl}px 0`,
         }}>
           <div className="cca-container">
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: hero.og_image ? "repeat(auto-fit, minmax(280px, 1fr))" : "1fr",
-              gap: 32,
-              alignItems: "center",
-            }}>
+            <div className="flagship-hero-grid">
               {/* Optional Hero Image */}
               {hero.og_image && (
                 <div style={{
                   position: "relative",
                   overflow: "hidden",
                   borderRadius: 3,
-                  maxHeight: 280,
                   aspectRatio: "16 / 10",
                   border: `1px solid ${T.border}`,
+                  width: "100%",
                 }}>
                   <img
                     src={hero.og_image}

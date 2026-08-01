@@ -545,6 +545,20 @@ hr, .prose-cca hr, article hr {
   }
 }
 
+.flagship-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .flagship-hero-grid {
+    grid-template-columns: minmax(280px, 440px) 1fr;
+    gap: 28px;
+  }
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 8fr 5fr;
