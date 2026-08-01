@@ -211,9 +211,9 @@ function HomepageStandaloneCard({ article }: { article: ArticleBrief }) {
 
           <p style={{
             fontFamily: "var(--font-body)", fontSize: 14.5, lineHeight: 1.6,
-            color: T.muted, fontStyle: "italic", margin: 0,
+            color: T.muted, fontStyle: "normal", margin: 0,
           }}>
-            {article.subtitle || article.excerpt}
+            {article.excerpt}
           </p>
         </div>
 
@@ -319,8 +319,8 @@ function CardWrapper({ article, index }: { article: ArticleBrief; index: number 
           
           <p style={{
             fontFamily: "var(--font-body)", fontSize: 14.5,
-            lineHeight: 1.6, color: T.muted, fontStyle: "italic",
-          }}>{article.subtitle || article.excerpt}</p>
+            lineHeight: 1.6, color: T.muted, fontStyle: "normal",
+          }}>{article.excerpt}</p>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: φ.md }}>

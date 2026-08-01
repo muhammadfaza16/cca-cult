@@ -153,9 +153,9 @@ export default async function HomePage() {
                     }}>{hero.title}</h2>
                     
                     <p style={{
-                      fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6,
-                      color: T.muted, fontStyle: "italic", margin: 0,
-                    }}>{hero.subtitle || hero.excerpt}</p>
+                      fontFamily: "var(--font-body)", fontSize: 15.5, lineHeight: 1.6,
+                      color: T.muted, fontStyle: "normal", margin: 0,
+                    }}>{hero.excerpt}</p>
                   </Link>
                 </div>
 
